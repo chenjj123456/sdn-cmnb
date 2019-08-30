@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.gwtt.ems</groupId>
+  <artifactId>cmnb</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>cmnb</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <servlet.version>3.0.1</servlet.version>
+    <spring.version>4.0.5.RELEASE</spring.version>
+    <cxf.version>3.0.0</cxf.version>
+    <jackson.version>2.4.1</jackson.version>
+    <shiro.version>1.2.3</shiro.version>
+    <netty.version>5.0.0.Alpha1</netty.version>
+    <junit.version>3.8.1</junit.version>
+    <bouncycastle.version>1.52</bouncycastle.version>
+    <guava.version>19.0</guava.version>
+    <nms.version>3.1.0</nms.version>
+    <json.version>2.4</json.version>
+    <ezmorph.version>1.0.6</ezmorph.version>
+    <rs.version>2.0.1</rs.version>
+  </properties>
+
+  <dependencies>
+    <!-- Servlet -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${servlet.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <!-- CXF -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+    <!-- Jackson -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-xml-provider</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <!-- Shiro -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+      <version>${shiro.version}</version>
+    </dependency>
+    <!-- Netty5 -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>${netty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>${bouncycastle.version}</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.json-lib</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>${json.version}</version>
+      <classifier>jdk15</classifier>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.ezmorph</groupId>
+      <artifactId>ezmorph</artifactId>
+      <version>${ezmorph.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.gwtt.nms</groupId>
+      <artifactId>da-server</artifactId>
+      <version>${nms.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>${rs.version}</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <finalName>cmnb-${project.version}</finalName>
+          <archive>
+
+            <manifestEntries>
+              <Module-Name>cmnb</Module-Name>
+              <Module-Version>${project.version}</Module-Version>
+              <Build-Time>${build.timesign}</Build-Time>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- install jar to local repository -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+              <packaging>jar</packaging>
+              <artifactId>${project.artifactId}</artifactId>
+              <groupId>${project.groupId}</groupId>
+              <version>${project.version}</version>
+              <file>
+                ${project.build.directory}/${project.artifactId}-${project.version}.jar
+              </file>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- deploy jar to remote repository -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy-file</goal>
+            </goals>
+            <configuration>
+              <packaging>jar</packaging>
+              <generatePom>true</generatePom>
+              <url>${project.distributionManagement.repository.url}</url>
+              <artifactId>${project.artifactId}</artifactId>
+              <groupId>${project.groupId}</groupId>
+              <version>${project.version}</version>
+              <file>${project.build.directory}/${project.artifactId}.jar</file>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <warName>cmnb</warName>
+          <packagingExcludes>
+            WEB-INF/lib/antlr*.jar,
+            WEB-INF/lib/asm*.jar,
+            WEB-INF/lib/bcprov-jdk15on*.jar,
+            WEB-INF/lib/c3p0*.jar,
+            WEB-INF/lib/castor*.jar,
+            WEB-INF/lib/cglib*.jar,
+            WEB-INF/lib/comm-*.jar,
+            WEB-INF/lib/commons-collection*.jar,
+            WEB-INF/lib/commons-configuration*.jar,
+            WEB-INF/lib/commons-lang*.jar,
+            WEB-INF/lib/commons-net*.jar,
+            WEB-INF/lib/da-server*.jar,
+            WEB-INF/lib/dom4j*.jar,
+            WEB-INF/lib/ehcache*.jar,
+            WEB-INF/lib/ezmorph*.jar,
+            WEB-INF/lib/guava*.jar,
+            WEB-INF/lib/hibernate*.jar,
+            WEB-INF/lib/javassist*.jar,
+            WEB-INF/lib/jetty*.jar,
+            WEB-INF/lib/json-lib*.jar,
+            WEB-INF/lib/jta*.jar,
+            WEB-INF/lib/mail*.jar,
+            WEB-INF/lib/mysql*.jar,
+            WEB-INF/lib/netty*.jar,
+            WEB-INF/lib/poi*.jar,
+            WEB-INF/lib/servlet*.jar,
+            WEB-INF/lib/slf4j-api-1.6.1.jar,
+            WEB-INF/lib/snmp*.jar,
+            WEB-INF/classes/com/gwtt/ems/cmnb/main/**,
+            WEB-INF/classes/com/gwtt/ems/cmnb/ems/**,
+            WEB-INF/classes/com/gwtt/ems/cmnb/api/json/**,
+            WEB-INF/classes/com/gwtt/ems/cmnb/websocket/**,
+            WEB-INF/classes/com/gwtt/ems/cmnb/model/**,
+            WEB-INF/classes/META-INF/hbm/**,
+            WEB-INF/classes/com/gwtt/ems/cmnb/dao/**
+          </packagingExcludes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>cmnb</id>
+            <phase>package</phase>
+            <goals>
+              <goal>war</goal>
+            </goals>
+            <!--<configuration>-->
+            <!--${project.build.directory} class的输出目录不做设置的话默认代表项目根目录的target目录；
+                也可以使用“自定义文件夹/自定义文件夹 例如：a/b”，也可以使用绝对路径如：“D:\test” -->
+            <!--<outputDirectory>${project.basedir}/runenv/webapp</outputDirectory>-->
+            <!--</configuration>-->
+          </execution>
+        </executions>
+      </plugin>
+
+
+
+    </plugins>
+
+  </build>
+</project>

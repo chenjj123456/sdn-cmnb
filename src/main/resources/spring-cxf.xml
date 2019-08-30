@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://cxf.apache.org/jaxrs
+       http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <bean id="xmlProvider" class="com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider"/>
+
+    <!-- 防止中文乱码，不配置默认也为UTF-8格式 -->
+    <bean id= "encodeFilter"
+          class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean
+                        class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>application/xml;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean
+                        class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+
+    <jaxrs:server address="/restconf">
+        <jaxrs:serviceBeans>
+            <ref bean="universalImpl"/>
+            <!--<ref bean="resourcesNorthImpl"/>-->
+            <ref bean="alarmNorthImpl"/>
+            <!--<ref bean="topologyNorthImpl"/>-->
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="xmlProvider"/>
+            <ref bean="authFilter"/>
+            <ref bean="encodeFilter"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+</beans>
