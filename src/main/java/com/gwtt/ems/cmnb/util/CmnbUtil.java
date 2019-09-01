@@ -2,6 +2,11 @@ package com.gwtt.ems.cmnb.util;
 
 
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
+import com.gwtt.ems.cmnb.model.north.resources.Ltp;
+import com.gwtt.ems.cmnb.model.north.resources.Ltps;
+import com.gwtt.ems.cmnb.model.north.resources.Ne;
+import com.gwtt.ems.cmnb.model.south.resources.LtpData;
+import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.nms.faultd.Alarm;
 import com.gwtt.nms.util.NmsUtil;
 
@@ -12,9 +17,7 @@ import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by chenjj on 2019/8/24
@@ -25,15 +28,14 @@ public class CmnbUtil {
 
     public static void init(){
         try {
-            File omcFile = new File(NmsUtil.AIM_ROOT + "/conf/omc.properties");
+            File cmnbFile = new File(NmsUtil.AIM_ROOT + "/conf/cmnb.properties");
             serverParamsTable.load(new InputStreamReader(new FileInputStream(
-                    omcFile)));
+                    cmnbFile)));
         } catch (Exception ex) {
             CmnbLogger.CMNBERR.logException(ex, 3);
         }
 
         try {
-            String df=CmnbUtil.getParameter("omcId","gwttomc");
 
             wsPort = Integer.parseInt(CmnbUtil.getParameter("websocketPort", "9999"));
         } catch (Exception ex) {
@@ -98,63 +100,54 @@ public class CmnbUtil {
 
     }
 
-//    public static Ne parserNeData(NeData neData){
-//        Ne ne=new Ne();
-//        ne.setRmUID(RmUidGenerator.getNeUID(neData.getIpAddress()));
-//        ne.setAdminStatus(neData.getAdminStatus());
-//        ne.setControlPlaneIp(neData.getControlPlaneIP());
-//        ne.setHardwareVersion(neData.getHardwareVersion());
-//        ne.setIpAddress(neData.getIpAddress());
-//        ne.setLatency(neData.getLatency());
-//        ne.setLatitude(neData.getLatitude());
-//        ne.setLocation(neData.getLocation());
-//        ne.setLongitude(neData.getLongitude());
-//        ne.setMaxCapacity(neData.getMaxCapacity());
-//        ne.setNativeName(neData.getNativeName());
-//        ne.setProductName(neData.getProductName());
-//        ne.setReality(neData.getReality());
-//        ne.setSoftwareVersion(neData.getSoftwareVersion());
-//        ne.setState(neData.getState());
-//        ne.setSynchronizationSupportStatus(neData.getSynchronizationSupportStatus());
-//        ne.setVendor(neData.getVendor());
-//        return ne;
-//    }
-//
-//    public static Port parserPortData(PortData portData){
-//        Port port=new Port();
-//        port.setRmUID(RmUidGenerator.getPortUID(portData.getNeId()+":"+portData.getId()));
-//        port.setNermUID(RmUidGenerator.getNeUID(portData.getNeId()));
-//        if (portData.getCardId() != null) {
-//            port.setCardrmUID(RmUidGenerator.getCardUID(portData));
-//        }
-//        if (portData.getHolderId() != null) {
-//            port.setHolderrmUID(RmUidGenerator.getHolderUID(portData));
-//        }
-//        port.setPortNo(portData.getPortNo());
-//        port.setNativeName(portData.getNativeName());
-//        port.setPhysicalOrLogical(portData.getPhysicalOrLogical());
-//        port.setPortType(portData.getPortType());
-//        port.setPortSubType(portData.getPortSubType());
-//        port.setSignalType(portData.getSignalType());
-//        port.setPortRate(portData.getPortRate());
-//        port.setDirection(portData.getDirection());
-//        port.setRole(portData.getRole());
-//        if (portData.getIpAddress() != null) {
-//            port.setIpAddress(portData.getIpAddress());
-//        }
-//        if (portData.getIpMask() != null) {
-//            port.setIpMask(portData.getIpMask());
-//        }
-//        port.setIsOverlay(portData.getIsOverlay());
-//        port.setLayerRate(portData.getLayerRate());
-//        port.setMtu(portData.getMtu());
-//        port.setAdminStatus(portData.getAdminStatus());
-//        port.setOperateStatus(portData.getOperateStatus());
-//        if (portData.getMacAddress() != null) {
-//            port.setMacAddress(portData.getMacAddress());
-//        }
-//        return port;
-//    }
+    public static Ne parserNeData(NeData neData){
+        Ne ne=new Ne();
+        ne.setId(neData.getId());
+        ne.setName(neData.getName());
+        ne.setType(neData.getType());
+        ne.setUserLabel(neData.getUserLabel());
+        ne.setAdminIp(neData.getAdminIp());
+        ne.setAdminStatus(neData.getAdminStatus());
+        ne.setOperateStatus(neData.getOperateStatus());
+        ne.setLongitude(neData.getLongitude());
+        ne.setLatitude(neData.getLatitude());
+        ne.setLocation(neData.getLocation());
+        ne.setLatency(neData.getLatency());
+        ne.setVendorName(neData.getVendorName());
+        if (neData.getLtpDataList().size()>0){
+            ne.setLtps(parserLtpDatas(neData.getLtpDataList()));
+        }
+        return ne;
+    }
+
+    public static Ltp parserLtpData(LtpData ltpData){
+        Ltp ltp=new Ltp();
+        ltp.setId(ltpData.getId());
+        ltp.setUserLabel(ltpData.getUserlabel());
+        ltp.setNeId(ltpData.getNeId());
+        ltp.setName(ltpData.getName());
+        ltp.setLayerRate(ltpData.getLayerRate());
+        ltp.setIpAddress(ltpData.getIpAddress());
+        ltp.setMtu(ltpData.getMtu());
+        ltp.setSpeed(ltpData.getSpeed());
+        ltp.setAdminStatus(ltpData.getAdminStatus());
+        ltp.setOperateStatus(ltpData.getOperateStatus());
+        ltp.setMacAddress(ltpData.getMacAddress());
+
+        return ltp;
+    }
+
+    public static Ltps parserLtpDatas(List<LtpData> ltpDatas){
+        Ltps ltps=new Ltps();
+        List<Ltp> ltpList=new ArrayList<>();
+        for (LtpData ltpData:ltpDatas){
+            Ltp ltp=parserLtpData(ltpData);
+            ltpList.add(ltp);
+        }
+        ltps.setLtp(ltpList);
+        return ltps;
+    }
+
 //
 //    public static TopoLink parserTopoLinkData(TopoLinkData topoLinkData){
 //        TopoLink topoLink=new TopoLink();

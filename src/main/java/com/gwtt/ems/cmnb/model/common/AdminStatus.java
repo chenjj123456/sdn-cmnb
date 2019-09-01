@@ -7,7 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public enum AdminStatus {
     @XmlElement(name = "admin-up")
-    adminUp,
+    AdminUp(),
     @XmlElement(name = "admin-down")
-    adminDown
+    AdminDown;
+
 }

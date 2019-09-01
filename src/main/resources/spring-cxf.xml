@@ -31,7 +31,7 @@
     <jaxrs:server address="/restconf">
         <jaxrs:serviceBeans>
             <ref bean="universalImpl"/>
-            <!--<ref bean="resourcesNorthImpl"/>-->
+            <ref bean="resourcesNorthImpl"/>
             <ref bean="alarmNorthImpl"/>
             <!--<ref bean="topologyNorthImpl"/>-->
         </jaxrs:serviceBeans>
