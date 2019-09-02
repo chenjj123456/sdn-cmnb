@@ -1,4 +1,4 @@
-package com.gwtt.ems.cmnb.model.north.resources;
+package com.gwtt.ems.cmnb.model.north.resources.ne;
 
 import java.util.List;
 

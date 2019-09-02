@@ -1,10 +1,13 @@
 package com.gwtt.ems.cmnb.util;
 
 
+import com.gwtt.ems.cmnb.model.common.AdminStatus;
+import com.gwtt.ems.cmnb.model.common.OperateStatus;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
-import com.gwtt.ems.cmnb.model.north.resources.Ltp;
-import com.gwtt.ems.cmnb.model.north.resources.Ltps;
-import com.gwtt.ems.cmnb.model.north.resources.Ne;
+import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
+import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
+import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
+import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.nms.faultd.Alarm;
@@ -14,6 +17,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,8 +41,15 @@ public class CmnbUtil {
         }
 
         try {
+            wsPort = Integer.parseInt(getParameter("websocketPort", "9999"));
+            if (getParameter("id").equalsIgnoreCase("null")){
+                setParameter("id",new Uuid(TimeBasedUUIDGenerator.generateIdFromTimestamp(System.currentTimeMillis(),
+                        getHostId()).toString()).getValue());
+            }
 
-            wsPort = Integer.parseInt(CmnbUtil.getParameter("websocketPort", "9999"));
+            if (getParameter("parentNcdId").equalsIgnoreCase("null")){
+                setParameter("parentNcdId", getHost().getHostAddress());
+            }
         } catch (Exception ex) {
             CmnbLogger.CMNBERR.logException(ex, 3);
         }
@@ -205,22 +217,60 @@ public class CmnbUtil {
 //        return linkTeAttrCfgData;
 //    }
 //
-//    public static Omc getOmcInfo(){
-//        Omc omc=new Omc();
-//        omc.setRmUID(getParameter("rmUID"));
-//        omc.setNativeName(getParameter("nativeName"));
-//        omc.setCommuAddress(getParameter("commuAddress"));
-//        omc.setOmcVersion(getParameter("omcVersion"));
-//        omc.setInterfaceVersion(getParameter("interfaceVersion"));
-//        omc.setEquipmentDomain(getParameter("equipmentDomain"));
-//        omc.setVendor(getParameter("vendor"));
-//        omc.setActiveControllerLocation(getParameter("activeControllerLocation"));
-//        omc.setPort(getParameter("port"));
-//        omc.setAdminStatus(getParameter("adminStatus"));
-//        omc.setOperateStatus(getParameter("operateStatus"));
-//        return omc;
-//    }
-//
+    public static Ncd getNcdInfo(){
+        Ncd ncd=new Ncd();
+        ncd.setId(getParameter("id"));
+        ncd.setUserLabel(getHost().getHostAddress());
+        ncd.setParentNcdId(getParameter("parentNcdId"));
+        ncd.setActiveControllerIp(getHost().getHostAddress());
+        ncd.setActiveControllerLocation(getParameter("activeControllerLocation"));
+        ncd.setVendorName(getParameter("vendorName"));
+        ncd.setPort(Long.parseLong(getParameter("port")));
+        if (getParameter("adminStatus").equalsIgnoreCase("adminDown")){
+            ncd.setAdminStatus(AdminStatus.AdminDown);
+        }else {
+            ncd.setAdminStatus(AdminStatus.AdminUp);
+        }
+
+        if (getParameter("operateStatus").equalsIgnoreCase("operateDown")){
+            ncd.setOperateStatus(OperateStatus.OperateDown);
+        }else {
+            ncd.setOperateStatus(OperateStatus.OperateUp);
+        }
+        return ncd;
+    }
+
+    private static InetAddress getHost() {
+        try {
+            InetAddress address = InetAddress.getLocalHost();
+            return address;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static long getHostId() {
+        long macAddressAsLong = 0;
+        try {
+            InetAddress address = InetAddress.getLocalHost();
+            NetworkInterface ni = NetworkInterface.getByInetAddress(address);
+            if (ni != null) {
+                byte[] mac = ni.getHardwareAddress();
+                //Converts array of unsigned bytes to an long
+                if (mac != null) {
+                    for (int i = 0; i < mac.length; i++) {
+                        macAddressAsLong <<= 8;
+                        macAddressAsLong ^= (long) mac[i] & 0xFF;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return macAddressAsLong;
+    }
+
     public static AlarmList parserAlarm(Alarm alarm) {
         AlarmList alarmList = new AlarmList();
         alarmList.setAlarmRaisedTime(CmnbUtil.getDatetime(alarm.getCreateTime()));

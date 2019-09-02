@@ -1,7 +1,16 @@
 package com.gwtt.ems.cmnb.northInterface.resources;
 
-import com.gwtt.ems.cmnb.model.north.resources.*;
+import com.gwtt.ems.cmnb.model.north.resources.AddMeLocationRequest;
+import com.gwtt.ems.cmnb.model.north.resources.AddMeLocationResponse;
+import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
+import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
+import com.gwtt.ems.cmnb.model.north.resources.ncd.NcdList;
+import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
+import com.gwtt.ems.cmnb.model.north.resources.ne.NeList;
+import com.gwtt.ems.cmnb.model.north.resources.ne.Nes;
+import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
 import com.gwtt.ems.cmnb.model.south.resources.LtpDataList;
+import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.ems.cmnb.model.south.resources.NeDataList;
 import com.gwtt.ems.cmnb.northInterface.RestError.DealRestConfError;
@@ -27,8 +36,8 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
     @Override
     public Response getNesByNcdId(String ncdId) {
         LOG.info("getNesByNcdId:{}", ncdId);
-        if (ncdId==null){
-            RestConfErrorList errorList=DealRestConfError.badRequest();
+        if (ncdId == null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
             return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
         }
 
@@ -36,33 +45,33 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
         try {
             NeDataList neDataList = CmnbEmsHelper.getInstance().getNes();
             //操作异常，Ems未返回错误
-            if (neDataList==null){
-                RestConfErrorList errorList=DealRestConfError.serverError();
+            if (neDataList == null) {
+                RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
-            }else {
+            } else {
                 //操作正常，返回数据列表
-                if(neDataList.getNeDataList().size()>0){
+                if (neDataList.getNeDataList().size() > 0) {
                     for (NeData neData : neDataList.getNeDataList()) {
-                        Ne ne =CmnbUtil.parserNeData(neData);
+                        Ne ne = CmnbUtil.parserNeData(neData);
                         neList.add(ne);
                     }
 
-                    NeList neLists=new NeList();
+                    NeList neLists = new NeList();
                     neLists.setNe(neList);
-                    Nes nes=new Nes();
+                    Nes nes = new Nes();
                     nes.setNeList(neLists);
                     LOG.info("getNesByNcdId:{}", neList.toString());
                     return Response.status(Response.Status.OK).entity(nes).build();
-                }else {
+                } else {
                     //无数据，Ems返回错误描述
-                    RestConfErrorList errorList=DealRestConfError.noContent(neDataList.getErrorDesc());
+                    RestConfErrorList errorList = DealRestConfError.noContent(neDataList.getErrorDesc());
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            RestConfErrorList errorList=DealRestConfError.serverError();
+            RestConfErrorList errorList = DealRestConfError.serverError();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
 
         }
@@ -72,34 +81,33 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
     @Override
     public Response getLtpsByNe(String neId) {
         LOG.info("getLtpsByNe:{}", neId);
-        if (neId==null){
-            RestConfErrorList errorList=DealRestConfError.badRequest();
+        if (neId == null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
             return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
         }
 
         try {
             LtpDataList ltpDataList = CmnbEmsHelper.getInstance().getLtpsByNeId(neId);
             //操作异常，Ems未返回错误
-            if (ltpDataList==null){
-                RestConfErrorList errorList=DealRestConfError.serverError();
+            if (ltpDataList == null) {
+                RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
-            }else {
+            } else {
                 //操作正常，返回数据列表
-                if(ltpDataList.getLtpDataList().size()>0){
-                    Ltps ltps=CmnbUtil.parserLtpDatas(ltpDataList.getLtpDataList());
+                if (ltpDataList.getLtpDataList().size() > 0) {
+                    Ltps ltps = CmnbUtil.parserLtpDatas(ltpDataList.getLtpDataList());
                     LOG.info("getLtpsByNe:{}", ltps.toString());
                     return Response.status(Response.Status.OK).entity(ltps).build();
-                    }
-                else {
+                } else {
                     //无数据，Ems返回错误描述
-                    RestConfErrorList errorList=DealRestConfError.noContent(ltpDataList.getErrorDesc());
+                    RestConfErrorList errorList = DealRestConfError.noContent(ltpDataList.getErrorDesc());
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            RestConfErrorList errorList=DealRestConfError.serverError();
+            RestConfErrorList errorList = DealRestConfError.serverError();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
 
         }
@@ -108,45 +116,75 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
 
     @Override
     public Response getNcdById(String ncdId) {
-        return null;
+        LOG.info("getNcdById:{}", ncdId);
+        if (ncdId == null || !ncdId.equals(CmnbUtil.getParameter("id"))) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
+        }
+
+        try {
+            Ncd ncd = CmnbUtil.getNcdInfo();
+            LOG.info("getNcdById:{}", ncd.toString());
+            return Response.status(Response.Status.OK).entity(ncd).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            RestConfErrorList errorList = DealRestConfError.serverError();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+
+        }
     }
 
     @Override
     public Response getNcds() {
-        return null;
+        try {
+            NcdList ncdList = new NcdList();
+            List<Ncd> ncds = new ArrayList<>();
+
+            Ncd ncd = CmnbUtil.getNcdInfo();
+            ncds.add(ncd);
+            ncdList.setNcd(ncds);
+            LOG.info("getNcds:{}", ncds.toString());
+            return Response.status(Response.Status.OK).entity(ncdList).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            RestConfErrorList errorList = DealRestConfError.serverError();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+
+        }
     }
 
     @Override
     public Response getNeById(String neId) {
         LOG.info("getNeById:{}", neId);
-        if (neId==null){
-            RestConfErrorList errorList=DealRestConfError.badRequest();
+        if (neId == null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
             return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
         }
 
         try {
             NeData neData = CmnbEmsHelper.getInstance().getNeById(neId);
             //操作异常，Ems未返回错误
-            if (neData==null){
-                RestConfErrorList errorList=DealRestConfError.serverError();
+            if (neData == null) {
+                RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
-            }else {
+            } else {
                 //操作正常，返回数据列表
-                if(neData!=null){
-                    Ne ne=CmnbUtil.parserNeData(neData);
+                if (neData != null) {
+                    Ne ne = CmnbUtil.parserNeData(neData);
                     LOG.info("getNeById:{}", ne.toString());
                     return Response.status(Response.Status.OK).entity(ne).build();
-                }
-                else {
+                } else {
                     //无数据，Ems返回错误描述
-                    RestConfErrorList errorList=DealRestConfError.noContent(neData.getErrorDesc());
+                    RestConfErrorList errorList = DealRestConfError.noContent(neData.getErrorDesc());
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            RestConfErrorList errorList=DealRestConfError.serverError();
+            RestConfErrorList errorList = DealRestConfError.serverError();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
 
         }
@@ -164,6 +202,46 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
 
     @Override
     public Response addMeLocation(AddMeLocationRequest request) {
-        return null;
+        LOG.info("addMeLocation:{}", request.toString());
+        if (request == null || request.getMeLocation() == null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
+        }
+        try {
+            List<MeLocationData> meLocationDatas = new ArrayList<>();
+
+            EmsConfigResult result = CmnbEmsHelper.getInstance().addMeLocation(meLocationDatas);
+            //操作异常，Ems未返回错误
+            if (result == null) {
+                RestConfErrorList errorList = DealRestConfError.serverError();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+            } else {
+                AddMeLocationResponse response = new AddMeLocationResponse();
+                //操作正常，返回配置结果
+                switch (result.getResult()) {
+                    case Success:
+                        LOG.info("addMeLocation:{}", "success");
+                        response.setResult("success");
+                        break;
+                    case Fail:
+                        LOG.info("addMeLocation:{}", "failed");
+                        response.setResult("failed");
+                        break;
+                    case PartialSuccess:
+                        LOG.info("addMeLocation:{}", "partialSuccess");
+                        response.setResult("partialSuccess");
+                        break;
+                }
+                return Response.status(Response.Status.OK).entity(response).build();
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            RestConfErrorList errorList = DealRestConfError.serverError();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+
+        }
     }
+
 }

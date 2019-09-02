@@ -1,14 +1,16 @@
-package com.gwtt.ems.cmnb.model.north.resources;
+package com.gwtt.ems.cmnb.model.north.resources.ncd;
 
 import com.gwtt.ems.cmnb.model.common.AdminStatus;
 import com.gwtt.ems.cmnb.model.common.OperateStatus;
 import com.gwtt.ems.cmnb.model.north.CmnbBaseData;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by chenjj on 2019/7/24
  */
+@XmlRootElement(name = "ncd", namespace="urn:chinamobile:resource")
 public class Ncd extends CmnbBaseData {
 
     /**

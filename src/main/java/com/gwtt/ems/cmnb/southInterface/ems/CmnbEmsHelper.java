@@ -1,6 +1,8 @@
 package com.gwtt.ems.cmnb.southInterface.ems;
 
+import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
 import com.gwtt.ems.cmnb.model.south.resources.LtpDataList;
+import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.ems.cmnb.model.south.resources.NeDataList;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventObserver;
@@ -114,6 +116,25 @@ public class CmnbEmsHelper {
             for (CmnbEmsAPI api : cmnbEmsApis) {
                 try {
                     result = api.getNeById(neId);
+                    //查询到一个结果后退出
+                    if (result != null) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public EmsConfigResult addMeLocation(List<MeLocationData> meLocationDataList){
+        EmsConfigResult result=null;
+        if (cmnbEmsApis != null) {
+            for (CmnbEmsAPI api : cmnbEmsApis) {
+                try {
+                    result = api.addMeLocation(meLocationDataList);
                     //查询到一个结果后退出
                     if (result != null) {
                         break;

@@ -1,4 +1,4 @@
-package com.gwtt.ems.cmnb.model.north.resources;
+package com.gwtt.ems.cmnb.model.north.resources.ncd;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

@@ -1,8 +1,9 @@
-package com.gwtt.ems.cmnb.model.north.resources;
+package com.gwtt.ems.cmnb.model.north.resources.ne;
 
 import com.gwtt.ems.cmnb.model.common.AdminStatus;
 import com.gwtt.ems.cmnb.model.common.OperateStatus;
 import com.gwtt.ems.cmnb.model.north.CmnbBaseData;
+import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 
 import javax.xml.bind.annotation.XmlElement;
 
