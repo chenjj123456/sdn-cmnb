@@ -1,6 +1,6 @@
 package com.gwtt.ems.cmnb.northInterface.resources;
 
-import com.gwtt.ems.cmnb.model.north.resources.AddMeLocationRequest;
+import com.gwtt.ems.cmnb.model.north.resources.ne.AddMeLocationRequest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

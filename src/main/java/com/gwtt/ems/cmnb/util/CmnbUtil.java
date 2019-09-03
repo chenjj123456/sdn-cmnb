@@ -8,6 +8,7 @@ import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
+import com.gwtt.ems.cmnb.model.north.resources.ne.NeNode;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.nms.faultd.Alarm;
@@ -130,6 +131,23 @@ public class CmnbUtil {
             ne.setLtps(parserLtpDatas(neData.getLtpDataList()));
         }
         return ne;
+    }
+
+    public static NeNode parserNeDataToNeNode(NeData neData){
+        NeNode neNode=new NeNode();
+        neNode.setId(neData.getId());
+        neNode.setName(neData.getName());
+        neNode.setType(neData.getType());
+        neNode.setUserLabel(neData.getUserLabel());
+        neNode.setAdminIp(neData.getAdminIp());
+        neNode.setAdminStatus(neData.getAdminStatus());
+        neNode.setOperateStatus(neData.getOperateStatus());
+        neNode.setLongitude(neData.getLongitude());
+        neNode.setLatitude(neData.getLatitude());
+        neNode.setLocation(neData.getLocation());
+        neNode.setLatency(neData.getLatency());
+        neNode.setVendorName(neData.getVendorName());
+        return neNode;
     }
 
     public static Ltp parserLtpData(LtpData ltpData){

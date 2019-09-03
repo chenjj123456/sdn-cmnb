@@ -12,7 +12,7 @@ public class CmnbEvent {
     public static enum ObjType{
         Ncd,
         Ne,
-        Port,
+        Ltp,
         TopoLink,
 
     }

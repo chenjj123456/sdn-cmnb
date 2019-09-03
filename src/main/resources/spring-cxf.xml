@@ -33,7 +33,7 @@
             <ref bean="universalImpl"/>
             <ref bean="resourcesNorthImpl"/>
             <ref bean="alarmNorthImpl"/>
-            <!--<ref bean="topologyNorthImpl"/>-->
+            <ref bean="topologyNorthImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="xmlProvider"/>

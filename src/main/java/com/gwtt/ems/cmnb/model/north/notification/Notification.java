@@ -1,7 +1,5 @@
 package com.gwtt.ems.cmnb.model.north.notification;
 
-import com.gwtt.ems.cmnb.model.north.fault.AlarmsNotification;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -15,8 +13,11 @@ public class Notification {
     @XmlElement(name = "alarms-notification")
     private AlarmsNotification alarmsNotification;
 
-//    private NeNotification neNotification;
+    @XmlElement(name = "ne-notification")
+    private NeNotification neNotification;
 
+    @XmlElement(name = "ltp-notification")
+    private LtpNotification ltpNotification;
 
     public String getEventTime() {
         return eventTime;
@@ -34,4 +35,19 @@ public class Notification {
         this.alarmsNotification = alarmsNotification;
     }
 
+    public NeNotification getNeNotification() {
+        return neNotification;
+    }
+
+    public void setNeNotification(NeNotification neNotification) {
+        this.neNotification = neNotification;
+    }
+
+    public LtpNotification getLtpNotification() {
+        return ltpNotification;
+    }
+
+    public void setLtpNotification(LtpNotification ltpNotification) {
+        this.ltpNotification = ltpNotification;
+    }
 }

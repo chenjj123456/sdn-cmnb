@@ -1,7 +1,7 @@
 package com.gwtt.ems.cmnb.northInterface.resources;
 
-import com.gwtt.ems.cmnb.model.north.resources.AddMeLocationRequest;
-import com.gwtt.ems.cmnb.model.north.resources.AddMeLocationResponse;
+import com.gwtt.ems.cmnb.model.north.resources.ne.AddMeLocationRequest;
+import com.gwtt.ems.cmnb.model.north.resources.ne.AddMeLocationResponse;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.NcdList;
@@ -9,7 +9,6 @@ import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
 import com.gwtt.ems.cmnb.model.north.resources.ne.NeList;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Nes;
 import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
-import com.gwtt.ems.cmnb.model.south.resources.LtpDataList;
 import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.ems.cmnb.model.south.resources.NeDataList;
@@ -87,20 +86,20 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
         }
 
         try {
-            LtpDataList ltpDataList = CmnbEmsHelper.getInstance().getLtpsByNeId(neId);
+            NeData neData = CmnbEmsHelper.getInstance().getNeById(neId);
             //操作异常，Ems未返回错误
-            if (ltpDataList == null) {
+            if (neData == null) {
                 RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
             } else {
                 //操作正常，返回数据列表
-                if (ltpDataList.getLtpDataList().size() > 0) {
-                    Ltps ltps = CmnbUtil.parserLtpDatas(ltpDataList.getLtpDataList());
+                if (neData.getLtpDataList().size() > 0) {
+                    Ltps ltps = CmnbUtil.parserLtpDatas(neData.getLtpDataList());
                     LOG.info("getLtpsByNe:{}", ltps.toString());
                     return Response.status(Response.Status.OK).entity(ltps).build();
                 } else {
                     //无数据，Ems返回错误描述
-                    RestConfErrorList errorList = DealRestConfError.noContent(ltpDataList.getErrorDesc());
+                    RestConfErrorList errorList = DealRestConfError.noContent(neData.getErrorDesc());
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
                 }
             }

@@ -1,5 +1,6 @@
 package com.gwtt.ems.cmnb.southInterface.eventListener;
 
+import com.gwtt.ems.cmnb.model.common.UpdateType;
 import com.gwtt.ems.cmnb.model.north.event.EventInQueque;
 import com.gwtt.ems.cmnb.model.north.event.PushEventType;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
@@ -31,6 +32,7 @@ public class CmnbAlarmObserver implements AlarmObserver {
         AlarmList nmsAlarm=CmnbUtil.parserAlarm(alarm);
 
         EventInQueque event=new EventInQueque();
+        event.setEventUpdateType(UpdateType.Add);
         event.setPushEventType(PushEventType.Alarm);
         event.setPushEventData(nmsAlarm);
         CmnbEventPush.getInstance().addEvent(event);

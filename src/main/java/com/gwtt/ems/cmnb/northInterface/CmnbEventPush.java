@@ -1,9 +1,16 @@
 package com.gwtt.ems.cmnb.northInterface;
 
+import com.gwtt.ems.cmnb.model.common.UpdateType;
+import com.gwtt.ems.cmnb.model.north.CmnbBaseData;
+import com.gwtt.ems.cmnb.model.north.event.Adds;
+import com.gwtt.ems.cmnb.model.north.event.Deletes;
 import com.gwtt.ems.cmnb.model.north.event.EventInQueque;
+import com.gwtt.ems.cmnb.model.north.event.Updates;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
 import com.gwtt.ems.cmnb.model.north.fault.Alarms;
-import com.gwtt.ems.cmnb.model.north.fault.AlarmsNotification;
+import com.gwtt.ems.cmnb.model.north.notification.AlarmsNotification;
+import com.gwtt.ems.cmnb.model.north.notification.LtpNotification;
+import com.gwtt.ems.cmnb.model.north.notification.NeNotification;
 import com.gwtt.ems.cmnb.model.north.notification.Notification;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 import com.gwtt.ems.cmnb.util.CmnbUtil;
@@ -25,15 +32,34 @@ import java.util.concurrent.*;
 public class CmnbEventPush implements Runnable {
     private final ScheduledExecutorService eventPushSchedule;
     private static BlockingQueue<EventInQueque> eventQueue;
+    //告警列表
     private List<AlarmList> alarmPushList;
-    //    private List<Ne> alarmPushList;
+    //网元列表
+    private List<CmnbBaseData> addNePushList;
+    private List<CmnbBaseData> updateNePushList;
+    private List<String> deleteNePushList;
+
+    //端口列表
+    private List<CmnbBaseData> addLtpPushList;
+    private List<CmnbBaseData> updateLtpPushList;
+    private List<String> deleteLtpPushList;
+
     private static CmnbEventPush instance;
     private EventInQueque event = null;
 
     private CmnbEventPush() {
         init();
         eventPushSchedule = Executors.newSingleThreadScheduledExecutor();
+
         alarmPushList = Collections.synchronizedList(new ArrayList<>());
+
+        addNePushList = Collections.synchronizedList(new ArrayList<>());
+        updateNePushList = Collections.synchronizedList(new ArrayList<>());
+        deleteNePushList = Collections.synchronizedList(new ArrayList<>());
+
+        addLtpPushList = Collections.synchronizedList(new ArrayList<>());
+        updateLtpPushList = Collections.synchronizedList(new ArrayList<>());
+        deleteLtpPushList = Collections.synchronizedList(new ArrayList<>());
     }
 
     public static synchronized CmnbEventPush getInstance() {
@@ -87,7 +113,6 @@ public class CmnbEventPush implements Runnable {
         return event;
     }
 
-
     @Override
     public void run() {
         while (!eventQueue.isEmpty()) {
@@ -101,12 +126,64 @@ public class CmnbEventPush implements Runnable {
                     }
                     break;
                 case Ne:
+                    if (event.getEventUpdateType().equals(UpdateType.Add)) {
+                        addNePushList.add(event.getPushEventData());
+                    } else if (event.getEventUpdateType().equals(UpdateType.Update)) {
+                        updateNePushList.add(event.getPushEventData());
+                    } else {
+                        deleteNePushList.add(event.getPushEventData().getId());
+                    }
+
+                    if (addNePushList.size() == Constants.list_size
+                            || updateNePushList.size() == Constants.list_size
+                            || deleteNePushList.size() == Constants.list_size) {
+                        pushNeData(addNePushList, updateNePushList, deleteNePushList);
+                        addNePushList = Collections.synchronizedList(new ArrayList<>());
+                        updateNePushList = Collections.synchronizedList(new ArrayList<>());
+                        deleteNePushList = Collections.synchronizedList(new ArrayList<>());
+                    }
+                    break;
+                case Ltp:
+                    if (event.getEventUpdateType().equals(UpdateType.Add)) {
+                        addLtpPushList.add(event.getPushEventData());
+                    } else if (event.getEventUpdateType().equals(UpdateType.Update)) {
+                        updateLtpPushList.add(event.getPushEventData());
+                    } else {
+                        deleteLtpPushList.add(event.getPushEventData().getId());
+                    }
+
+                    if (addLtpPushList.size() == Constants.list_size
+                            || updateLtpPushList.size() == Constants.list_size
+                            || deleteLtpPushList.size() == Constants.list_size) {
+                        pushLtpData(addLtpPushList, updateLtpPushList, deleteLtpPushList);
+                        addLtpPushList = Collections.synchronizedList(new ArrayList<>());
+                        updateLtpPushList = Collections.synchronizedList(new ArrayList<>());
+                        deleteLtpPushList = Collections.synchronizedList(new ArrayList<>());
+                    }
                     break;
             }
         }
-        if (alarmPushList.size()>0){
+        if (alarmPushList.size() > 0) {
             pushAlarmData(alarmPushList);
             alarmPushList = Collections.synchronizedList(new ArrayList<>());
+        }
+
+        if (addNePushList.size() > 0
+                || updateNePushList.size() > 0
+                || deleteNePushList.size() > 0) {
+            pushNeData(addNePushList, updateNePushList, deleteNePushList);
+            addNePushList = Collections.synchronizedList(new ArrayList<>());
+            updateNePushList = Collections.synchronizedList(new ArrayList<>());
+            deleteNePushList = Collections.synchronizedList(new ArrayList<>());
+        }
+
+        if (addLtpPushList.size() > 0
+                || updateLtpPushList.size() > 0
+                || deleteLtpPushList.size() > 0) {
+            pushNeData(addLtpPushList, updateLtpPushList, deleteLtpPushList);
+            addLtpPushList = Collections.synchronizedList(new ArrayList<>());
+            updateLtpPushList = Collections.synchronizedList(new ArrayList<>());
+            deleteLtpPushList = Collections.synchronizedList(new ArrayList<>());
         }
     }
 
@@ -118,13 +195,76 @@ public class CmnbEventPush implements Runnable {
                 alarms.setAlarmList(alarmLists);
                 AlarmsNotification alarmsNotification = new AlarmsNotification();
                 alarmsNotification.setAlarms(alarms);
+
                 Notification notification = new Notification();
                 notification.setEventTime(CmnbUtil.getDateAndTime(new Date()));
                 notification.setAlarmsNotification(alarmsNotification);
 
                 String alarmXml = JaxbObjectAndXmlUtil.object2xml(AlarmsNotification.class, alarmsNotification);
                 alarmListener.sendEvent(alarmXml);
-                CmnbLogger.CMNBOUT.log("AlarmObserver:push:admin" + alarmLists, 3);
+                CmnbLogger.CMNBOUT.log("AlarmObserver:push:admin" + alarmXml, 3);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            CmnbLogger.CMNBERR.logException(e, 3);
+        }
+    }
+
+    private void pushNeData(List<CmnbBaseData> addNePushList, List<CmnbBaseData> updateNePushList, List<String> deleteNePushList) {
+        try {
+            ListenerAdapter neListener = Notificator.getInstance().getListenerFor("ne-notification");
+            if (neListener != null) {
+                Adds adds = new Adds();
+                Updates updates = new Updates();
+                Deletes deletes = new Deletes();
+                adds.setAddList(addNePushList);
+                updates.setUpdateList(updateNePushList);
+                deletes.setDeleteList(deleteNePushList);
+
+                NeNotification neNotification = new NeNotification();
+                neNotification.setAdds(adds);
+                neNotification.setUpdates(updates);
+                neNotification.setDeletes(deletes);
+
+                Notification notification = new Notification();
+                notification.setEventTime(CmnbUtil.getDateAndTime(new Date()));
+                notification.setNeNotification(neNotification);
+
+                String neXml = JaxbObjectAndXmlUtil.object2xml(NeNotification.class, neNotification);
+                neListener.sendEvent(neXml);
+                CmnbLogger.CMNBOUT.log("neObserver:push:admin" + neXml, 3);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            CmnbLogger.CMNBERR.logException(e, 3);
+        }
+
+    }
+
+    private void pushLtpData(List<CmnbBaseData> addLtpPushList, List<CmnbBaseData> updateLtpPushList, List<String> deleteLtpPushList) {
+        try {
+            ListenerAdapter ltpListener = Notificator.getInstance().getListenerFor("ltp-notification");
+            if (ltpListener != null) {
+
+                Adds adds = new Adds();
+                Updates updates = new Updates();
+                Deletes deletes = new Deletes();
+                adds.setAddList(addLtpPushList);
+                updates.setUpdateList(updateLtpPushList);
+                deletes.setDeleteList(deleteLtpPushList);
+
+                LtpNotification ltpNotification = new LtpNotification();
+                ltpNotification.setAdds(adds);
+                ltpNotification.setUpdates(updates);
+                ltpNotification.setDeletes(deletes);
+
+                Notification notification = new Notification();
+                notification.setEventTime(CmnbUtil.getDateAndTime(new Date()));
+                notification.setLtpNotification(ltpNotification);
+
+                String ltpXml = JaxbObjectAndXmlUtil.object2xml(LtpNotification.class, ltpNotification);
+                ltpListener.sendEvent(ltpXml);
+                CmnbLogger.CMNBOUT.log("ltpObserver:push:admin" + ltpXml, 3);
             }
         } catch (Exception e) {
             e.printStackTrace();

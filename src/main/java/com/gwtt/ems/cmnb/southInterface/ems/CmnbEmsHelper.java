@@ -89,25 +89,6 @@ public class CmnbEmsHelper {
         return result;
     }
 
-    public LtpDataList getLtpsByNeId(String neId) {
-        LtpDataList result = null;
-
-        if (cmnbEmsApis != null) {
-            for (CmnbEmsAPI api : cmnbEmsApis) {
-                try {
-                    result = api.getLtpsByNeId(neId);
-                    //查询到一个结果后退出
-                    if (result != null && result.getLtpDataList().size() > 0) {
-                        break;
-                    }
-                } catch (Exception ex) {
-                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
-                    CmnbLogger.CMNBERR.logException(ex, 3);
-                }
-            }
-        }
-        return result;
-    }
 
     public NeData getNeById(String neId) {
         NeData result = null;

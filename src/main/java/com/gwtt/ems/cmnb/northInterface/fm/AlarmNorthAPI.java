@@ -2,7 +2,7 @@ package com.gwtt.ems.cmnb.northInterface.fm;
 
 import com.gwtt.ems.cmnb.model.north.fault.CurrentAlarmQueryCond;
 
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
  */
 public interface AlarmNorthAPI {
 
-    @POST
+    @GET
     @Path("/operations/sptn-fm-module:query-alarms")
     @Produces({MediaType.APPLICATION_XML})
     Response queryAlarms(CurrentAlarmQueryCond request);
