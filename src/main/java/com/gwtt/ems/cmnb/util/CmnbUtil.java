@@ -9,8 +9,12 @@ import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
 import com.gwtt.ems.cmnb.model.north.resources.ne.NeNode;
+import com.gwtt.ems.cmnb.model.north.topology.*;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
+import com.gwtt.ems.cmnb.model.south.topology.LinkData;
+import com.gwtt.ems.cmnb.model.south.topology.NodeData;
+import com.gwtt.ems.cmnb.model.south.topology.TopologyData;
 import com.gwtt.nms.faultd.Alarm;
 import com.gwtt.nms.util.NmsUtil;
 
@@ -299,6 +303,77 @@ public class CmnbUtil {
         alarmList.setSequence(BigInteger.valueOf(alarm.getId()));
         alarmList.setId(alarm.getId()+"");
         return alarmList;
+    }
+
+    public static Topology parserTopologyData(TopologyData topologyData){
+        Topology topology=new Topology();
+        topology.setId(topologyData.getId());
+        topology.setName(topologyData.getName());
+        topology.setLayerRate(topologyData.getLayerRate());
+        if (topologyData.getSubLayerRate()!=null){
+            topology.setSubLayerRate(topologyData.getSubLayerRate());
+        }
+        return topology;
+    }
+
+    public static Node parserNodeData(NodeData nodeData){
+        Node node=new Node();
+        node.setId(nodeData.getId());
+        node.setName(nodeData.getName());
+        node.setUserLabel(nodeData.getUserLabel());
+        node.setNodeType(nodeData.getNodeType());
+        node.setAdminStatus(nodeData.getAdminStatus());
+        node.setOperateStatus(nodeData.getOperateStatus());
+        node.setParentTopoId(nodeData.getParentTopoId());
+        node.setResourceId(nodeData.getResourceId());
+        return node;
+    }
+
+    public static ExtNode parserNodeDataToExtNode(NodeData nodeData){
+        ExtNode extNode=new ExtNode();
+        extNode.setId(nodeData.getId());
+        extNode.setName(nodeData.getName());
+        extNode.setUserLabel(nodeData.getUserLabel());
+        extNode.setNodeType(nodeData.getNodeType());
+        extNode.setAdminStatus(nodeData.getAdminStatus());
+        extNode.setOperateStatus(nodeData.getOperateStatus());
+        extNode.setParentTopoId(nodeData.getParentTopoId());
+        extNode.setResourceId(nodeData.getResourceId());
+        return extNode;
+    }
+
+    public static Link parserLinkData(LinkData linkData){
+        Link link=new Link();
+        link.setId(linkData.getId());
+        link.setName(linkData.getName());
+        link.setUserLabel(linkData.getUserLabel());
+        link.setDirection(linkData.getDirection());
+        link.setAdminStatus(linkData.getAdminStatus());
+        link.setOperateStatus(linkData.getOperateStatus());
+        link.setLayerRate(linkData.getLayerRate());
+        link.setLeftLtpId(linkData.getLeftLtpId());
+        link.setLeftNodeId(linkData.getLeftNodeId());
+        link.setRightLtpId(linkData.getRightLtpId());
+        link.setRightNodeId(linkData.getRightNodeId());
+
+        LinkTeAttrCfg linkTeAttrCfg=new LinkTeAttrCfg();
+        linkTeAttrCfg.setLatency(linkData.getLatency());
+        linkTeAttrCfg.setMaxReservableBandwidth(linkData.getMaxReservableBandwidth());
+        link.setLinkTeAttrCfg(linkTeAttrCfg);
+
+        LinkTeAttrRun linkTeAttrRun=new LinkTeAttrRun();
+        linkTeAttrRun.setAvailableBandwidth(linkData.getAvailableBandwidth());
+        linkTeAttrRun.setLinkLatency(linkData.getLinkLatency());
+        linkTeAttrRun.setPhysicalBandwidth(linkData.getPhysicalBandwidth());
+        link.setLinkTeAttrRun(linkTeAttrRun);
+
+        return link;
+    }
+
+    public static ExtLink parserLinkDataToExtLink(LinkData linkData){
+        ExtLink extLink=new ExtLink();
+
+        return extLink;
     }
 
 }

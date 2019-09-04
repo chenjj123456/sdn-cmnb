@@ -1,7 +1,6 @@
 package com.gwtt.ems.cmnb.southInterface.ems;
 
 import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
-import com.gwtt.ems.cmnb.model.south.resources.LtpDataList;
 import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.ems.cmnb.model.south.resources.NeDataList;

@@ -4,6 +4,7 @@ package com.gwtt.ems.cmnb.main;
 import com.gwtt.ems.cmnb.northInterface.CmnbEventPush;
 import com.gwtt.ems.cmnb.southInterface.ems.CmnbEmsHelper;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbAlarmObserver;
+import com.gwtt.ems.cmnb.southInterface.service.CmnbServiceHelper;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 import com.gwtt.ems.cmnb.util.CmnbUtil;
 import com.gwtt.ems.cmnb.websocket.server.WebSocketServer;
@@ -57,7 +58,7 @@ public class CmnbMain implements RunProcessInterface {
         try {
             //初始化helper 注册模块发给Rest等其他模块的通知
             CmnbEmsHelper.getInstance().start();
-//            CmnbServiceHelper.getInstance().start();
+            CmnbServiceHelper.getInstance().start();
 
         } catch (Exception ex) {
             CmnbLogger.CMNBERR.logException(ex, 3);
@@ -76,6 +77,7 @@ public class CmnbMain implements RunProcessInterface {
     public void shutDown() {
         try {
             CmnbEmsHelper.getInstance().shutdown();
+            CmnbServiceHelper.getInstance().shutdown();
         } catch (Exception ex) {
             CmnbLogger.CMNBERR.logException(ex, 3);
         }
