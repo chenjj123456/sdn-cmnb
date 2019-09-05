@@ -19,6 +19,13 @@ public class Notification {
     @XmlElement(name = "ltp-notification")
     private LtpNotification ltpNotification;
 
+    @XmlElement(name = "node-notification")
+    private NodeNotification nodeNotification;
+
+    @XmlElement(name = "link-notification")
+    private LinkNotification linkNotification;
+
+
     public String getEventTime() {
         return eventTime;
     }
@@ -49,5 +56,21 @@ public class Notification {
 
     public void setLtpNotification(LtpNotification ltpNotification) {
         this.ltpNotification = ltpNotification;
+    }
+
+    public NodeNotification getNodeNotification() {
+        return nodeNotification;
+    }
+
+    public void setNodeNotification(NodeNotification nodeNotification) {
+        this.nodeNotification = nodeNotification;
+    }
+
+    public LinkNotification getLinkNotification() {
+        return linkNotification;
+    }
+
+    public void setLinkNotification(LinkNotification linkNotification) {
+        this.linkNotification = linkNotification;
     }
 }

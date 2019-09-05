@@ -119,7 +119,7 @@ public class CmnbUtil {
 
     public static Ne parserNeData(NeData neData){
         Ne ne=new Ne();
-        ne.setId(neData.getId());
+        ne.setId(neData.getUuid());
         ne.setName(neData.getName());
         ne.setType(neData.getType());
         ne.setUserLabel(neData.getUserLabel());
@@ -139,7 +139,7 @@ public class CmnbUtil {
 
     public static NeNode parserNeDataToNeNode(NeData neData){
         NeNode neNode=new NeNode();
-        neNode.setId(neData.getId());
+        neNode.setId(neData.getUuid());
         neNode.setName(neData.getName());
         neNode.setType(neData.getType());
         neNode.setUserLabel(neData.getUserLabel());
@@ -156,7 +156,7 @@ public class CmnbUtil {
 
     public static Ltp parserLtpData(LtpData ltpData){
         Ltp ltp=new Ltp();
-        ltp.setId(ltpData.getId());
+        ltp.setId(ltpData.getUuid());
         ltp.setUserLabel(ltpData.getUserlabel());
         ltp.setNeId(ltpData.getNeId());
         ltp.setName(ltpData.getName());
@@ -181,64 +181,6 @@ public class CmnbUtil {
         ltps.setLtp(ltpList);
         return ltps;
     }
-
-//
-//    public static TopoLink parserTopoLinkData(TopoLinkData topoLinkData){
-//        TopoLink topoLink=new TopoLink();
-//        topoLink.setRmUID(RmUidGenerator.getTopoLinkUID(topoLinkData.getId()));
-//        topoLink.setNativeName(topoLinkData.getNativeName());
-//        topoLink.setaEndNermUID(RmUidGenerator.getNeUID(topoLinkData.getaEndNeId()));
-//        topoLink.setzEndNermUID(RmUidGenerator.getNeUID(topoLinkData.getzEndNeId()));
-//        topoLink.setaEndPortrmUID(RmUidGenerator.getPortUID(topoLinkData.getaEndPortInfo()));
-//        topoLink.setzEndPortrmUID(RmUidGenerator.getPortUID(topoLinkData.getzEndPortInfo()));
-//        topoLink.setRate(topoLinkData.getRate());
-//        topoLink.setDirection(topoLinkData.getDirection());
-//        topoLink.setReality(topoLinkData.getReality());
-//        topoLink.setLayerRate(topoLinkData.getLayerRate());
-//        topoLink.setAdminStatus(topoLinkData.getAdminStatus());
-//        topoLink.setOperateStatus(topoLinkData.getOperateStatus());
-//        topoLink.setLatency(topoLinkData.getLatency());
-//        topoLink.setMaxReservableBandwidth(topoLinkData.getMaxReservableBandwidth());
-//        topoLink.setPhysicalBandwidth(topoLinkData.getPhysicalBandwidth());
-//        topoLink.setAvailableBandwidth(topoLinkData.getAvailableBandwidth());
-//        topoLink.setLinkLatency(topoLinkData.getLinkLatency());
-//        topoLink.setLeftPortMac(topoLinkData.getLeftPortMac());
-//        topoLink.setRightPortMac(topoLinkData.getRightPortMac());
-//        return topoLink;
-//    }
-//
-//    public static TopoLinkData parserTopoLink(TopoLink topoLink){
-//        TopoLinkData topoLinkData=new TopoLinkData();
-//        topoLinkData.setId(RmUidToId.getLinkIdByLinkUid(topoLink.getRmUID()));
-//        topoLinkData.setNativeName(topoLink.getNativeName());
-//        topoLinkData.setaEndNeId(RmUidToId.getNeIdByNeUid(topoLink.getaEndNermUID()));
-//        topoLinkData.setzEndNeId(RmUidToId.getNeIdByNeUid(topoLink.getzEndNermUID()));
-//        topoLinkData.setaEndPortInfo(RmUidToId.getPortInfoByPortUid(topoLink.getaEndPortrmUID()));
-//        topoLinkData.setzEndPortInfo(RmUidToId.getPortInfoByPortUid(topoLink.getzEndPortrmUID()));
-//        topoLinkData.setRate(topoLink.getRate());
-//        topoLinkData.setDirection(topoLink.getDirection());
-//        topoLinkData.setReality(topoLink.getReality());
-//        topoLinkData.setLayerRate(topoLink.getLayerRate());
-//        topoLinkData.setAdminStatus(topoLink.getAdminStatus());
-//        topoLinkData.setOperateStatus(topoLink.getOperateStatus());
-//        topoLinkData.setLatency(topoLink.getLatency());
-//        topoLinkData.setMaxReservableBandwidth(topoLink.getMaxReservableBandwidth());
-//        topoLinkData.setPhysicalBandwidth(topoLink.getPhysicalBandwidth());
-//        topoLinkData.setAvailableBandwidth(topoLink.getAvailableBandwidth());
-//        topoLinkData.setLinkLatency(topoLink.getLinkLatency());
-//        topoLinkData.setLeftPortMac(topoLink.getLeftPortMac());
-//        topoLinkData.setRightPortMac(topoLink.getRightPortMac());
-//        return topoLinkData;
-//
-//    }
-//
-//    public static LinkTeAttrCfgData parserLinkTeCfg(LinkTeAttrCfg linkTeAttrCfg){
-//        LinkTeAttrCfgData linkTeAttrCfgData=new LinkTeAttrCfgData();
-//        linkTeAttrCfgData.setLatency(linkTeAttrCfg.getLatency());
-//        linkTeAttrCfgData.setMaxReservableBandwidth(linkTeAttrCfg.getMaxReservableBandwidth());
-//        return linkTeAttrCfgData;
-//    }
-//
     public static Ncd getNcdInfo(){
         Ncd ncd=new Ncd();
         ncd.setId(getParameter("id"));
@@ -307,7 +249,7 @@ public class CmnbUtil {
 
     public static Topology parserTopologyData(TopologyData topologyData){
         Topology topology=new Topology();
-        topology.setId(topologyData.getId());
+        topology.setId(topologyData.getUuid());
         topology.setName(topologyData.getName());
         topology.setLayerRate(topologyData.getLayerRate());
         if (topologyData.getSubLayerRate()!=null){
@@ -318,7 +260,7 @@ public class CmnbUtil {
 
     public static Node parserNodeData(NodeData nodeData){
         Node node=new Node();
-        node.setId(nodeData.getId());
+        node.setId(nodeData.getUuid());
         node.setName(nodeData.getName());
         node.setUserLabel(nodeData.getUserLabel());
         node.setNodeType(nodeData.getNodeType());
@@ -331,7 +273,7 @@ public class CmnbUtil {
 
     public static ExtNode parserNodeDataToExtNode(NodeData nodeData){
         ExtNode extNode=new ExtNode();
-        extNode.setId(nodeData.getId());
+        extNode.setId(nodeData.getUuid());
         extNode.setName(nodeData.getName());
         extNode.setUserLabel(nodeData.getUserLabel());
         extNode.setNodeType(nodeData.getNodeType());
@@ -344,7 +286,7 @@ public class CmnbUtil {
 
     public static Link parserLinkData(LinkData linkData){
         Link link=new Link();
-        link.setId(linkData.getId());
+        link.setId(linkData.getUuid());
         link.setName(linkData.getName());
         link.setUserLabel(linkData.getUserLabel());
         link.setDirection(linkData.getDirection());
@@ -372,8 +314,94 @@ public class CmnbUtil {
 
     public static ExtLink parserLinkDataToExtLink(LinkData linkData){
         ExtLink extLink=new ExtLink();
+        extLink.setId(linkData.getUuid());
+        extLink.setName(linkData.getName());
+        extLink.setUserLabel(linkData.getUserLabel());
+        extLink.setDirection(linkData.getDirection());
+        extLink.setExtLinkType(linkData.getExtLinkType());
+        extLink.setAdminStatus(linkData.getAdminStatus());
+        extLink.setOperateStatus(linkData.getOperateStatus());
+        extLink.setLayerRate(linkData.getLayerRate());
+        extLink.setLeftLtpId(linkData.getLeftLtpId());
+        extLink.setLeftNodeId(linkData.getLeftNodeId());
+        extLink.setRightLtpId(linkData.getRightLtpId());
+        extLink.setRightNodeId(linkData.getRightNodeId());
 
+        LinkTeAttrCfg linkTeAttrCfg=new LinkTeAttrCfg();
+        linkTeAttrCfg.setLatency(linkData.getLatency());
+        linkTeAttrCfg.setMaxReservableBandwidth(linkData.getMaxReservableBandwidth());
+        extLink.setLinkTeAttrCfg(linkTeAttrCfg);
+
+        LinkTeAttrRun linkTeAttrRun=new LinkTeAttrRun();
+        linkTeAttrRun.setAvailableBandwidth(linkData.getAvailableBandwidth());
+        linkTeAttrRun.setLinkLatency(linkData.getLinkLatency());
+        linkTeAttrRun.setPhysicalBandwidth(linkData.getPhysicalBandwidth());
+        extLink.setLinkTeAttrRun(linkTeAttrRun);
+
+        extLink.setLeftLtpMac(linkData.getLeftLtpMac());
+        extLink.setRightLtpMac(linkData.getRightLtpMac());
         return extLink;
     }
+
+    public static LinkData parserExtLink(ExtLink extLink){
+        LinkData linkData=new LinkData();
+        linkData.setUuid(extLink.getId());
+        linkData.setName(extLink.getName());
+        linkData.setUserLabel(extLink.getUserLabel());
+        linkData.setDirection(extLink.getDirection());
+        linkData.setExtLinkType(extLink.getExtLinkType());
+        linkData.setAdminStatus(extLink.getAdminStatus());
+        linkData.setOperateStatus(extLink.getOperateStatus());
+        linkData.setLayerRate(extLink.getLayerRate());
+        linkData.setLeftLtpId(extLink.getLeftLtpId());
+        linkData.setLeftNodeId(extLink.getLeftNodeId());
+        linkData.setRightLtpId(extLink.getRightLtpId());
+        linkData.setRightNodeId(extLink.getRightNodeId());
+
+        linkData.setLatency(extLink.getLinkTeAttrCfg().getLatency());
+        linkData.setMaxReservableBandwidth(extLink.getLinkTeAttrCfg().getMaxReservableBandwidth());
+
+        linkData.setAvailableBandwidth(extLink.getLinkTeAttrRun().getAvailableBandwidth());
+        linkData.setLinkLatency(extLink.getLinkTeAttrRun().getLinkLatency());
+        linkData.setPhysicalBandwidth(extLink.getLinkTeAttrRun().getPhysicalBandwidth());
+
+        extLink.setLeftLtpMac(extLink.getLeftLtpMac());
+        extLink.setRightLtpMac(extLink.getRightLtpMac());
+        return linkData;
+    }
+
+    public static LinkData parserLink(Link link){
+        LinkData linkData=new LinkData();
+        linkData.setUuid(link.getId());
+        linkData.setName(link.getName());
+        linkData.setUserLabel(link.getUserLabel());
+        linkData.setDirection(link.getDirection());
+        linkData.setAdminStatus(link.getAdminStatus());
+        linkData.setOperateStatus(link.getOperateStatus());
+        linkData.setLayerRate(link.getLayerRate());
+        linkData.setLeftLtpId(link.getLeftLtpId());
+        linkData.setLeftNodeId(link.getLeftNodeId());
+        linkData.setRightLtpId(link.getRightLtpId());
+        linkData.setRightNodeId(link.getRightNodeId());
+
+        linkData.setLatency(link.getLinkTeAttrCfg().getLatency());
+        linkData.setMaxReservableBandwidth(link.getLinkTeAttrCfg().getMaxReservableBandwidth());
+
+        linkData.setAvailableBandwidth(link.getLinkTeAttrRun().getAvailableBandwidth());
+        linkData.setLinkLatency(link.getLinkTeAttrRun().getLinkLatency());
+        linkData.setPhysicalBandwidth(link.getLinkTeAttrRun().getPhysicalBandwidth());
+
+        return linkData;
+    }
+
+    public static LinkData parserLinkWithLinkTeAttrCfg(String linkId,LinkTeAttrCfg linkTeAttrCfg){
+        LinkData linkData=new LinkData();
+        linkData.setUuid(linkId);
+        linkData.setLatency(linkTeAttrCfg.getLatency());
+        linkData.setMaxReservableBandwidth(linkTeAttrCfg.getMaxReservableBandwidth());
+        return linkData;
+
+    }
+
 
 }

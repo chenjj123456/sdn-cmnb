@@ -6,18 +6,18 @@ import com.gwtt.ems.cmnb.model.south.EmsBaseData;
  * Created by chenjj on 2019/9/2
  */
 public class MeLocationData extends EmsBaseData {
-    private String neId;
+    private String neUuid;
 
     private String longitude;
 
     private String latitude;
 
-    public String getNeId() {
-        return neId;
+    public String getNeUuid() {
+        return neUuid;
     }
 
-    public void setNeId(String neId) {
-        this.neId = neId;
+    public void setNeUuid(String neUuid) {
+        this.neUuid = neUuid;
     }
 
     public String getLongitude() {

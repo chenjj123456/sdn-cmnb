@@ -4,9 +4,13 @@ import com.gwtt.ems.cmnb.model.north.event.EventInQueque;
 import com.gwtt.ems.cmnb.model.north.event.PushEventType;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
 import com.gwtt.ems.cmnb.model.north.resources.ne.NeNode;
+import com.gwtt.ems.cmnb.model.north.topology.Link;
+import com.gwtt.ems.cmnb.model.north.topology.Node;
 import com.gwtt.ems.cmnb.model.south.EmsBaseData;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
+import com.gwtt.ems.cmnb.model.south.topology.LinkData;
+import com.gwtt.ems.cmnb.model.south.topology.NodeData;
 import com.gwtt.ems.cmnb.northInterface.CmnbEventPush;
 import com.gwtt.ems.cmnb.util.CmnbUtil;
 
@@ -56,9 +60,16 @@ public class CmnbEventObserver implements CmnbEventListener {
                 Ltp ltp=CmnbUtil.parserLtpData((LtpData)emsBaseData);
                 eventInQueque.setPushEventData(ltp);
                 break;
-            case TopoLink:
+            case TopoNode:
+                eventInQueque.setPushEventType(PushEventType.TopoNode);
+                Node node=CmnbUtil.parserNodeData((NodeData)emsBaseData);
+                eventInQueque.setPushEventData(node);
                 break;
-
+            case TopoLink:
+                eventInQueque.setPushEventType(PushEventType.TopoLink);
+                Link link=CmnbUtil.parserLinkData((LinkData)emsBaseData);
+                eventInQueque.setPushEventData(link);
+                break;
 
         }
 

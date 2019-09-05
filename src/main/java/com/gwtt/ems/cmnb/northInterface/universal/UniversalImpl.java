@@ -5,6 +5,8 @@ import com.gwtt.ems.cmnb.model.north.notification.NotificationResponse;
 import com.gwtt.ems.cmnb.northInterface.fm.AlarmListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.resources.LtpListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.resources.NeListenerAdapter;
+import com.gwtt.ems.cmnb.northInterface.topology.LinkListenerAdapter;
+import com.gwtt.ems.cmnb.northInterface.topology.NodeListenerAdapter;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 import com.gwtt.ems.cmnb.websocket.listener.ListenerAdapter;
 import com.gwtt.ems.cmnb.websocket.listener.Notificator;
@@ -71,10 +73,10 @@ public class UniversalImpl implements UniversalAPI{
                 listener = new AlarmListenerAdapter();
                 break;
             case NODE:
-
+                listener = new NodeListenerAdapter();
                 break;
             case LINK:
-
+                listener = new LinkListenerAdapter();
                 break;
             case LTP:
                 listener = new LtpListenerAdapter();

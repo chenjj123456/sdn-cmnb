@@ -8,17 +8,17 @@ import com.gwtt.ems.cmnb.model.south.EmsBaseData;
  * Created by chenjj on 2019/9/4
  */
 public class TopologyData extends EmsBaseData {
-    private String id;
+    private String uuid;
     private String name;
     private LayerRate layerRate;
     private SubLayerRate subLayerRate;
 
-    public String getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {

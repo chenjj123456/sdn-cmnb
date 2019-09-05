@@ -13,6 +13,7 @@ public class CmnbEvent {
         Ncd,
         Ne,
         Ltp,
+        TopoNode,
         TopoLink,
 
     }

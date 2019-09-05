@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class NeData extends EmsBaseData {
     // uuid of ne
-    private String id;
+    private String uuid;
 
     //eg:192.168.10.63
     private String name;
@@ -41,12 +41,12 @@ public class NeData extends EmsBaseData {
 
     private List<LtpData> ltpDataList;
 
-    public String getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {

@@ -8,10 +8,7 @@ import com.gwtt.ems.cmnb.model.north.event.EventInQueque;
 import com.gwtt.ems.cmnb.model.north.event.Updates;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
 import com.gwtt.ems.cmnb.model.north.fault.Alarms;
-import com.gwtt.ems.cmnb.model.north.notification.AlarmsNotification;
-import com.gwtt.ems.cmnb.model.north.notification.LtpNotification;
-import com.gwtt.ems.cmnb.model.north.notification.NeNotification;
-import com.gwtt.ems.cmnb.model.north.notification.Notification;
+import com.gwtt.ems.cmnb.model.north.notification.*;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 import com.gwtt.ems.cmnb.util.CmnbUtil;
 import com.gwtt.ems.cmnb.util.Constants;
@@ -44,6 +41,16 @@ public class CmnbEventPush implements Runnable {
     private List<CmnbBaseData> updateLtpPushList;
     private List<String> deleteLtpPushList;
 
+    //TopoNode列表
+    private List<CmnbBaseData> addNodePushList;
+    private List<CmnbBaseData> updateNodePushList;
+    private List<String> deleteNodePushList;
+    
+    //TopoLink列表
+    private List<CmnbBaseData> addLinkPushList;
+    private List<CmnbBaseData> updateLinkPushList;
+    private List<String> deleteLinkPushList;
+
     private static CmnbEventPush instance;
     private EventInQueque event = null;
 
@@ -60,6 +67,14 @@ public class CmnbEventPush implements Runnable {
         addLtpPushList = Collections.synchronizedList(new ArrayList<>());
         updateLtpPushList = Collections.synchronizedList(new ArrayList<>());
         deleteLtpPushList = Collections.synchronizedList(new ArrayList<>());
+
+        addNodePushList = Collections.synchronizedList(new ArrayList<>());
+        updateNodePushList = Collections.synchronizedList(new ArrayList<>());
+        deleteNodePushList = Collections.synchronizedList(new ArrayList<>());
+
+        addLinkPushList = Collections.synchronizedList(new ArrayList<>());
+        updateLinkPushList = Collections.synchronizedList(new ArrayList<>());
+        deleteLinkPushList = Collections.synchronizedList(new ArrayList<>());
     }
 
     public static synchronized CmnbEventPush getInstance() {
@@ -161,6 +176,41 @@ public class CmnbEventPush implements Runnable {
                         deleteLtpPushList = Collections.synchronizedList(new ArrayList<>());
                     }
                     break;
+                case TopoNode:
+                    if (event.getEventUpdateType().equals(UpdateType.Add)) {
+                        addNodePushList.add(event.getPushEventData());
+                    } else if (event.getEventUpdateType().equals(UpdateType.Update)) {
+                        updateNodePushList.add(event.getPushEventData());
+                    } else {
+                        deleteNodePushList.add(event.getPushEventData().getId());
+                    }
+
+                    if (addNodePushList.size() == Constants.list_size
+                            || updateNodePushList.size() == Constants.list_size
+                            || deleteNodePushList.size() == Constants.list_size) {
+                        pushNodeData(addNodePushList, updateNodePushList, deleteNodePushList);
+                        addNodePushList = Collections.synchronizedList(new ArrayList<>());
+                        updateNodePushList = Collections.synchronizedList(new ArrayList<>());
+                        deleteNodePushList = Collections.synchronizedList(new ArrayList<>());
+                    }
+                    break; 
+                case TopoLink:
+                    if (event.getEventUpdateType().equals(UpdateType.Add)) {
+                        addLinkPushList.add(event.getPushEventData());
+                    } else if (event.getEventUpdateType().equals(UpdateType.Update)) {
+                        updateLinkPushList.add(event.getPushEventData());
+                    } else {
+                        deleteLinkPushList.add(event.getPushEventData().getId());
+                    }
+
+                    if (addLinkPushList.size() == Constants.list_size
+                            || updateLinkPushList.size() == Constants.list_size
+                            || deleteLinkPushList.size() == Constants.list_size) {
+                        pushLinkData(addLinkPushList, updateLinkPushList, deleteLinkPushList);
+                        addLinkPushList = Collections.synchronizedList(new ArrayList<>());
+                        updateLinkPushList = Collections.synchronizedList(new ArrayList<>());
+                        deleteLinkPushList = Collections.synchronizedList(new ArrayList<>());
+                    }   
             }
         }
         if (alarmPushList.size() > 0) {
@@ -180,10 +230,28 @@ public class CmnbEventPush implements Runnable {
         if (addLtpPushList.size() > 0
                 || updateLtpPushList.size() > 0
                 || deleteLtpPushList.size() > 0) {
-            pushNeData(addLtpPushList, updateLtpPushList, deleteLtpPushList);
+            pushLtpData(addLtpPushList, updateLtpPushList, deleteLtpPushList);
             addLtpPushList = Collections.synchronizedList(new ArrayList<>());
             updateLtpPushList = Collections.synchronizedList(new ArrayList<>());
             deleteLtpPushList = Collections.synchronizedList(new ArrayList<>());
+        }
+
+        if (addNodePushList.size() > 0
+                || updateNodePushList.size() > 0
+                || deleteNodePushList.size() > 0) {
+            pushNodeData(addNodePushList, updateNodePushList, deleteNodePushList);
+            addNodePushList = Collections.synchronizedList(new ArrayList<>());
+            updateNodePushList = Collections.synchronizedList(new ArrayList<>());
+            deleteNodePushList = Collections.synchronizedList(new ArrayList<>());
+        }
+
+        if (addLinkPushList.size() > 0
+                || updateLinkPushList.size() > 0
+                || deleteLinkPushList.size() > 0) {
+            pushLinkData(addLinkPushList, updateLinkPushList, deleteLinkPushList);
+            addLinkPushList = Collections.synchronizedList(new ArrayList<>());
+            updateLinkPushList = Collections.synchronizedList(new ArrayList<>());
+            deleteLinkPushList = Collections.synchronizedList(new ArrayList<>());
         }
     }
 
@@ -272,4 +340,66 @@ public class CmnbEventPush implements Runnable {
         }
     }
 
+
+    private void pushNodeData(List<CmnbBaseData> addNodePushList, List<CmnbBaseData> updateNodePushList, List<String> deleteNodePushList) {
+        try {
+            ListenerAdapter ltpListener = Notificator.getInstance().getListenerFor("node-notification");
+            if (ltpListener != null) {
+
+                Adds adds = new Adds();
+                Updates updates = new Updates();
+                Deletes deletes = new Deletes();
+                adds.setAddList(addNodePushList);
+                updates.setUpdateList(updateNodePushList);
+                deletes.setDeleteList(deleteNodePushList);
+
+                NodeNotification nodeNotification = new NodeNotification();
+                nodeNotification.setAdds(adds);
+                nodeNotification.setUpdates(updates);
+                nodeNotification.setDeletes(deletes);
+
+                Notification notification = new Notification();
+                notification.setEventTime(CmnbUtil.getDateAndTime(new Date()));
+                notification.setNodeNotification(nodeNotification);
+
+                String nodeXml = JaxbObjectAndXmlUtil.object2xml(NodeNotification.class, nodeNotification);
+                ltpListener.sendEvent(nodeXml);
+                CmnbLogger.CMNBOUT.log("nodeObserver:push:admin" + nodeXml, 3);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            CmnbLogger.CMNBERR.logException(e, 3);
+        }
+    }
+
+    private void pushLinkData(List<CmnbBaseData> addLinkPushList, List<CmnbBaseData> updateLinkPushList, List<String> deleteLinkPushList) {
+        try {
+            ListenerAdapter ltpListener = Notificator.getInstance().getListenerFor("link-notification");
+            if (ltpListener != null) {
+
+                Adds adds = new Adds();
+                Updates updates = new Updates();
+                Deletes deletes = new Deletes();
+                adds.setAddList(addLinkPushList);
+                updates.setUpdateList(updateLinkPushList);
+                deletes.setDeleteList(deleteLinkPushList);
+
+                LinkNotification linkNotification = new LinkNotification();
+                linkNotification.setAdds(adds);
+                linkNotification.setUpdates(updates);
+                linkNotification.setDeletes(deletes);
+
+                Notification notification = new Notification();
+                notification.setEventTime(CmnbUtil.getDateAndTime(new Date()));
+                notification.setLinkNotification(linkNotification);
+
+                String linkXml = JaxbObjectAndXmlUtil.object2xml(LinkNotification.class, linkNotification);
+                ltpListener.sendEvent(linkXml);
+                CmnbLogger.CMNBOUT.log("nodeObserver:push:admin" + linkXml, 3);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            CmnbLogger.CMNBERR.logException(e, 3);
+        }
+    }
 }

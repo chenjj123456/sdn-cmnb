@@ -11,7 +11,7 @@ import java.math.BigInteger;
  */
 public class LtpData extends EmsBaseData {
     // uuid of ltp
-    private String id;
+    private String uuid;
 
     //eg:port1/1
     private String userlabel;
@@ -36,12 +36,12 @@ public class LtpData extends EmsBaseData {
 
     private String macAddress;
 
-    public String getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getUserlabel() {

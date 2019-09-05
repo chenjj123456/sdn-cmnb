@@ -1,8 +1,7 @@
 package com.gwtt.ems.cmnb.southInterface.service;
 
-import com.gwtt.ems.cmnb.model.south.topology.LinkDataList;
-import com.gwtt.ems.cmnb.model.south.topology.NodeDataList;
-import com.gwtt.ems.cmnb.model.south.topology.TopologyDataList;
+import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
+import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventObserver;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 
@@ -136,6 +135,205 @@ public class CmnbServiceHelper {
                     result = api.getTopoLinksByTopoId(layerRate,topoId);
                     //查询到一个结果后退出
                     if (result != null && result.getLinkDataList().size() > 0) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public LinkDataList getTopoExtLinksByTopoId(String layerRate, String topoId){
+        LinkDataList result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getTopoExtLinksByTopoId(layerRate,topoId);
+                    //查询到一个结果后退出
+                    if (result != null && result.getLinkDataList().size() > 0) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+    public NodeData getTopoNodeByNodeId(String layerRate, String nodeId){
+        NodeData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getTopoNodeByNodeId(layerRate,nodeId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public NodeData getTopoExtNodeByNodeId(String layerRate, String nodeId){
+        NodeData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getTopoExtNodeByNodeId(layerRate,nodeId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public LinkData getTopoLinkByLinkId(String layerRate, String linkId){
+        LinkData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getTopoLinkByLinkId(layerRate,linkId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public LinkData getTopoExtLinkByLinkId(String layerRate, String linkId){
+        LinkData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getTopoExtLinkByLinkId(layerRate,linkId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public EmsConfigResult createExtLink(String layerRate,LinkData linkData){
+        EmsConfigResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.createExtLink(layerRate,linkData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public EmsConfigResult createLink(String layerRate,LinkData linkData){
+        EmsConfigResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.createLink(layerRate,linkData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public EmsConfigResult deleteExtLink(String layerRate,String linkId){
+        EmsConfigResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.deleteExtLink(layerRate,linkId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public EmsConfigResult deleteLink(String layerRate,String linkId){
+        EmsConfigResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.deleteLink(layerRate,linkId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public EmsConfigResult configLink(String layerRate,LinkData linkData){
+        EmsConfigResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.configLink(layerRate,linkData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
                         break;
                     }
                 } catch (Exception ex) {
