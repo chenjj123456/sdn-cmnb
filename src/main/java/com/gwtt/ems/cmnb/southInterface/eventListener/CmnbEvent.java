@@ -9,7 +9,7 @@ import com.gwtt.ems.cmnb.model.south.EmsBaseData;
  */
 public class CmnbEvent {
 
-    public static enum ObjType{
+    public enum ObjType{
         Ncd,
         Ne,
         Ltp,
