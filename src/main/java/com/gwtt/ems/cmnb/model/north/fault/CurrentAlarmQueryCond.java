@@ -3,10 +3,12 @@ package com.gwtt.ems.cmnb.model.north.fault;
 import com.gwtt.ems.cmnb.model.north.CmnbBaseData;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by chenjj on 2019/8/29
  */
+@XmlRootElement(name = "input",namespace="urn:chinamobile:fm")
 public class CurrentAlarmQueryCond extends CmnbBaseData {
 
     @XmlElement(name = "perceived-severity")

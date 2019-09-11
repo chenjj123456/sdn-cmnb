@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by chenjj on 2019/9/1
  */
-@XmlRootElement(name = "ltps", namespace="urn:chinamobile:resource")
+@XmlRootElement(name = "ltps")
 public class Ltps {
     private List<Ltp> ltp;
 

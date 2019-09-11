@@ -10,19 +10,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Notification {
     private String eventTime;
 
-    @XmlElement(name = "alarms-notification")
+
     private AlarmsNotification alarmsNotification;
 
-    @XmlElement(name = "ne-notification")
     private NeNotification neNotification;
 
-    @XmlElement(name = "ltp-notification")
     private LtpNotification ltpNotification;
 
-    @XmlElement(name = "node-notification")
     private NodeNotification nodeNotification;
 
-    @XmlElement(name = "link-notification")
     private LinkNotification linkNotification;
 
 
@@ -38,6 +34,7 @@ public class Notification {
         return alarmsNotification;
     }
 
+    @XmlElement(name = "alarms-notification")
     public void setAlarmsNotification(AlarmsNotification alarmsNotification) {
         this.alarmsNotification = alarmsNotification;
     }
@@ -46,6 +43,7 @@ public class Notification {
         return neNotification;
     }
 
+    @XmlElement(name = "ne-notification")
     public void setNeNotification(NeNotification neNotification) {
         this.neNotification = neNotification;
     }
@@ -54,6 +52,7 @@ public class Notification {
         return ltpNotification;
     }
 
+    @XmlElement(name = "ltp-notification")
     public void setLtpNotification(LtpNotification ltpNotification) {
         this.ltpNotification = ltpNotification;
     }
@@ -62,6 +61,7 @@ public class Notification {
         return nodeNotification;
     }
 
+    @XmlElement(name = "node-notification")
     public void setNodeNotification(NodeNotification nodeNotification) {
         this.nodeNotification = nodeNotification;
     }
@@ -70,6 +70,7 @@ public class Notification {
         return linkNotification;
     }
 
+    @XmlElement(name = "link-notification")
     public void setLinkNotification(LinkNotification linkNotification) {
         this.linkNotification = linkNotification;
     }

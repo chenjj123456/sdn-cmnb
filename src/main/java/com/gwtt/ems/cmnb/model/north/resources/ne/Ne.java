@@ -3,13 +3,17 @@ package com.gwtt.ems.cmnb.model.north.resources.ne;
 import com.gwtt.ems.cmnb.model.common.AdminStatus;
 import com.gwtt.ems.cmnb.model.common.OperateStatus;
 import com.gwtt.ems.cmnb.model.north.CmnbBaseData;
-import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
+import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Created by chenjj on 2019/9/1
  */
+@XmlRootElement(name = "ne")
 public class Ne extends CmnbBaseData {
     private String name;
 
@@ -44,7 +48,9 @@ public class Ne extends CmnbBaseData {
     @XmlElement(name = "vendor-name")
     private String vendorName;
 
-    private Ltps ltps;
+    @XmlElementWrapper(name = "ltps")
+    @XmlElement(name = "ltp")
+    private List<Ltp> ltp;
 
     public String getName() {
         return name;
@@ -134,11 +140,11 @@ public class Ne extends CmnbBaseData {
         this.vendorName = vendorName;
     }
 
-    public Ltps getLtps() {
-        return ltps;
+    public List<Ltp> getLtp() {
+        return ltp;
     }
 
-    public void setLtps(Ltps ltps) {
-        this.ltps = ltps;
+    public void setLtp(List<Ltp> ltp) {
+        this.ltp = ltp;
     }
 }

@@ -2,7 +2,6 @@ package com.gwtt.ems.cmnb.northInterface.fm;
 
 import com.gwtt.ems.cmnb.main.CmnbMain;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
-import com.gwtt.ems.cmnb.model.north.fault.Alarms;
 import com.gwtt.ems.cmnb.model.north.fault.CurrentAlarmQueryCond;
 import com.gwtt.ems.cmnb.model.north.fault.QueryAlarmsResponse;
 import com.gwtt.ems.cmnb.northInterface.RestError.DealRestConfError;
@@ -36,7 +35,10 @@ public class AlarmNorthImpl implements AlarmNorthAPI {
 
         //查找平台告警
         Alarm alarmCond = new Alarm();
-        alarmCond.setId(Integer.valueOf(request.getId()));
+        if(request.getId()!=null){
+            alarmCond.setId(Integer.valueOf(request.getId()));
+        }
+
         alarmCond.setSeverity(request.getPerceivedSeverity());
         alarmCond.setSource(request.getDetailAlarmSource());
 //        alarmCond.setType(request.getAlarmType());
@@ -55,10 +57,29 @@ public class AlarmNorthImpl implements AlarmNorthAPI {
             return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
         }
         List<AlarmList> alarmList = new ArrayList<>();
-        Alarms alarms=new Alarms();
         QueryAlarmsResponse response=new QueryAlarmsResponse();
         try {
             Vector vector = CmnbMain.alarmApi.getAlarms(alarmCond);
+            //测试使用
+//            Vector vector =new Vector();
+//            Alarm emsAlarm=new Alarm();
+//            Date date=new Date();
+//            emsAlarm.setCreateTime(date.getTime());
+//            emsAlarm.setSource("ne");
+//            emsAlarm.setPreviousSeverity(2);
+//            emsAlarm.setMessage("temperature is high");
+//            emsAlarm.setId(2);
+//
+//            Alarm emsAlarm1=new Alarm();
+//            emsAlarm1.setCreateTime(date.getTime());
+//            emsAlarm1.setSource("ltp");
+//            emsAlarm1.setPreviousSeverity(2);
+//            emsAlarm1.setMessage("temperature is high");
+//            emsAlarm1.setId(3);
+//            vector.add(emsAlarm);
+//            vector.add(emsAlarm1);
+
+
             if (vector.size() > 0) {
                 //如果没有时间限制，则全部输出
                 if (beginTime==0L&&endTime==0L) {
@@ -100,9 +121,8 @@ public class AlarmNorthImpl implements AlarmNorthAPI {
                 }
             }
             if (alarmList.size()>0){
-                alarms.setAlarmList(alarmList);
-                response.setAlarms(alarms);
-                LOG.info("queryAlarms:{}", alarms.toString());
+                response.setAlarmList(alarmList);
+                LOG.info("queryAlarms:{}", alarmList.toString());
                 return Response.status(Response.Status.OK).entity(response).build();
             }else {
                 LOG.info("queryAlarms:{}", "no such alarms");

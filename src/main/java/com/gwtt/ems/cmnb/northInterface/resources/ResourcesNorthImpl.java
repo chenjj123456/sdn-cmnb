@@ -1,12 +1,12 @@
 package com.gwtt.ems.cmnb.northInterface.resources;
 
+import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
 import com.gwtt.ems.cmnb.model.north.resources.ne.AddMeLocationRequest;
 import com.gwtt.ems.cmnb.model.north.resources.ne.AddMeLocationResponse;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.NcdList;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
-import com.gwtt.ems.cmnb.model.north.resources.ne.NeList;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Nes;
 import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
 import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
@@ -55,10 +55,8 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
                         neList.add(ne);
                     }
 
-                    NeList neLists = new NeList();
-                    neLists.setNe(neList);
                     Nes nes = new Nes();
-                    nes.setNeList(neLists);
+                    nes.setNe(neList);
                     LOG.info("getNesByNcdId:{}", neList.toString());
                     return Response.status(Response.Status.OK).entity(nes).build();
                 } else {
@@ -116,7 +114,8 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
     @Override
     public Response getNcdById(String ncdId) {
         LOG.info("getNcdById:{}", ncdId);
-        if (ncdId == null || !ncdId.equals(CmnbUtil.getParameter("id"))) {
+        //|| !ncdId.equals(CmnbUtil.getParameter("id"))
+        if (ncdId == null ) {
             RestConfErrorList errorList = DealRestConfError.badRequest();
             return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
         }
@@ -138,12 +137,10 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
     public Response getNcds() {
         try {
             NcdList ncdList = new NcdList();
-            List<Ncd> ncds = new ArrayList<>();
 
             Ncd ncd = CmnbUtil.getNcdInfo();
-            ncds.add(ncd);
-            ncdList.setNcd(ncds);
-            LOG.info("getNcds:{}", ncds.toString());
+            ncdList.setNcd(ncd);
+            LOG.info("getNcds:{}", ncd.toString());
             return Response.status(Response.Status.OK).entity(ncdList).build();
 
         } catch (Exception e) {

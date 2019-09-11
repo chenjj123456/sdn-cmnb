@@ -1,21 +1,21 @@
 package com.gwtt.ems.cmnb.model.north.resources.ncd;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
+
 
 /**
  * Created by chenjj on 2019/9/1
  */
 
-@XmlRootElement(name = "ncd-list", namespace="urn:chinamobile:resource")
+@XmlRootElement(name = "ncd-list")
 public class NcdList {
-    private List<Ncd> ncd;
+private Ncd ncd;
 
-    public List<Ncd> getNcd() {
+    public Ncd getNcd() {
         return ncd;
     }
 
-    public void setNcd(List<Ncd> ncd) {
+    public void setNcd(Ncd ncd) {
         this.ncd = ncd;
     }
 }

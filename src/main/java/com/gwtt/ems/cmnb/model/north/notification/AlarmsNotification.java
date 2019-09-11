@@ -1,7 +1,11 @@
 package com.gwtt.ems.cmnb.model.north.notification;
 
 
-import com.gwtt.ems.cmnb.model.north.fault.Alarms;
+import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import java.util.List;
 
 /**
  * Created by chenjj on 2019/8/2
@@ -9,13 +13,15 @@ import com.gwtt.ems.cmnb.model.north.fault.Alarms;
 
 public class AlarmsNotification{
 
-    private Alarms alarms;
+    private List<AlarmList> alarmList;
 
-    public Alarms getAlarms() {
-        return alarms;
+    @XmlElementWrapper(name = "alarms")
+    @XmlElement(name = "alarm-list")
+    public List<AlarmList> getAlarmList() {
+        return alarmList;
     }
 
-    public void setAlarms(Alarms alarms) {
-        this.alarms = alarms;
+    public void setAlarmList(List<AlarmList> alarmList) {
+        this.alarmList = alarmList;
     }
 }

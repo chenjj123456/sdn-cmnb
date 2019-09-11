@@ -7,7 +7,6 @@ import com.gwtt.ems.cmnb.model.north.event.Deletes;
 import com.gwtt.ems.cmnb.model.north.event.EventInQueque;
 import com.gwtt.ems.cmnb.model.north.event.Updates;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
-import com.gwtt.ems.cmnb.model.north.fault.Alarms;
 import com.gwtt.ems.cmnb.model.north.notification.*;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 import com.gwtt.ems.cmnb.util.CmnbUtil;
@@ -259,10 +258,8 @@ public class CmnbEventPush implements Runnable {
         try {
             ListenerAdapter alarmListener = Notificator.getInstance().getListenerFor("alarms-notification");
             if (alarmListener != null) {
-                Alarms alarms = new Alarms();
-                alarms.setAlarmList(alarmLists);
                 AlarmsNotification alarmsNotification = new AlarmsNotification();
-                alarmsNotification.setAlarms(alarms);
+                alarmsNotification.setAlarmList(alarmLists);
 
                 Notification notification = new Notification();
                 notification.setEventTime(CmnbUtil.getDateAndTime(new Date()));

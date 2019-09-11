@@ -132,7 +132,7 @@ public class CmnbUtil {
         ne.setLatency(neData.getLatency());
         ne.setVendorName(neData.getVendorName());
         if (neData.getLtpDataList().size()>0){
-            ne.setLtps(parserLtpDatas(neData.getLtpDataList()));
+            ne.setLtp(parserLtpDatas(neData.getLtpDataList()).getLtp());
         }
         return ne;
     }
@@ -183,24 +183,26 @@ public class CmnbUtil {
     }
     public static Ncd getNcdInfo(){
         Ncd ncd=new Ncd();
-        ncd.setId(getParameter("id"));
+//        ncd.setId(getParameter("id"));
+        ncd.setId("0d1cfe72-015e-1000-0000-1c3947d8427a");
         ncd.setUserLabel(getHost().getHostAddress());
         ncd.setParentNcdId(getParameter("parentNcdId"));
         ncd.setActiveControllerIp(getHost().getHostAddress());
         ncd.setActiveControllerLocation(getParameter("activeControllerLocation"));
         ncd.setVendorName(getParameter("vendorName"));
-        ncd.setPort(Long.parseLong(getParameter("port")));
-        if (getParameter("adminStatus").equalsIgnoreCase("adminDown")){
-            ncd.setAdminStatus(AdminStatus.AdminDown);
-        }else {
+                ncd.setPort(6653L);
+//        ncd.setPort(Long.parseLong(getParameter("port")));
+//        if (getParameter("adminStatus").equalsIgnoreCase("adminDown")){
+//            ncd.setAdminStatus(AdminStatus.AdminDown);
+//        }else {
             ncd.setAdminStatus(AdminStatus.AdminUp);
-        }
-
-        if (getParameter("operateStatus").equalsIgnoreCase("operateDown")){
-            ncd.setOperateStatus(OperateStatus.OperateDown);
-        }else {
+//        }
+//
+//        if (getParameter("operateStatus").equalsIgnoreCase("operateDown")){
+//            ncd.setOperateStatus(OperateStatus.OperateDown);
+//        }else {
             ncd.setOperateStatus(OperateStatus.OperateUp);
-        }
+//        }
         return ncd;
     }
 

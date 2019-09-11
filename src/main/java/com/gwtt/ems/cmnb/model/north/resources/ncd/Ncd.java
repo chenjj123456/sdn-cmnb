@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by chenjj on 2019/7/24
  */
-@XmlRootElement(name = "ncd", namespace="urn:chinamobile:resource")
+@XmlRootElement(name = "ncd")
 public class Ncd extends CmnbBaseData {
 
     /**
