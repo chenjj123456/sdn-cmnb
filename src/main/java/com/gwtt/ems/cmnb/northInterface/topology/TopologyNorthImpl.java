@@ -1,8 +1,8 @@
 package com.gwtt.ems.cmnb.northInterface.topology;
 
-import com.gwtt.ems.cmnb.model.common.ConfigResult;
+import com.gwtt.ems.cmnb.model.common.ConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.north.topology.*;
-import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
+import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.northInterface.RestError.DealRestConfError;
 import com.gwtt.ems.cmnb.northInterface.RestError.RestConfErrorList;
@@ -512,14 +512,14 @@ public class TopologyNorthImpl implements TopoLogyNorthAPI {
         try {
 
             LinkData linkData = CmnbUtil.parserExtLink(extLink);
-            EmsConfigResult result = CmnbServiceHelper.getInstance().createExtLink(Constants.TOPOLOGY_ID_PHY,linkData);
+            EmsConfigOrQueryResult result = CmnbServiceHelper.getInstance().createExtLink(Constants.TOPOLOGY_ID_PHY,linkData);
             //操作异常，Ems未返回错误
             if (result == null) {
                 RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
             } else {
                 //操作正常，返回配置结果
-                if (result.getResult().equals(ConfigResult.Success)) {
+                if (result.getResult().equals(ConfigOrQueryResult.Success)) {
                     LOG.info("createExtLink:{}", "success");
                     return Response.status(Response.Status.OK).entity("success").build();
                 } else {
@@ -545,14 +545,14 @@ public class TopologyNorthImpl implements TopoLogyNorthAPI {
         }
         try {
 
-            EmsConfigResult result = CmnbServiceHelper.getInstance().deleteExtLink(Constants.TOPOLOGY_ID_PHY,linkId);
+            EmsConfigOrQueryResult result = CmnbServiceHelper.getInstance().deleteExtLink(Constants.TOPOLOGY_ID_PHY,linkId);
             //操作异常，Ems未返回错误
             if (result == null) {
                 RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
             } else {
                 //操作正常，返回配置结果
-                if (result.getResult().equals(ConfigResult.Success)) {
+                if (result.getResult().equals(ConfigOrQueryResult.Success)) {
                     LOG.info("deleteExtLink:{}", "success");
                     return Response.status(Response.Status.OK).entity("success").build();
                 } else {
@@ -579,14 +579,14 @@ public class TopologyNorthImpl implements TopoLogyNorthAPI {
         try {
 
             LinkData linkData = CmnbUtil.parserLinkWithLinkTeAttrCfg(linkId,linkTeAttrCfg);
-            EmsConfigResult result = CmnbServiceHelper.getInstance().configLink(Constants.TOPOLOGY_ID_PHY,linkData);
+            EmsConfigOrQueryResult result = CmnbServiceHelper.getInstance().configLink(Constants.TOPOLOGY_ID_PHY,linkData);
             //操作异常，Ems未返回错误
             if (result == null) {
                 RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
             } else {
                 //操作正常，返回配置结果
-                if (result.getResult().equals(ConfigResult.Success)) {
+                if (result.getResult().equals(ConfigOrQueryResult.Success)) {
                     LOG.info("configLink:{}", "success");
                     return Response.status(Response.Status.OK).entity("success").build();
                 } else {
@@ -613,14 +613,14 @@ public class TopologyNorthImpl implements TopoLogyNorthAPI {
         try {
 
             LinkData linkData = CmnbUtil.parserLink(link);
-            EmsConfigResult result = CmnbServiceHelper.getInstance().createLink(Constants.TOPOLOGY_ID_PHY,linkData);
+            EmsConfigOrQueryResult result = CmnbServiceHelper.getInstance().createLink(Constants.TOPOLOGY_ID_PHY,linkData);
             //操作异常，Ems未返回错误
             if (result == null) {
                 RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
             } else {
                 //操作正常，返回配置结果
-                if (result.getResult().equals(ConfigResult.Success)) {
+                if (result.getResult().equals(ConfigOrQueryResult.Success)) {
                     LOG.info("createLink:{}", "success");
                     return Response.status(Response.Status.OK).entity("success").build();
                 } else {
@@ -646,14 +646,14 @@ public class TopologyNorthImpl implements TopoLogyNorthAPI {
         }
         try {
 
-            EmsConfigResult result = CmnbServiceHelper.getInstance().deleteLink(Constants.TOPOLOGY_ID_PHY,linkId);
+            EmsConfigOrQueryResult result = CmnbServiceHelper.getInstance().deleteLink(Constants.TOPOLOGY_ID_PHY,linkId);
             //操作异常，Ems未返回错误
             if (result == null) {
                 RestConfErrorList errorList = DealRestConfError.serverError();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
             } else {
                 //操作正常，返回配置结果
-                if (result.getResult().equals(ConfigResult.Success)) {
+                if (result.getResult().equals(ConfigOrQueryResult.Success)) {
                     LOG.info("deleteLink:{}", "success");
                     return Response.status(Response.Status.OK).entity("success").build();
                 } else {

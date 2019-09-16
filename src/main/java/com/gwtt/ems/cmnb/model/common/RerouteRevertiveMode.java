@@ -3,39 +3,32 @@ package com.gwtt.ems.cmnb.model.common;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by chenjj on 2019/9/4
+ * Created by chenjj on 2019/9/16
  */
-public enum ExtLinkType {
+public enum RerouteRevertiveMode {
     /**
-     * nni-nni
+     * no revertive.
      *
      */
-    @XmlElement(name = "nni")
-    Nni(1, "nni"),
+    @XmlElement(name = "no-revertive")
+    NoRevertive(0, "no-revertive"),
 
     /**
-     * uni-uni
+     * revertive.
      *
      */
-    @XmlElement(name = "uni")
-    Uni(2, "uni"),
-
-    /**
-     * nni-nni and uni-uni
-     *
-     */
-    @XmlElement(name = "nni-and-uni")
-    NniAndUni(3, "nni-and-uni")
+    @XmlElement(name = "revertive")
+    Revertive(1, "revertive")
     ;
 
 
     java.lang.String name;
     int value;
-    private static final java.util.Map<java.lang.Integer, ExtLinkType> VALUE_MAP;
+    private static final java.util.Map<java.lang.Integer, RerouteRevertiveMode> VALUE_MAP;
 
     static {
-        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, ExtLinkType> b = com.google.common.collect.ImmutableMap.builder();
-        for (ExtLinkType enumItem : ExtLinkType.values())
+        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, RerouteRevertiveMode> b = com.google.common.collect.ImmutableMap.builder();
+        for (RerouteRevertiveMode enumItem : RerouteRevertiveMode.values())
         {
             b.put(enumItem.value, enumItem);
         }
@@ -43,7 +36,7 @@ public enum ExtLinkType {
         VALUE_MAP = b.build();
     }
 
-    private ExtLinkType(int value, java.lang.String name) {
+    private RerouteRevertiveMode(int value, java.lang.String name) {
         this.value = value;
         this.name = name;
     }
@@ -66,9 +59,9 @@ public enum ExtLinkType {
 
     /**
      * @param valueArg
-     * @return corresponding ExtLinkType item
+     * @return corresponding RerouteRevertiveMode item
      */
-    public static ExtLinkType forValue(int valueArg) {
+    public static RerouteRevertiveMode forValue(int valueArg) {
         return VALUE_MAP.get(valueArg);
     }
 }

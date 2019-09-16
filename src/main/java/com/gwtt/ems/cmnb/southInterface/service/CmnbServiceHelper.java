@@ -1,6 +1,6 @@
 package com.gwtt.ems.cmnb.southInterface.service;
 
-import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
+import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventObserver;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
@@ -245,8 +245,8 @@ public class CmnbServiceHelper {
         return result;
     }
 
-    public EmsConfigResult createExtLink(String layerRate,LinkData linkData){
-        EmsConfigResult result = null;
+    public EmsConfigOrQueryResult createExtLink(String layerRate,LinkData linkData){
+        EmsConfigOrQueryResult result = null;
 
         if (cmnbServiceApis != null) {
             for (CmnbServiceAPI api : cmnbServiceApis) {
@@ -265,8 +265,8 @@ public class CmnbServiceHelper {
         return result;
     }
 
-    public EmsConfigResult createLink(String layerRate,LinkData linkData){
-        EmsConfigResult result = null;
+    public EmsConfigOrQueryResult createLink(String layerRate,LinkData linkData){
+        EmsConfigOrQueryResult result = null;
 
         if (cmnbServiceApis != null) {
             for (CmnbServiceAPI api : cmnbServiceApis) {
@@ -285,8 +285,8 @@ public class CmnbServiceHelper {
         return result;
     }
 
-    public EmsConfigResult deleteExtLink(String layerRate,String linkId){
-        EmsConfigResult result = null;
+    public EmsConfigOrQueryResult deleteExtLink(String layerRate,String linkId){
+        EmsConfigOrQueryResult result = null;
 
         if (cmnbServiceApis != null) {
             for (CmnbServiceAPI api : cmnbServiceApis) {
@@ -305,8 +305,8 @@ public class CmnbServiceHelper {
         return result;
     }
 
-    public EmsConfigResult deleteLink(String layerRate,String linkId){
-        EmsConfigResult result = null;
+    public EmsConfigOrQueryResult deleteLink(String layerRate,String linkId){
+        EmsConfigOrQueryResult result = null;
 
         if (cmnbServiceApis != null) {
             for (CmnbServiceAPI api : cmnbServiceApis) {
@@ -325,8 +325,8 @@ public class CmnbServiceHelper {
         return result;
     }
 
-    public EmsConfigResult configLink(String layerRate,LinkData linkData){
-        EmsConfigResult result = null;
+    public EmsConfigOrQueryResult configLink(String layerRate,LinkData linkData){
+        EmsConfigOrQueryResult result = null;
 
         if (cmnbServiceApis != null) {
             for (CmnbServiceAPI api : cmnbServiceApis) {

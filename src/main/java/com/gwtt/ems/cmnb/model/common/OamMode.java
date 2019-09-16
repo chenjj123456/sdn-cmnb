@@ -3,39 +3,39 @@ package com.gwtt.ems.cmnb.model.common;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by chenjj on 2019/9/4
+ * Created by chenjj on 2019/9/16
  */
-public enum ExtLinkType {
+public enum OamMode {
     /**
-     * nni-nni
+     * disable.
      *
      */
-    @XmlElement(name = "nni")
-    Nni(1, "nni"),
+    @XmlElement(name = "disable")
+    Disable(0, "disable"),
 
     /**
-     * uni-uni
+     * preactive.
      *
      */
-    @XmlElement(name = "uni")
-    Uni(2, "uni"),
+    @XmlElement(name = "preactive")
+    Preactive(1, "preactive"),
 
     /**
-     * nni-nni and uni-uni
+     * on-demand.
      *
      */
-    @XmlElement(name = "nni-and-uni")
-    NniAndUni(3, "nni-and-uni")
+    @XmlElement(name = "on-demand")
+    OnDemand(2, "on-demand")
     ;
 
 
     java.lang.String name;
     int value;
-    private static final java.util.Map<java.lang.Integer, ExtLinkType> VALUE_MAP;
+    private static final java.util.Map<java.lang.Integer, OamMode> VALUE_MAP;
 
     static {
-        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, ExtLinkType> b = com.google.common.collect.ImmutableMap.builder();
-        for (ExtLinkType enumItem : ExtLinkType.values())
+        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, OamMode> b = com.google.common.collect.ImmutableMap.builder();
+        for (OamMode enumItem : OamMode.values())
         {
             b.put(enumItem.value, enumItem);
         }
@@ -43,7 +43,7 @@ public enum ExtLinkType {
         VALUE_MAP = b.build();
     }
 
-    private ExtLinkType(int value, java.lang.String name) {
+    private OamMode(int value, java.lang.String name) {
         this.value = value;
         this.name = name;
     }
@@ -66,9 +66,9 @@ public enum ExtLinkType {
 
     /**
      * @param valueArg
-     * @return corresponding ExtLinkType item
+     * @return corresponding OamMode item
      */
-    public static ExtLinkType forValue(int valueArg) {
+    public static OamMode forValue(int valueArg) {
         return VALUE_MAP.get(valueArg);
     }
 }

@@ -10,11 +10,13 @@ import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
 import com.gwtt.ems.cmnb.model.north.resources.ne.NeNode;
 import com.gwtt.ems.cmnb.model.north.topology.*;
+import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.ems.cmnb.model.south.topology.LinkData;
 import com.gwtt.ems.cmnb.model.south.topology.NodeData;
 import com.gwtt.ems.cmnb.model.south.topology.TopologyData;
+import com.gwtt.ems.cmnb.southInterface.ems.CmnbEmsHelper;
 import com.gwtt.nms.faultd.Alarm;
 import com.gwtt.nms.util.NmsUtil;
 
@@ -183,26 +185,27 @@ public class CmnbUtil {
     }
     public static Ncd getNcdInfo(){
         Ncd ncd=new Ncd();
-//        ncd.setId(getParameter("id"));
-        ncd.setId("0d1cfe72-015e-1000-0000-1c3947d8427a");
+        ncd.setId(getParameter("id"));
+        //用于测试
+//        ncd.setId("0d1cfe72-015e-1000-0000-1c3947d8427a");
         ncd.setUserLabel(getHost().getHostAddress());
         ncd.setParentNcdId(getParameter("parentNcdId"));
         ncd.setActiveControllerIp(getHost().getHostAddress());
         ncd.setActiveControllerLocation(getParameter("activeControllerLocation"));
         ncd.setVendorName(getParameter("vendorName"));
-                ncd.setPort(6653L);
-//        ncd.setPort(Long.parseLong(getParameter("port")));
-//        if (getParameter("adminStatus").equalsIgnoreCase("adminDown")){
-//            ncd.setAdminStatus(AdminStatus.AdminDown);
-//        }else {
+//                ncd.setPort(6653L);
+        ncd.setPort(Long.parseLong(getParameter("port")));
+        if (getParameter("adminStatus").equalsIgnoreCase("adminDown")){
+            ncd.setAdminStatus(AdminStatus.AdminDown);
+        }else {
             ncd.setAdminStatus(AdminStatus.AdminUp);
-//        }
-//
-//        if (getParameter("operateStatus").equalsIgnoreCase("operateDown")){
-//            ncd.setOperateStatus(OperateStatus.OperateDown);
-//        }else {
+        }
+
+        if (getParameter("operateStatus").equalsIgnoreCase("operateDown")){
+            ncd.setOperateStatus(OperateStatus.OperateDown);
+        }else {
             ncd.setOperateStatus(OperateStatus.OperateUp);
-//        }
+        }
         return ncd;
     }
 
@@ -403,6 +406,24 @@ public class CmnbUtil {
         linkData.setMaxReservableBandwidth(linkTeAttrCfg.getMaxReservableBandwidth());
         return linkData;
 
+    }
+
+    public static String getNodeUuidByNodeId(String nodeId){
+        String neUuid=null;
+        try {
+            EmsConfigOrQueryResult result=CmnbEmsHelper.getInstance().getNodeUuidByNodeId(nodeId);
+            switch (result.getResult()){
+                case Success:
+                    neUuid=result.getValue().toString();
+                    break;
+                case Fail:
+                    break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return neUuid;
     }
 
 

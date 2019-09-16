@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.common;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Created by chenjj on 2019/9/4
  */
@@ -7,16 +9,19 @@ public enum SubLayerRate {
     /**
      * lsp
      */
+    @XmlElement(name = "lsp")
     Lsp(201, "lsp"),
 
     /**
      * pw
      */
+    @XmlElement(name = "pw")
     Pw(202, "pw"),
 
     /**
      * ethernet
      */
+    @XmlElement(name = "ethernet")
     Ethernet(203, "ethernet");
 
 

@@ -3,39 +3,32 @@ package com.gwtt.ems.cmnb.model.common;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by chenjj on 2019/9/4
+ * Created by chenjj on 2019/9/16
  */
-public enum ExtLinkType {
+public enum SwitchMode {
     /**
-     * nni-nni
+     * Single-ended switch.
      *
      */
-    @XmlElement(name = "nni")
-    Nni(1, "nni"),
+    @XmlElement(name = "single-ended-switch")
+    SingleEndedSwitch(0, "single-ended-switch"),
 
     /**
-     * uni-uni
+     * double end switch.
      *
      */
-    @XmlElement(name = "uni")
-    Uni(2, "uni"),
-
-    /**
-     * nni-nni and uni-uni
-     *
-     */
-    @XmlElement(name = "nni-and-uni")
-    NniAndUni(3, "nni-and-uni")
+    @XmlElement(name = "double-end-switch")
+    DoubleEndSwitch(1, "double-end-switch")
     ;
 
 
     java.lang.String name;
     int value;
-    private static final java.util.Map<java.lang.Integer, ExtLinkType> VALUE_MAP;
+    private static final java.util.Map<java.lang.Integer, SwitchMode> VALUE_MAP;
 
     static {
-        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, ExtLinkType> b = com.google.common.collect.ImmutableMap.builder();
-        for (ExtLinkType enumItem : ExtLinkType.values())
+        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, SwitchMode> b = com.google.common.collect.ImmutableMap.builder();
+        for (SwitchMode enumItem : SwitchMode.values())
         {
             b.put(enumItem.value, enumItem);
         }
@@ -43,7 +36,7 @@ public enum ExtLinkType {
         VALUE_MAP = b.build();
     }
 
-    private ExtLinkType(int value, java.lang.String name) {
+    private SwitchMode(int value, java.lang.String name) {
         this.value = value;
         this.name = name;
     }
@@ -66,9 +59,9 @@ public enum ExtLinkType {
 
     /**
      * @param valueArg
-     * @return corresponding ExtLinkType item
+     * @return corresponding SwitchMode item
      */
-    public static ExtLinkType forValue(int valueArg) {
+    public static SwitchMode forValue(int valueArg) {
         return VALUE_MAP.get(valueArg);
     }
 }

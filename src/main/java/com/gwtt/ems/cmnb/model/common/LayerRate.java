@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.common;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Created by chenjj on 2019/9/4
  */
@@ -7,21 +9,25 @@ public enum LayerRate {
     /**
      * optical
      */
+    @XmlElement(name = "optical")
     Optical(0, "optical"),
 
     /**
      * physical
      */
+    @XmlElement(name = "physical")
     Physical(1, "physical"),
 
     /**
      * datalink
      */
+    @XmlElement(name = "datalink")
     Datalink(2, "datalink"),
 
     /**
      * ip
      */
+    @XmlElement(name = "ip")
     Ip(3, "ip");
 
     java.lang.String name;

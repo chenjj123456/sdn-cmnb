@@ -2,10 +2,7 @@ package com.gwtt.ems.cmnb.northInterface;
 
 import com.gwtt.ems.cmnb.model.common.UpdateType;
 import com.gwtt.ems.cmnb.model.north.CmnbBaseData;
-import com.gwtt.ems.cmnb.model.north.event.Adds;
-import com.gwtt.ems.cmnb.model.north.event.Deletes;
-import com.gwtt.ems.cmnb.model.north.event.EventInQueque;
-import com.gwtt.ems.cmnb.model.north.event.Updates;
+import com.gwtt.ems.cmnb.model.north.event.*;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
 import com.gwtt.ems.cmnb.model.north.notification.*;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
@@ -16,11 +13,13 @@ import com.gwtt.ems.cmnb.websocket.listener.ListenerAdapter;
 import com.gwtt.ems.cmnb.websocket.listener.Notificator;
 import com.gwtt.management.log.Log;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.*;
+
 
 /**
  * Created by chenjj on 2019/8/29
@@ -129,6 +128,20 @@ public class CmnbEventPush implements Runnable {
 
     @Override
     public void run() {
+        //用于测试
+//        EventInQueque event1=new EventInQueque();
+//        event1.setEventUpdateType(UpdateType.Add);
+//        event1.setPushEventType(PushEventType.Alarm);
+//        AlarmList alarmList=new AlarmList();
+//        alarmList.setId("2");
+//        alarmList.setSequence(BigInteger.valueOf(2L));
+//        alarmList.setAlarmSource("ne");
+//        alarmList.setPerceivedSeverity(1);
+//
+//        event1.setPushEventData(alarmList);
+//        eventQueue.add(event1);
+
+
         while (!eventQueue.isEmpty()) {
             EventInQueque event = getEvent();
             switch (event.getPushEventType()) {
@@ -265,7 +278,7 @@ public class CmnbEventPush implements Runnable {
                 notification.setEventTime(CmnbUtil.getDateAndTime(new Date()));
                 notification.setAlarmsNotification(alarmsNotification);
 
-                String alarmXml = JaxbObjectAndXmlUtil.object2xml(AlarmsNotification.class, alarmsNotification);
+                String alarmXml = JaxbObjectAndXmlUtil.object2xml(Notification.class, notification);
                 alarmListener.sendEvent(alarmXml);
                 CmnbLogger.CMNBOUT.log("AlarmObserver:push:admin" + alarmXml, 3);
             }

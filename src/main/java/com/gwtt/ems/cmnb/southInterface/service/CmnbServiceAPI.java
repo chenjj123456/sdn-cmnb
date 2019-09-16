@@ -1,6 +1,6 @@
 package com.gwtt.ems.cmnb.southInterface.service;
 
-import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
+import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventListener;
 
@@ -18,11 +18,11 @@ public interface CmnbServiceAPI {
     public NodeData getTopoExtNodeByNodeId(String layerRate, String nodeId);
     public LinkData getTopoLinkByLinkId(String layerRate, String linkId);
     public LinkData getTopoExtLinkByLinkId(String layerRate, String linkId);
-    public EmsConfigResult createExtLink(String layerRate,LinkData linkData);
-    public EmsConfigResult createLink(String layerRate,LinkData linkData);
-    public EmsConfigResult deleteExtLink(String layerRate,String linkId);
-    public EmsConfigResult deleteLink(String layerRate,String linkId);
-    public EmsConfigResult configLink(String layerRate,LinkData linkData);
+    public EmsConfigOrQueryResult createExtLink(String layerRate,LinkData linkData);
+    public EmsConfigOrQueryResult createLink(String layerRate,LinkData linkData);
+    public EmsConfigOrQueryResult deleteExtLink(String layerRate,String linkId);
+    public EmsConfigOrQueryResult deleteLink(String layerRate,String linkId);
+    public EmsConfigOrQueryResult configLink(String layerRate,LinkData linkData);
 
 
     public void addListener(CmnbEventListener cmnbEventListener);

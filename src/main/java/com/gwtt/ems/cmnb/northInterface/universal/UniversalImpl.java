@@ -2,14 +2,17 @@ package com.gwtt.ems.cmnb.northInterface.universal;
 
 import com.gwtt.ems.cmnb.model.north.notification.NotificationRequest;
 import com.gwtt.ems.cmnb.model.north.notification.NotificationResponse;
+import com.gwtt.ems.cmnb.northInterface.CmnbEventPush;
 import com.gwtt.ems.cmnb.northInterface.fm.AlarmListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.resources.LtpListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.resources.NeListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.topology.LinkListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.topology.NodeListenerAdapter;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
+import com.gwtt.ems.cmnb.util.CmnbUtil;
 import com.gwtt.ems.cmnb.websocket.listener.ListenerAdapter;
 import com.gwtt.ems.cmnb.websocket.listener.Notificator;
+import com.gwtt.ems.cmnb.websocket.server.WebSocketServer;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.Response;
@@ -42,6 +45,11 @@ public class UniversalImpl implements UniversalAPI{
 
     @Override
     public Response createNotificationStream(NotificationRequest request) {
+        //用于测试
+//        Thread webSocketServerThread = new Thread(WebSocketServer.createInstance(CmnbUtil.wsPort));
+//        webSocketServerThread.setName("Web socket server on port " + CmnbUtil.wsPort);
+//        webSocketServerThread.start();
+
         String notfiyReq = request.getNotifications();
         String id = notfiyReq.substring(notfiyReq.lastIndexOf(".")+1);
         String streamId = null;
@@ -71,6 +79,8 @@ public class UniversalImpl implements UniversalAPI{
         switch (notfiyReq) {
             case ALARM:
                 listener = new AlarmListenerAdapter();
+                //用于测试
+                CmnbEventPush.getInstance().startSchedule();
                 break;
             case NODE:
                 listener = new NodeListenerAdapter();

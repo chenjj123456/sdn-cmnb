@@ -3,39 +3,39 @@ package com.gwtt.ems.cmnb.model.common;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by chenjj on 2019/9/4
+ * Created by chenjj on 2019/9/16
  */
-public enum ExtLinkType {
+public enum TunnelMode {
     /**
-     * nni-nni
+     * pipeline.
      *
      */
-    @XmlElement(name = "nni")
-    Nni(1, "nni"),
+    @XmlElement(name = "pipeline")
+    Pipeline(1, "pipeline"),
 
     /**
-     * uni-uni
+     * short pipeline.
      *
      */
-    @XmlElement(name = "uni")
-    Uni(2, "uni"),
+    @XmlElement(name = "short-pipeline")
+    ShortPipeline(2, "short-pipeline"),
 
     /**
-     * nni-nni and uni-uni
+     * unified pattern.
      *
      */
-    @XmlElement(name = "nni-and-uni")
-    NniAndUni(3, "nni-and-uni")
+    @XmlElement(name = "unified-pattern")
+    UnifiedPattern(3, "unified-pattern")
     ;
 
 
     java.lang.String name;
     int value;
-    private static final java.util.Map<java.lang.Integer, ExtLinkType> VALUE_MAP;
+    private static final java.util.Map<java.lang.Integer, TunnelMode> VALUE_MAP;
 
     static {
-        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, ExtLinkType> b = com.google.common.collect.ImmutableMap.builder();
-        for (ExtLinkType enumItem : ExtLinkType.values())
+        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, TunnelMode> b = com.google.common.collect.ImmutableMap.builder();
+        for (TunnelMode enumItem : TunnelMode.values())
         {
             b.put(enumItem.value, enumItem);
         }
@@ -43,7 +43,7 @@ public enum ExtLinkType {
         VALUE_MAP = b.build();
     }
 
-    private ExtLinkType(int value, java.lang.String name) {
+    private TunnelMode(int value, java.lang.String name) {
         this.value = value;
         this.name = name;
     }
@@ -66,9 +66,9 @@ public enum ExtLinkType {
 
     /**
      * @param valueArg
-     * @return corresponding ExtLinkType item
+     * @return corresponding TunnelMode item
      */
-    public static ExtLinkType forValue(int valueArg) {
+    public static TunnelMode forValue(int valueArg) {
         return VALUE_MAP.get(valueArg);
     }
 }

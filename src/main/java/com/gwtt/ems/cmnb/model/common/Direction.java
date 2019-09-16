@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.common;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Created by chenjj on 2019/9/4
  */
@@ -8,12 +10,14 @@ public enum Direction {
      * unidirectional
      *
      */
+    @XmlElement(name = "unidirectional")
     Unidirectional(0, "unidirectional"),
 
     /**
      * bidirectional
      *
      */
+    @XmlElement(name = "bidirectional")
     Bidirectional(1, "bidirectional")
     ;
 

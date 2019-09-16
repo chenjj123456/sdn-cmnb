@@ -1,34 +1,30 @@
 package com.gwtt.ems.cmnb.model.common;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
- * Created by chenjj on 2019/8/5
+ * Created by chenjj on 2019/9/16
  */
-public enum OperateStatus {
+public enum LinearProtectionProtocol {
     /**
-     * operate up.
+     * APS.
      *
      */
-    @XmlElement(name ="operate-up" )
-    OperateUp(0, "operate-up"),
+    APS(0, "APS"),
 
     /**
-     * operate down.
+     * PSC.
      *
      */
-    @XmlElement(name = "operate-down")
-    OperateDown(1, "operate-down")
+    PSC(1, "PSC")
     ;
 
 
     java.lang.String name;
     int value;
-    private static final java.util.Map<java.lang.Integer, OperateStatus> VALUE_MAP;
+    private static final java.util.Map<java.lang.Integer, LinearProtectionProtocol> VALUE_MAP;
 
     static {
-        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, OperateStatus> b = com.google.common.collect.ImmutableMap.builder();
-        for (OperateStatus enumItem : OperateStatus.values())
+        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, LinearProtectionProtocol> b = com.google.common.collect.ImmutableMap.builder();
+        for (LinearProtectionProtocol enumItem : LinearProtectionProtocol.values())
         {
             b.put(enumItem.value, enumItem);
         }
@@ -36,7 +32,7 @@ public enum OperateStatus {
         VALUE_MAP = b.build();
     }
 
-    private OperateStatus(int value, java.lang.String name) {
+    private LinearProtectionProtocol(int value, java.lang.String name) {
         this.value = value;
         this.name = name;
     }
@@ -59,9 +55,9 @@ public enum OperateStatus {
 
     /**
      * @param valueArg
-     * @return corresponding OperateStatus item
+     * @return corresponding LinearProtectionProtocol item
      */
-    public static OperateStatus forValue(int valueArg) {
+    public static LinearProtectionProtocol forValue(int valueArg) {
         return VALUE_MAP.get(valueArg);
     }
 }

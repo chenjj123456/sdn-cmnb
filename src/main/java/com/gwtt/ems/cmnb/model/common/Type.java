@@ -3,39 +3,46 @@ package com.gwtt.ems.cmnb.model.common;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by chenjj on 2019/9/4
+ * Created by chenjj on 2019/9/16
  */
-public enum ExtLinkType {
+public enum Type {
     /**
-     * nni-nni
+     * PE-PE.
      *
      */
-    @XmlElement(name = "nni")
-    Nni(1, "nni"),
+    @XmlElement(name = "PE-PE")
+    PEPE(0, "PE-PE"),
 
     /**
-     * uni-uni
+     * PE-P.
      *
      */
-    @XmlElement(name = "uni")
-    Uni(2, "uni"),
+    @XmlElement(name = "PE-P")
+    PEP(1, "PE-P"),
 
     /**
-     * nni-nni and uni-uni
+     * P-P.
      *
      */
-    @XmlElement(name = "nni-and-uni")
-    NniAndUni(3, "nni-and-uni")
+    @XmlElement(name = "P-P")
+    PP(2, "P-P"),
+
+    /**
+     * P-PE.
+     *
+     */
+    @XmlElement(name = "P-PE")
+    PPE(3, "P-PE")
     ;
 
 
     java.lang.String name;
     int value;
-    private static final java.util.Map<java.lang.Integer, ExtLinkType> VALUE_MAP;
+    private static final java.util.Map<java.lang.Integer, Type> VALUE_MAP;
 
     static {
-        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, ExtLinkType> b = com.google.common.collect.ImmutableMap.builder();
-        for (ExtLinkType enumItem : ExtLinkType.values())
+        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, Type> b = com.google.common.collect.ImmutableMap.builder();
+        for (Type enumItem : Type.values())
         {
             b.put(enumItem.value, enumItem);
         }
@@ -43,7 +50,7 @@ public enum ExtLinkType {
         VALUE_MAP = b.build();
     }
 
-    private ExtLinkType(int value, java.lang.String name) {
+    private Type(int value, java.lang.String name) {
         this.value = value;
         this.name = name;
     }
@@ -66,9 +73,9 @@ public enum ExtLinkType {
 
     /**
      * @param valueArg
-     * @return corresponding ExtLinkType item
+     * @return corresponding Type item
      */
-    public static ExtLinkType forValue(int valueArg) {
+    public static Type forValue(int valueArg) {
         return VALUE_MAP.get(valueArg);
     }
 }

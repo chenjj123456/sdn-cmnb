@@ -10,13 +10,14 @@ import java.util.List;
  */
 
 public class Updates {
-    @XmlElement(name = "update-list")
+
     private List<CmnbBaseData> updateList;
 
     public List<CmnbBaseData> getUpdateList() {
         return updateList;
     }
 
+    @XmlElement(name = "update-list")
     public void setUpdateList(List<CmnbBaseData> updateList) {
         this.updateList = updateList;
     }

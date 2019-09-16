@@ -7,7 +7,11 @@
        http://cxf.apache.org/jaxrs
        http://cxf.apache.org/schemas/jaxrs.xsd">
 
-    <bean id="xmlProvider" class="com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider"/>
+    <bean id="xmlProvider" class="com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider">
+        <!--<property name="annotationsToUse"-->
+    </bean>
+
+
 
     <!-- 防止中文乱码，不配置默认也为UTF-8格式 -->
     <bean id= "encodeFilter"
@@ -34,6 +38,7 @@
             <ref bean="resourcesNorthImpl"/>
             <ref bean="alarmNorthImpl"/>
             <ref bean="topologyNorthImpl"/>
+            <ref bean="tunnelNorthImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="xmlProvider"/>

@@ -10,13 +10,14 @@ import java.util.List;
  */
 public class Adds {
 
-    @XmlElement(name = "add-list")
+
     private List<CmnbBaseData> addList;
 
     public List<CmnbBaseData> getAddList() {
         return addList;
     }
 
+    @XmlElement(name = "add-list")
     public void setAddList(List<CmnbBaseData> addList) {
         this.addList = addList;
     }

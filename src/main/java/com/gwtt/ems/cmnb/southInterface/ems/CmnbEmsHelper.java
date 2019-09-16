@@ -1,7 +1,8 @@
 package com.gwtt.ems.cmnb.southInterface.ems;
 
 import com.gwtt.ems.cmnb.model.common.AdminStatus;
-import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
+import com.gwtt.ems.cmnb.model.common.ConfigOrQueryResult;
+import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
@@ -88,56 +89,56 @@ public class CmnbEmsHelper {
             }
         }
         //用于测试
-        result=new NeDataList();
-        List<NeData> neDataList=new ArrayList<>();
-
-        NeData neData=new NeData();
-        neData.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427b");
-        neData.setAdminIp("192.168.10.95");
-        neData.setAdminStatus(AdminStatus.AdminUp);
-        neData.setVendorName("GWTT");
-        LtpData ltpData=new LtpData();
-        ltpData.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427d");
-        ltpData.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
-        ltpData.setLayerRate(1L);
-        ltpData.setMtu("1000");
-
-        LtpData ltpData1=new LtpData();
-        ltpData1.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427e");
-        ltpData1.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
-        ltpData1.setLayerRate(1L);
-        ltpData1.setMtu("2000");
-        List<LtpData> ltpDataList=new ArrayList<>();
-        ltpDataList.add(ltpData);
-        ltpDataList.add(ltpData1);
-        neData.setLtpDataList(ltpDataList);
-
-        NeData neData1=new NeData();
-        neData1.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427c");
-        neData1.setAdminIp("192.168.10.95");
-        neData1.setAdminStatus(AdminStatus.AdminDown);
-        neData1.setVendorName("GWTT");
-
-        LtpData ltpData2=new LtpData();
-        ltpData2.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427f");
-        ltpData2.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427c");
-        ltpData2.setLayerRate(1L);
-        ltpData2.setMtu("1000");
-
-        LtpData ltpData3=new LtpData();
-        ltpData3.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427g");
-        ltpData3.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427c");
-        ltpData3.setLayerRate(1L);
-        ltpData3.setMtu("2000");
-        List<LtpData> ltpDataList1=new ArrayList<>();
-        ltpDataList1.add(ltpData2);
-        ltpDataList1.add(ltpData3);
-        neData1.setLtpDataList(ltpDataList1);
-
-
-        neDataList.add(neData);
-        neDataList.add(neData1);
-        result.setNeDataList(neDataList);
+//        result=new NeDataList();
+//        List<NeData> neDataList=new ArrayList<>();
+//
+//        NeData neData=new NeData();
+//        neData.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427b");
+//        neData.setAdminIp("192.168.10.95");
+//        neData.setAdminStatus(AdminStatus.AdminUp);
+//        neData.setVendorName("GWTT");
+//        LtpData ltpData=new LtpData();
+//        ltpData.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427d");
+//        ltpData.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
+//        ltpData.setLayerRate(1L);
+//        ltpData.setMtu("1000");
+//
+//        LtpData ltpData1=new LtpData();
+//        ltpData1.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427e");
+//        ltpData1.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
+//        ltpData1.setLayerRate(1L);
+//        ltpData1.setMtu("2000");
+//        List<LtpData> ltpDataList=new ArrayList<>();
+//        ltpDataList.add(ltpData);
+//        ltpDataList.add(ltpData1);
+//        neData.setLtpDataList(ltpDataList);
+//
+//        NeData neData1=new NeData();
+//        neData1.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427c");
+//        neData1.setAdminIp("192.168.10.95");
+//        neData1.setAdminStatus(AdminStatus.AdminDown);
+//        neData1.setVendorName("GWTT");
+//
+//        LtpData ltpData2=new LtpData();
+//        ltpData2.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427f");
+//        ltpData2.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427c");
+//        ltpData2.setLayerRate(1L);
+//        ltpData2.setMtu("1000");
+//
+//        LtpData ltpData3=new LtpData();
+//        ltpData3.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427g");
+//        ltpData3.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427c");
+//        ltpData3.setLayerRate(1L);
+//        ltpData3.setMtu("2000");
+//        List<LtpData> ltpDataList1=new ArrayList<>();
+//        ltpDataList1.add(ltpData2);
+//        ltpDataList1.add(ltpData3);
+//        neData1.setLtpDataList(ltpDataList1);
+//
+//
+//        neDataList.add(neData);
+//        neDataList.add(neData1);
+//        result.setNeDataList(neDataList);
         return result;
     }
 
@@ -161,31 +162,31 @@ public class CmnbEmsHelper {
         }
 
         //用于测试
-        result=new NeData();
-        result.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427b");
-        result.setAdminIp("192.168.10.95");
-        result.setAdminStatus(AdminStatus.AdminUp);
-        result.setVendorName("GWTT");
-        LtpData ltpData=new LtpData();
-        ltpData.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427d");
-        ltpData.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
-        ltpData.setLayerRate(1L);
-        ltpData.setMtu("1000");
-
-        LtpData ltpData1=new LtpData();
-        ltpData1.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427e");
-        ltpData1.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
-        ltpData1.setLayerRate(1L);
-        ltpData1.setMtu("2000");
-        List<LtpData> ltpDataList=new ArrayList<>();
-        ltpDataList.add(ltpData);
-        ltpDataList.add(ltpData1);
-        result.setLtpDataList(ltpDataList);
+//        result=new NeData();
+//        result.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427b");
+//        result.setAdminIp("192.168.10.95");
+//        result.setAdminStatus(AdminStatus.AdminUp);
+//        result.setVendorName("GWTT");
+//        LtpData ltpData=new LtpData();
+//        ltpData.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427d");
+//        ltpData.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
+//        ltpData.setLayerRate(1L);
+//        ltpData.setMtu("1000");
+//
+//        LtpData ltpData1=new LtpData();
+//        ltpData1.setUuid("0d1cfe72-015e-1000-0000-1c3947d8427e");
+//        ltpData1.setNeId("0d1cfe72-015e-1000-0000-1c3947d8427b");
+//        ltpData1.setLayerRate(1L);
+//        ltpData1.setMtu("2000");
+//        List<LtpData> ltpDataList=new ArrayList<>();
+//        ltpDataList.add(ltpData);
+//        ltpDataList.add(ltpData1);
+//        result.setLtpDataList(ltpDataList);
         return result;
     }
 
-    public EmsConfigResult addMeLocation(List<MeLocationData> meLocationDataList){
-        EmsConfigResult result=null;
+    public EmsConfigOrQueryResult addMeLocation(List<MeLocationData> meLocationDataList){
+        EmsConfigOrQueryResult result=null;
         if (cmnbEmsApis != null) {
             for (CmnbEmsAPI api : cmnbEmsApis) {
                 try {
@@ -200,6 +201,29 @@ public class CmnbEmsHelper {
                 }
             }
         }
+        //用于测试
+//        result=new EmsConfigResult();
+//        result.setResult(ConfigResult.Success);
         return result;
     }
+
+    public EmsConfigOrQueryResult getNodeUuidByNodeId(String nodeId){
+        EmsConfigOrQueryResult result=null;
+        if (cmnbEmsApis != null) {
+            for (CmnbEmsAPI api : cmnbEmsApis) {
+                try {
+                    result = api.getNodeUuidByNodeId(nodeId);
+                    //查询到一个结果后退出
+                    if (result != null) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
 }

@@ -1,41 +1,48 @@
 package com.gwtt.ems.cmnb.model.common;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
- * Created by chenjj on 2019/9/4
+ * Created by chenjj on 2019/9/16
  */
-public enum ExtLinkType {
+public enum Role {
     /**
-     * nni-nni
+     * master.
      *
      */
-    @XmlElement(name = "nni")
-    Nni(1, "nni"),
+    Master(0, "master"),
 
     /**
-     * uni-uni
+     * slave.
      *
      */
-    @XmlElement(name = "uni")
-    Uni(2, "uni"),
+    Slave(1, "slave"),
 
     /**
-     * nni-nni and uni-uni
+     * restore.
      *
      */
-    @XmlElement(name = "nni-and-uni")
-    NniAndUni(3, "nni-and-uni")
+    Restore(2, "restore"),
+
+    /**
+     * master-restore.
+     *
+     */
+    MasterRestore(3, "master-restore"),
+
+    /**
+     * slave-restore.
+     *
+     */
+    SlaveRestore(4, "slave-restore")
     ;
 
 
     java.lang.String name;
     int value;
-    private static final java.util.Map<java.lang.Integer, ExtLinkType> VALUE_MAP;
+    private static final java.util.Map<java.lang.Integer, Role> VALUE_MAP;
 
     static {
-        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, ExtLinkType> b = com.google.common.collect.ImmutableMap.builder();
-        for (ExtLinkType enumItem : ExtLinkType.values())
+        final com.google.common.collect.ImmutableMap.Builder<java.lang.Integer, Role> b = com.google.common.collect.ImmutableMap.builder();
+        for (Role enumItem : Role.values())
         {
             b.put(enumItem.value, enumItem);
         }
@@ -43,7 +50,7 @@ public enum ExtLinkType {
         VALUE_MAP = b.build();
     }
 
-    private ExtLinkType(int value, java.lang.String name) {
+    private Role(int value, java.lang.String name) {
         this.value = value;
         this.name = name;
     }
@@ -66,9 +73,9 @@ public enum ExtLinkType {
 
     /**
      * @param valueArg
-     * @return corresponding ExtLinkType item
+     * @return corresponding Role item
      */
-    public static ExtLinkType forValue(int valueArg) {
+    public static Role forValue(int valueArg) {
         return VALUE_MAP.get(valueArg);
     }
 }

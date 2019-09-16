@@ -8,7 +8,7 @@ import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.NcdList;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Nes;
-import com.gwtt.ems.cmnb.model.south.EmsConfigResult;
+import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.ems.cmnb.model.south.resources.NeDataList;
@@ -206,7 +206,7 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
         try {
             List<MeLocationData> meLocationDatas = new ArrayList<>();
 
-            EmsConfigResult result = CmnbEmsHelper.getInstance().addMeLocation(meLocationDatas);
+            EmsConfigOrQueryResult result = CmnbEmsHelper.getInstance().addMeLocation(meLocationDatas);
             //操作异常，Ems未返回错误
             if (result == null) {
                 RestConfErrorList errorList = DealRestConfError.serverError();
