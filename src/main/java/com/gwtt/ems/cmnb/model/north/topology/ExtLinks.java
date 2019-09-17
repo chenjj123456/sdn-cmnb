@@ -1,5 +1,8 @@
 package com.gwtt.ems.cmnb.model.north.topology;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -15,6 +18,8 @@ public class ExtLinks {
         return extLink;
     }
 
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @XmlElement(name = "ext-link")
     public void setExtLink(List<ExtLink> extLink) {
         this.extLink = extLink;
     }

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public enum Type {
     /**
-     * PE-PE.
+     * PE-PE.default "PE-PE"
      *
      */
     @XmlElement(name = "PE-PE")

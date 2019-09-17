@@ -14,7 +14,7 @@ public enum Direction {
     Unidirectional(0, "unidirectional"),
 
     /**
-     * bidirectional
+     * bidirectional,default "bidirection"
      *
      */
     @XmlElement(name = "bidirectional")

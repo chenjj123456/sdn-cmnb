@@ -1,37 +1,44 @@
 package com.gwtt.ems.cmnb.model.common;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Created by chenjj on 2019/9/16
  */
 public enum Role {
     /**
-     * master.
+     * master.default "master"
      *
      */
+    @XmlElement(name = "master")
     Master(0, "master"),
 
     /**
      * slave.
      *
      */
+    @XmlElement(name = "slave")
     Slave(1, "slave"),
 
     /**
      * restore.
      *
      */
+    @XmlElement(name = "restore")
     Restore(2, "restore"),
 
     /**
      * master-restore.
      *
      */
+    @XmlElement(name = "master-restore")
     MasterRestore(3, "master-restore"),
 
     /**
      * slave-restore.
      *
      */
+    @XmlElement(name = "slave-restore")
     SlaveRestore(4, "slave-restore")
     ;
 

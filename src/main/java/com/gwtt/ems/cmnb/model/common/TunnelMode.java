@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public enum TunnelMode {
     /**
-     * pipeline.
+     * pipeline.default mode
      *
      */
     @XmlElement(name = "pipeline")

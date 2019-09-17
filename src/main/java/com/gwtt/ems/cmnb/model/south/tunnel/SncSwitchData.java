@@ -1,13 +1,12 @@
-package com.gwtt.ems.cmnb.model.north.tunnel;
+package com.gwtt.ems.cmnb.model.south.tunnel;
 
 import com.gwtt.ems.cmnb.model.common.*;
-
-import javax.xml.bind.annotation.XmlElement;
+import com.gwtt.ems.cmnb.model.south.EmsBaseData;
 
 /**
- * Created by chenjj on 2019/9/16
+ * Created by chenjj on 2019/9/17
  */
-public class SncSwitch {
+public class SncSwitchData extends EmsBaseData {
     /**
      *id of pw or lsp ect.
      */
@@ -38,7 +37,7 @@ public class SncSwitch {
 
 
     /**
-     * switch delay time. unit:ms. step:100ms.default "0"
+     * switch delay time. unit:ms. step:100ms
      */
     private String holdOffTime;
 
@@ -50,7 +49,6 @@ public class SncSwitch {
         return sncId;
     }
 
-    @XmlElement(name = "snc-id")
     public void setSncId(String sncId) {
         this.sncId = sncId;
     }
@@ -67,7 +65,6 @@ public class SncSwitch {
         return layerRate;
     }
 
-    @XmlElement(name = "layer-rate")
     public void setLayerRate(String layerRate) {
         this.layerRate = layerRate;
     }
@@ -76,7 +73,6 @@ public class SncSwitch {
         return linearProtectionType;
     }
 
-    @XmlElement(name = "linear-protection-type")
     public void setLinearProtectionType(LinearProtectionType linearProtectionType) {
         this.linearProtectionType = linearProtectionType;
     }
@@ -85,7 +81,6 @@ public class SncSwitch {
         return linearProtectionProtocol;
     }
 
-    @XmlElement(name = "linear-protection-protocol")
     public void setLinearProtectionProtocol(LinearProtectionProtocol linearProtectionProtocol) {
         this.linearProtectionProtocol = linearProtectionProtocol;
     }
@@ -94,7 +89,6 @@ public class SncSwitch {
         return switchMode;
     }
 
-    @XmlElement(name = "switch-mode")
     public void setSwitchMode(SwitchMode switchMode) {
         this.switchMode = switchMode;
     }
@@ -103,7 +97,6 @@ public class SncSwitch {
         return revertiveMode;
     }
 
-    @XmlElement(name = "revertive-mode")
     public void setRevertiveMode(RevertiveMode revertiveMode) {
         this.revertiveMode = revertiveMode;
     }
@@ -120,7 +113,6 @@ public class SncSwitch {
         return holdOffTime;
     }
 
-    @XmlElement(name = "hold-off-time")
     public void setHoldOffTime(String holdOffTime) {
         this.holdOffTime = holdOffTime;
     }
@@ -129,7 +121,6 @@ public class SncSwitch {
         return rerouteRevertiveMode;
     }
 
-    @XmlElement(name = "reroute-revertive-mode")
     public void setRerouteRevertiveMode(RerouteRevertiveMode rerouteRevertiveMode) {
         this.rerouteRevertiveMode = rerouteRevertiveMode;
     }
@@ -138,7 +129,6 @@ public class SncSwitch {
         return rerouteWtr;
     }
 
-    @XmlElement(name = "reroute-wtr")
     public void setRerouteWtr(String rerouteWtr) {
         this.rerouteWtr = rerouteWtr;
     }

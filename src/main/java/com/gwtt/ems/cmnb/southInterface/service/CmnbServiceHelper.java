@@ -1,7 +1,10 @@
 package com.gwtt.ems.cmnb.southInterface.service;
 
+import com.gwtt.ems.cmnb.model.common.AdminStatus;
+import com.gwtt.ems.cmnb.model.common.CommandResult;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.topology.*;
+import com.gwtt.ems.cmnb.model.south.tunnel.*;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventObserver;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 
@@ -332,6 +335,161 @@ public class CmnbServiceHelper {
             for (CmnbServiceAPI api : cmnbServiceApis) {
                 try {
                     result = api.configLink(layerRate,linkData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public SncTunnelDataList getAllSncTunnels(String srcNeId, String dstNeId){
+        SncTunnelDataList result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getAllSncTunnels(srcNeId,dstNeId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+
+        //用于测试
+//        result=new SncTunnelDataList();
+//        SncTunnelData sncTunnelData1=new SncTunnelData();
+//        sncTunnelData1.setAdminStatus(AdminStatus.AdminUp);
+//        sncTunnelData1.setDestinationIp("sdlfa");
+//
+//        SncTunnelData sncTunnelData2=new SncTunnelData();
+//        sncTunnelData2.setAdminStatus(AdminStatus.AdminDown);
+//        sncTunnelData2.setDestinationIp("zskdflh");
+//        List<SncTunnelData> sncTunnelDatas=new ArrayList<>();
+//        sncTunnelDatas.add(sncTunnelData1);
+//        sncTunnelDatas.add(sncTunnelData2);
+//        result.setSncTunnelDataList(sncTunnelDatas);
+        return result;
+    }
+
+    public SncTunnelData getSncTunnelsById(String tunnelId){
+        SncTunnelData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getSncTunnelsById(tunnelId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public CommandResult createTunnel(CreateTunnelInputData createTunnelInputData){
+        CommandResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.createTunnel(createTunnelInputData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    //route一起删除
+    public CommandResult deleteTunnel(String tunnelUuid){
+        CommandResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.deleteTunnel(tunnelUuid);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public CommandResult modifyTunnelBasicProperty(String tunnelId,String userLabel){
+        CommandResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.modifyTunnelBasicProperty(tunnelId,userLabel);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public CommandResult modifyTunnelQos(String tunnelId,QosData qosData){
+        CommandResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.modifyTunnelQos(tunnelId,qosData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public CommandResult modifyTunnelSwitchProperty(String tunnelId,SncSwitchData sncSwitchData){
+        CommandResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.modifyTunnelSwitchProperty(tunnelId,sncSwitchData);
                     //查询到一个结果后退出
                     if (result != null ) {
                         break;

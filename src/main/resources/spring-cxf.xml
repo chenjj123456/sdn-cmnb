@@ -8,7 +8,6 @@
        http://cxf.apache.org/schemas/jaxrs.xsd">
 
     <bean id="xmlProvider" class="com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider">
-        <!--<property name="annotationsToUse"-->
     </bean>
 
 
