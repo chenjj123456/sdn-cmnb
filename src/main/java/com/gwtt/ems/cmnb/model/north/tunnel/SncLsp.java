@@ -25,7 +25,7 @@ public class SncLsp extends CmnbBaseData {
 
     private String egressNeId;
 
-    private LspConstraint lspConstraint;
+    private NeLinkConstraint lspConstraint;
 
     private AdminStatus adminStatus;
 
@@ -92,12 +92,12 @@ public class SncLsp extends CmnbBaseData {
         this.egressNeId = egressNeId;
     }
 
-    public LspConstraint getLspConstraint() {
+    public NeLinkConstraint getLspConstraint() {
         return lspConstraint;
     }
 
     @XmlElement(name = "lsp-constraint")
-    public void setLspConstraint(LspConstraint lspConstraint) {
+    public void setLspConstraint(NeLinkConstraint lspConstraint) {
         this.lspConstraint = lspConstraint;
     }
 

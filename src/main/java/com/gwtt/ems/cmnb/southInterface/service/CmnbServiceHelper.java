@@ -3,6 +3,7 @@ package com.gwtt.ems.cmnb.southInterface.service;
 import com.gwtt.ems.cmnb.model.common.AdminStatus;
 import com.gwtt.ems.cmnb.model.common.CommandResult;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
+import com.gwtt.ems.cmnb.model.south.route.SncRouteData;
 import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.model.south.tunnel.*;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventObserver;
@@ -490,6 +491,86 @@ public class CmnbServiceHelper {
             for (CmnbServiceAPI api : cmnbServiceApis) {
                 try {
                     result = api.modifyTunnelSwitchProperty(tunnelId,sncSwitchData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public CommandResult modifyLspOam(String tunnelId,String lspId,OamData oamData){
+        CommandResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.modifyLspOam(tunnelId,lspId,oamData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public SncRouteData getSncRouteByPw(String pwId){
+        SncRouteData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getSncRouteByPw(pwId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public SncRouteData getSncRouteByLsp(String lspId){
+        SncRouteData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.getSncRouteByLsp(lspId);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public CommandResult modifyLspRouteProperty(String tunnelId,String lspId,SncRouteData sncRouteData){
+        CommandResult result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.modifyLspRouteProperty(tunnelId,lspId,sncRouteData);
                     //查询到一个结果后退出
                     if (result != null ) {
                         break;

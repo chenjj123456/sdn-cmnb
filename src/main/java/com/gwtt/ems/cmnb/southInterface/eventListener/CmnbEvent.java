@@ -15,6 +15,8 @@ public class CmnbEvent {
         Ltp,
         TopoNode,
         TopoLink,
+        SncTunnel,
+        SncLsp,
 
     }
 

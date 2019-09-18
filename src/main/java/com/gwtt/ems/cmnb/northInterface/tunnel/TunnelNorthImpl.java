@@ -70,7 +70,10 @@ public class TunnelNorthImpl implements TunnelNorthAPI {
     @Override
     public Response getSncTunnelsById(String tunnelId, int depth) {
         LOG.info("getSncTunnelsById:{},{}",tunnelId,depth);
-
+        if (tunnelId == null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
+        }
         List<SncTunnel> sncTunnelList = new ArrayList<>();
         try {
             SncTunnelData sncTunnelData = CmnbServiceHelper.getInstance().getSncTunnelsById(tunnelId);
@@ -238,6 +241,36 @@ public class TunnelNorthImpl implements TunnelNorthAPI {
                 ConfigServiceResult configServiceResult=new ConfigServiceResult();
                 configServiceResult.setCommandResult(commandResult);
                 LOG.info("modifyTunnelSwitchProperty:{}", commandResult.toString());
+                return Response.status(Response.Status.OK).entity(configServiceResult).build();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            RestConfErrorList errorList = DealRestConfError.serverError();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+
+        }
+    }
+
+    @Override
+    public Response modifyLspOam(String tunnelId, String lspId, Oam oam) {
+        LOG.info("modifyLspOam:{},{},{}",tunnelId+":"+lspId,oam.toString());
+        if (tunnelId == null||lspId==null||oam==null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
+        }
+        try {
+            OamData oamData=CmnbUtil.parserOam(oam);
+            CommandResult commandResult = CmnbServiceHelper.getInstance().modifyLspOam(tunnelId,lspId,oamData);
+            //操作异常，Ems未返回错误
+            if (commandResult == null) {
+                RestConfErrorList errorList = DealRestConfError.serverError();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+            } else {
+                //操作正常，返回配置结果
+                ConfigServiceResult configServiceResult=new ConfigServiceResult();
+                configServiceResult.setCommandResult(commandResult);
+                LOG.info("modifyLspOam:{}", commandResult.toString());
                 return Response.status(Response.Status.OK).entity(configServiceResult).build();
             }
 

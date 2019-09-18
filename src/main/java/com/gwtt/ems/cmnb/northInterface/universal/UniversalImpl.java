@@ -8,6 +8,8 @@ import com.gwtt.ems.cmnb.northInterface.resources.LtpListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.resources.NeListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.topology.LinkListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.topology.NodeListenerAdapter;
+import com.gwtt.ems.cmnb.northInterface.tunnel.SncLspListenerAdapter;
+import com.gwtt.ems.cmnb.northInterface.tunnel.SncTunnelListenerAdapter;
 import com.gwtt.ems.cmnb.util.CmnbLogger;
 import com.gwtt.ems.cmnb.util.CmnbUtil;
 import com.gwtt.ems.cmnb.websocket.listener.ListenerAdapter;
@@ -80,7 +82,7 @@ public class UniversalImpl implements UniversalAPI{
             case ALARM:
                 listener = new AlarmListenerAdapter();
                 //用于测试
-                CmnbEventPush.getInstance().startSchedule();
+//                CmnbEventPush.getInstance().startSchedule();
                 break;
             case NODE:
                 listener = new NodeListenerAdapter();
@@ -100,10 +102,12 @@ public class UniversalImpl implements UniversalAPI{
                 break;
 
             case LSP:
+                listener=new SncLspListenerAdapter();
 
                 break;
 
             case TUNNEL:
+                listener=new SncTunnelListenerAdapter();
 
                 break;
             case PW:

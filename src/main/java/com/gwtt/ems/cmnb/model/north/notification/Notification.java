@@ -21,6 +21,10 @@ public class Notification {
 
     private LinkNotification linkNotification;
 
+    private SncLspNotification sncLspNotification;
+
+    private SncTunnelNotification sncTunnelNotification;
+
 
     public String getEventTime() {
         return eventTime;
@@ -73,5 +77,24 @@ public class Notification {
     @XmlElement(name = "link-notification")
     public void setLinkNotification(LinkNotification linkNotification) {
         this.linkNotification = linkNotification;
+    }
+
+
+    public SncLspNotification getSncLspNotification() {
+        return sncLspNotification;
+    }
+
+    @XmlElement(name = "snc-lsp-notification")
+    public void setSncLspNotification(SncLspNotification sncLspNotification) {
+        this.sncLspNotification = sncLspNotification;
+    }
+
+    public SncTunnelNotification getSncTunnelNotification() {
+        return sncTunnelNotification;
+    }
+
+    @XmlElement(name = "snc-tunnel-notification")
+    public void setSncTunnelNotification(SncTunnelNotification sncTunnelNotification) {
+        this.sncTunnelNotification = sncTunnelNotification;
     }
 }

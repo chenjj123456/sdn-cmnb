@@ -2,6 +2,7 @@ package com.gwtt.ems.cmnb.util;
 
 
 import com.gwtt.ems.cmnb.model.common.AdminStatus;
+import com.gwtt.ems.cmnb.model.common.NeLinkConstraint;
 import com.gwtt.ems.cmnb.model.common.OperateStatus;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
@@ -9,11 +10,16 @@ import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
 import com.gwtt.ems.cmnb.model.north.resources.ne.NeNode;
+import com.gwtt.ems.cmnb.model.north.route.SncRoute;
+import com.gwtt.ems.cmnb.model.north.route.XcList;
+import com.gwtt.ems.cmnb.model.north.route.Xcs;
 import com.gwtt.ems.cmnb.model.north.topology.*;
 import com.gwtt.ems.cmnb.model.north.tunnel.*;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
+import com.gwtt.ems.cmnb.model.south.route.SncRouteData;
+import com.gwtt.ems.cmnb.model.south.route.XcData;
 import com.gwtt.ems.cmnb.model.south.topology.LinkData;
 import com.gwtt.ems.cmnb.model.south.topology.NodeData;
 import com.gwtt.ems.cmnb.model.south.topology.TopologyData;
@@ -520,7 +526,7 @@ public class CmnbUtil {
                 || sncLspData.getExplicitIncludeLinks() != null
                 || sncLspData.getExplicitIncludeNes() != null
                 || sncLspData.getExplicitExcludeLinks() != null) {
-            LspConstraint lspConstraint = new LspConstraint();
+            NeLinkConstraint lspConstraint = new NeLinkConstraint();
 
             if (sncLspData.getExplicitIncludeNes() != null && sncLspData.getExplicitIncludeNes().size() > 0) {
                 List<ExplicitIncludeNeList> explicitIncludeNes = new ArrayList<>();
@@ -650,5 +656,105 @@ public class CmnbUtil {
         return sncSwitchData;
     }
 
+    public static OamData parserOam(Oam oam){
+        OamData oamData=new OamData();
+        oamData.setBelongedId(oam.getBelongedId());
+        oamData.setName(oam.getName());
+        oamData.setMegId(oam.getMegId());
 
+        if (oam.getMep()!=null&&oam.getMep().size()>0){
+            List<MepData> mepDatas=new ArrayList<>();
+            for (Mep mep:oam.getMep()){
+                mepDatas.add(parserMep(mep));
+            }
+            oamData.setMep(mepDatas);
+        }
+
+        oamData.setCcAllow(oam.isCcAllow());
+        oamData.setCcExp(oam.getCcExp());
+        oamData.setCcInterval(oam.getCcInterval());
+        oamData.setLmMode(oam.getLmMode());
+        oamData.setDmMode(oam.getDmMode());
+        return oamData;
+    }
+
+    public static MepData parserMep(Mep mep){
+        MepData mepData=new MepData();
+        mepData.setId(mep.getId());
+        mepData.setName(mep.getName());
+        return mepData;
+    }
+
+    public static SncRoute parserSncRouteData(SncRouteData sncRouteData){
+        SncRoute sncRoute=new SncRoute();
+        sncRoute.setId(sncRouteData.getUuid());
+        sncRoute.setName(sncRouteData.getName());
+        sncRoute.setLayerRate(sncRouteData.getLayerRate());
+        sncRoute.setSncId(sncRouteData.getSncId());
+
+        if (sncRouteData.getXcDataList().size()>0){
+            List<XcList> xcLists=new ArrayList<>();
+            for (XcData xcData:sncRouteData.getXcDataList()){
+                XcList xcList=parserXcData(xcData);
+                xcLists.add(xcList);
+            }
+            Xcs xcs=new Xcs();
+            xcs.setXcList(xcLists);
+            sncRoute.setXcs(xcs);
+        }
+
+        return sncRoute;
+    }
+
+    public static XcList parserXcData(XcData xcData){
+        XcList xcList=new XcList();
+        xcList.setNeId(xcData.getNeId());
+        xcList.setIngressLtpId(xcData.getIngressLtpId());
+        xcList.setForwardInLabel(xcData.getForwardInLabel());
+        xcList.setBackwardOutLabel(xcData.getBackwardOutLabel());
+        xcList.setBackwardPeerId(xcData.getBackwardPeerId());
+        xcList.setEgressLtpId(xcData.getEgressLtpId());
+        xcList.setForwardOutLabel(xcData.getForwardOutLabel());
+        xcList.setBackwardInLabel(xcData.getBackwardInLabel());
+        xcList.setForwardPeerId(xcData.getForwardPeerId());
+        xcList.setEgressVlan(xcData.getEgressVlan());
+        xcList.setIngressVlan(xcData.getIngressVlan());
+
+        return xcList;
+    }
+
+    public static SncRouteData parserSncRoute(SncRoute sncRoute){
+        SncRouteData sncRouteData=new SncRouteData();
+        sncRouteData.setUuid(sncRoute.getId());
+        sncRouteData.setName(sncRoute.getName());
+        sncRouteData.setLayerRate(sncRoute.getLayerRate());
+        sncRouteData.setSncId(sncRoute.getSncId());
+
+        if (sncRoute.getXcs().getXcList().size()>0){
+            List<XcData> xcDataList=new ArrayList<>();
+            for (XcList xcList:sncRoute.getXcs().getXcList()){
+                XcData xcData=parserXcList(xcList);
+                xcDataList.add(xcData);
+            }
+
+            sncRouteData.setXcDataList(xcDataList);
+        }
+        return sncRouteData;
+    }
+
+    public static XcData parserXcList(XcList xcList){
+        XcData xcData=new XcData();
+        xcData.setNeId(xcList.getNeId());
+        xcData.setIngressLtpId(xcList.getIngressLtpId());
+        xcData.setForwardInLabel(xcList.getForwardInLabel());
+        xcData.setBackwardOutLabel(xcList.getBackwardOutLabel());
+        xcData.setBackwardPeerId(xcList.getBackwardPeerId());
+        xcData.setEgressLtpId(xcList.getEgressLtpId());
+        xcData.setForwardOutLabel(xcList.getForwardOutLabel());
+        xcData.setBackwardInLabel(xcList.getBackwardInLabel());
+        xcData.setForwardPeerId(xcList.getForwardPeerId());
+        xcData.setEgressVlan(xcList.getEgressVlan());
+        xcData.setIngressVlan(xcList.getIngressVlan());
+        return xcData;
+    }
 }

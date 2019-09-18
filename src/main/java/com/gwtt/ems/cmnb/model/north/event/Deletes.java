@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.north.event;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+
 import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class Deletes {
         return deleteList;
     }
 
+    @JacksonXmlElementWrapper(useWrapping = false)
     @XmlElement(name = "delete-list")
     public void setDeleteList(List<String> deleteList) {
         this.deleteList = deleteList;

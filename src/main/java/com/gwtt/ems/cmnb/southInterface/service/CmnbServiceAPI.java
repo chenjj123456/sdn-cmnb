@@ -2,6 +2,7 @@ package com.gwtt.ems.cmnb.southInterface.service;
 
 import com.gwtt.ems.cmnb.model.common.CommandResult;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
+import com.gwtt.ems.cmnb.model.south.route.SncRouteData;
 import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.model.south.tunnel.*;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventListener;
@@ -30,12 +31,17 @@ public interface CmnbServiceAPI {
     //tunnel
     public SncTunnelDataList getAllSncTunnels(String srcNeId,String dstNeId);
     public SncTunnelData getSncTunnelsById(String tunnelId);
+    //route一起创建
     public CommandResult createTunnel(CreateTunnelInputData createTunnelInputData);
     //route一起删除
     public CommandResult deleteTunnel(String tunnelUuid);
     public CommandResult modifyTunnelBasicProperty(String tunnelId,String userLabel);
     public CommandResult modifyTunnelQos(String tunnelId,QosData qosData);
     public CommandResult modifyTunnelSwitchProperty(String tunnelId,SncSwitchData sncSwitchData);
+    public CommandResult modifyLspOam(String tunnelId,String lspId,OamData oamData);
+    public SncRouteData getSncRouteByPw(String pwId);
+    public SncRouteData getSncRouteByLsp(String lspId);
+    public CommandResult modifyLspRouteProperty(String tunnelId,String lspId,SncRouteData sncRouteData);
 
     public void addListener(CmnbEventListener cmnbEventListener);
 

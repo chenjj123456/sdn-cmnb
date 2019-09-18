@@ -38,6 +38,7 @@
             <ref bean="alarmNorthImpl"/>
             <ref bean="topologyNorthImpl"/>
             <ref bean="tunnelNorthImpl"/>
+            <ref bean="routeNorthImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="xmlProvider"/>

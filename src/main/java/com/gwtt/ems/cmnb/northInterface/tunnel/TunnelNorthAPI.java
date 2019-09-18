@@ -1,9 +1,6 @@
 package com.gwtt.ems.cmnb.northInterface.tunnel;
 
-import com.gwtt.ems.cmnb.model.north.tunnel.CreateTunnelInput;
-import com.gwtt.ems.cmnb.model.north.tunnel.DeleteTunnelInput;
-import com.gwtt.ems.cmnb.model.north.tunnel.Qos;
-import com.gwtt.ems.cmnb.model.north.tunnel.SncSwitch;
+import com.gwtt.ems.cmnb.model.north.tunnel.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -49,6 +46,11 @@ public interface TunnelNorthAPI {
     @Path("/data/sptn-service-tunnel:service/snc-tunnels/snc-tunnel={id}/snc-switch")
     @Produces({MediaType.APPLICATION_XML})
     Response modifyTunnelSwitchProperty(@PathParam("id") String tunnelId, SncSwitch sncSwitch);
+
+    @PUT
+    @Path("/data/sptn-service-tunnel:service/snc-tunnels/snc-tunnel={tunnelid}/snc-lsps/snc-lsp={lspid}/oam")
+    @Produces({MediaType.APPLICATION_XML})
+    Response modifyLspOam(@PathParam("tunnelid") String tunnelId, @PathParam("lspid") String lspId, Oam oam);
 
 
 }
