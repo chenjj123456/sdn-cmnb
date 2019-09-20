@@ -1,11 +1,17 @@
 package com.gwtt.ems.cmnb.southInterface.service;
 
 import com.gwtt.ems.cmnb.model.common.CommandResult;
+import com.gwtt.ems.cmnb.model.common.NeId;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
+import com.gwtt.ems.cmnb.model.south.route.RequestRoutesOutputData;
+import com.gwtt.ems.cmnb.model.south.route.RerouteCalReqData;
+import com.gwtt.ems.cmnb.model.south.route.RouteCalReqData;
 import com.gwtt.ems.cmnb.model.south.route.SncRouteData;
 import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.model.south.tunnel.*;
 import com.gwtt.ems.cmnb.southInterface.eventListener.CmnbEventListener;
+
+import java.util.List;
 
 /**
  * Created by chenjj on 2019/9/4
@@ -42,6 +48,10 @@ public interface CmnbServiceAPI {
     public SncRouteData getSncRouteByPw(String pwId);
     public SncRouteData getSncRouteByLsp(String lspId);
     public CommandResult modifyLspRouteProperty(String tunnelId,String lspId,SncRouteData sncRouteData);
+    public RequestRoutesOutputData requestRoutes(List<RouteCalReqData> routeCalReqDataList);
+    public RequestRoutesOutputData requestRestoreRoutes(List<RerouteCalReqData>rerouteCalReqDataList);
+    public RequestLabelsOutputData requestLabels(RequestLabelsInputData requestLabelsInputData);
+    public RequestMegidSpacesOutputData requestMegidSpaces(List<NeId> neIds);
 
     public void addListener(CmnbEventListener cmnbEventListener);
 

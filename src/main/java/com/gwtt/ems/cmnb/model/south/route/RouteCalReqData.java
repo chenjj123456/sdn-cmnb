@@ -1,14 +1,14 @@
-package com.gwtt.ems.cmnb.model.north.route;
+package com.gwtt.ems.cmnb.model.south.route;
 
-import com.gwtt.ems.cmnb.model.common.CalculateConstraint;
 import com.gwtt.ems.cmnb.model.common.*;
+import com.gwtt.ems.cmnb.model.south.EmsBaseData;
 
-import javax.xml.bind.annotation.XmlElement;
+import java.util.List;
 
 /**
- * Created by chenjj on 2019/9/18
+ * Created by chenjj on 2019/9/19
  */
-public class RouteCalReqContainer {
+public class RouteCalReqData extends EmsBaseData {
     private String sequenceNo;
 
     private CalculatePolicy calculatePolicy;
@@ -20,13 +20,13 @@ public class RouteCalReqContainer {
     private CalculateInterconnectionMode calculateInterconnectionMode;
 
     /**
-     * 0:lsp   1:pw，填写lsp或pw
+     * 0:lsp   1:pw，填写lsp获取pw
      */
     private String layerRate;
 
-    private LeftNeIds leftNeIds;
+    private List<NeId> leftNeId;
 
-    private RightNeIds rightNeIds;
+    private List<NeId> rightNeId;
 
     private CalculateConstraint workCalculateConstraint;
 
@@ -55,7 +55,6 @@ public class RouteCalReqContainer {
         return sequenceNo;
     }
 
-    @XmlElement(name = "sequence-no")
     public void setSequenceNo(String sequenceNo) {
         this.sequenceNo = sequenceNo;
     }
@@ -64,7 +63,6 @@ public class RouteCalReqContainer {
         return calculatePolicy;
     }
 
-    @XmlElement(name = "calculate-policy")
     public void setCalculatePolicy(CalculatePolicy calculatePolicy) {
         this.calculatePolicy = calculatePolicy;
     }
@@ -73,7 +71,6 @@ public class RouteCalReqContainer {
         return calculateType;
     }
 
-    @XmlElement(name = "calculate-type")
     public void setCalculateType(CalculateType calculateType) {
         this.calculateType = calculateType;
     }
@@ -82,7 +79,6 @@ public class RouteCalReqContainer {
         return calculateMode;
     }
 
-    @XmlElement(name = "calculate-mode")
     public void setCalculateMode(CalculateMode calculateMode) {
         this.calculateMode = calculateMode;
     }
@@ -91,7 +87,6 @@ public class RouteCalReqContainer {
         return calculateInterconnectionMode;
     }
 
-    @XmlElement(name = "calculate-interconnection-mode")
     public void setCalculateInterconnectionMode(CalculateInterconnectionMode calculateInterconnectionMode) {
         this.calculateInterconnectionMode = calculateInterconnectionMode;
     }
@@ -100,34 +95,30 @@ public class RouteCalReqContainer {
         return layerRate;
     }
 
-    @XmlElement(name = "layer-rate")
     public void setLayerRate(String layerRate) {
         this.layerRate = layerRate;
     }
 
-    public LeftNeIds getLeftNeIds() {
-        return leftNeIds;
+    public List<NeId> getLeftNeId() {
+        return leftNeId;
     }
 
-    @XmlElement(name = "left-ne-ids")
-    public void setLeftNeIds(LeftNeIds leftNeIds) {
-        this.leftNeIds = leftNeIds;
+    public void setLeftNeId(List<NeId> leftNeId) {
+        this.leftNeId = leftNeId;
     }
 
-    public RightNeIds getRightNeIds() {
-        return rightNeIds;
+    public List<NeId> getRightNeId() {
+        return rightNeId;
     }
 
-    @XmlElement(name = "right-ne-ids")
-    public void setRightNeIds(RightNeIds rightNeIds) {
-        this.rightNeIds = rightNeIds;
+    public void setRightNeId(List<NeId> rightNeId) {
+        this.rightNeId = rightNeId;
     }
 
     public CalculateConstraint getWorkCalculateConstraint() {
         return workCalculateConstraint;
     }
 
-    @XmlElement(name = "work-calculate-constraint")
     public void setWorkCalculateConstraint(CalculateConstraint workCalculateConstraint) {
         this.workCalculateConstraint = workCalculateConstraint;
     }
@@ -136,7 +127,6 @@ public class RouteCalReqContainer {
         return protectCalculateConstraint;
     }
 
-    @XmlElement(name = "protect-calculate-constraint")
     public void setProtectCalculateConstraint(CalculateConstraint protectCalculateConstraint) {
         this.protectCalculateConstraint = protectCalculateConstraint;
     }
@@ -145,7 +135,6 @@ public class RouteCalReqContainer {
         return tunnelUsePolicy;
     }
 
-    @XmlElement(name = "tunnel-use-policy")
     public void setTunnelUsePolicy(TunnelUsePolicy tunnelUsePolicy) {
         this.tunnelUsePolicy = tunnelUsePolicy;
     }
@@ -154,7 +143,6 @@ public class RouteCalReqContainer {
         return l3vpnId;
     }
 
-    @XmlElement(name = "l3vpn-id")
     public void setL3vpnId(String l3vpnId) {
         this.l3vpnId = l3vpnId;
     }
@@ -163,7 +151,6 @@ public class RouteCalReqContainer {
         return gwIp;
     }
 
-    @XmlElement(name = "gw-ip")
     public void setGwIp(String gwIp) {
         this.gwIp = gwIp;
     }
@@ -172,7 +159,6 @@ public class RouteCalReqContainer {
         return gwMask;
     }
 
-    @XmlElement(name = "gw-mask")
     public void setGwMask(String gwMask) {
         this.gwMask = gwMask;
     }

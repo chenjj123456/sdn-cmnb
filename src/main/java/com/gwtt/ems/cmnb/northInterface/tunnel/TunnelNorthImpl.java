@@ -1,6 +1,9 @@
 package com.gwtt.ems.cmnb.northInterface.tunnel;
 
+import com.gwtt.ems.cmnb.model.common.NeId;
+import com.gwtt.ems.cmnb.model.common.NeLabelList;
 import com.gwtt.ems.cmnb.model.common.CommandResult;
+import com.gwtt.ems.cmnb.model.common.NeMegidSpace;
 import com.gwtt.ems.cmnb.model.north.tunnel.*;
 import com.gwtt.ems.cmnb.model.south.tunnel.*;
 import com.gwtt.ems.cmnb.northInterface.RestError.DealRestConfError;
@@ -272,6 +275,86 @@ public class TunnelNorthImpl implements TunnelNorthAPI {
                 configServiceResult.setCommandResult(commandResult);
                 LOG.info("modifyLspOam:{}", commandResult.toString());
                 return Response.status(Response.Status.OK).entity(configServiceResult).build();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            RestConfErrorList errorList = DealRestConfError.serverError();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+
+        }
+    }
+
+    @Override
+    public Response requestLabels(RequestLabelsInput input) {
+        LOG.info("requestLabels:{}", input.toString());
+        if (input == null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
+        }
+
+        List<NeLabelList> neLabelLists = new ArrayList<>();
+        try {
+            RequestLabelsInputData requestLabelsInputData=CmnbUtil.parserRequestLabelsInput(input);
+
+            RequestLabelsOutputData requestLabelsOutputData = CmnbServiceHelper.getInstance().requestLabels(requestLabelsInputData);
+            //操作异常，Ems未返回错误
+            if (requestLabelsOutputData == null) {
+                RestConfErrorList errorList = DealRestConfError.serverError();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+            } else {
+                //操作正常，返回数据列表
+                if (requestLabelsOutputData.getNeLabelLists().size() > 0) {
+
+                    RequestLabelsOutput requestLabelsOutput = new RequestLabelsOutput();
+                    requestLabelsOutput.setNeLabelList(requestLabelsOutputData.getNeLabelLists());
+                    LOG.info("requestLabels:{}", requestLabelsOutput.toString());
+                    return Response.status(Response.Status.OK).entity(requestLabelsOutput).build();
+                } else {
+                    //无数据，Ems返回错误描述
+                    RestConfErrorList errorList = DealRestConfError.noContent(requestLabelsOutputData.getErrorDesc());
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            RestConfErrorList errorList = DealRestConfError.serverError();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+
+        }
+    }
+
+    @Override
+    public Response requestMegidSpaces(RequestMegidSpacesInput input) {
+        LOG.info("requestMegidSpaces:{}", input.toString());
+        if (input == null) {
+            RestConfErrorList errorList = DealRestConfError.badRequest();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorList).build();
+        }
+
+        List<NeMegidSpace> neMegidSpaces = new ArrayList<>();
+        try {
+            List<NeId> neIds=input.getNeIdList();
+
+            RequestMegidSpacesOutputData requestMegidSpacesOutputData = CmnbServiceHelper.getInstance().requestMegidSpaces(neIds);
+            //操作异常，Ems未返回错误
+            if (requestMegidSpacesOutputData == null) {
+                RestConfErrorList errorList = DealRestConfError.serverError();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+            } else {
+                //操作正常，返回数据列表
+                if (requestMegidSpacesOutputData.getNeMegidSpaces().size() > 0) {
+
+                    RequestMegidSpacesOutput requestMegidSpacesOutput = new RequestMegidSpacesOutput();
+                    requestMegidSpacesOutput.setNeMegidSpace(requestMegidSpacesOutputData.getNeMegidSpaces());
+                    LOG.info("requestMegidSpaces:{}", requestMegidSpacesOutput.toString());
+                    return Response.status(Response.Status.OK).entity(requestMegidSpacesOutput).build();
+                } else {
+                    //无数据，Ems返回错误描述
+                    RestConfErrorList errorList = DealRestConfError.noContent(requestMegidSpacesOutputData.getErrorDesc());
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorList).build();
+                }
             }
 
         } catch (Exception e) {

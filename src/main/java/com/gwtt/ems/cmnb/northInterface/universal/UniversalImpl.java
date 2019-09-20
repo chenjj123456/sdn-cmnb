@@ -4,6 +4,7 @@ import com.gwtt.ems.cmnb.model.north.notification.NotificationRequest;
 import com.gwtt.ems.cmnb.model.north.notification.NotificationResponse;
 import com.gwtt.ems.cmnb.northInterface.CmnbEventPush;
 import com.gwtt.ems.cmnb.northInterface.fm.AlarmListenerAdapter;
+import com.gwtt.ems.cmnb.northInterface.pse.PseListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.resources.LtpListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.resources.NeListenerAdapter;
 import com.gwtt.ems.cmnb.northInterface.topology.LinkListenerAdapter;
@@ -120,7 +121,7 @@ public class UniversalImpl implements UniversalAPI{
 //                listener = new PerfListenerAdapter();
                 break;
             case PSES:
-//                listener = new PseListenerAdapter();
+                listener = new PseListenerAdapter();
                 break;
 
         }

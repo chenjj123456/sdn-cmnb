@@ -1,13 +1,10 @@
 package com.gwtt.ems.cmnb.northInterface.resources;
 
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
-import com.gwtt.ems.cmnb.model.north.resources.ne.AddMeLocationRequest;
-import com.gwtt.ems.cmnb.model.north.resources.ne.AddMeLocationResponse;
+import com.gwtt.ems.cmnb.model.north.resources.ne.*;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.NcdList;
-import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
-import com.gwtt.ems.cmnb.model.north.resources.ne.Nes;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
@@ -205,7 +202,12 @@ public class ResourcesNorthImpl implements ResourcesNorthAPI {
         }
         try {
             List<MeLocationData> meLocationDatas = new ArrayList<>();
-
+            if (request.getMeLocation().size()>0){
+                for (MeLocation meLocation:request.getMeLocation()){
+                    MeLocationData meLocationData=CmnbUtil.parserMeLocation(meLocation);
+                    meLocationDatas.add(meLocationData);
+                }
+            }
             EmsConfigOrQueryResult result = CmnbEmsHelper.getInstance().addMeLocation(meLocationDatas);
             //操作异常，Ems未返回错误
             if (result == null) {

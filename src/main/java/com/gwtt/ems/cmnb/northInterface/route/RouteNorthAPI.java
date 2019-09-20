@@ -1,5 +1,6 @@
 package com.gwtt.ems.cmnb.northInterface.route;
 
+import com.gwtt.ems.cmnb.model.north.route.RequestRestoreRoutesInput;
 import com.gwtt.ems.cmnb.model.north.route.RequestRoutesInput;
 import com.gwtt.ems.cmnb.model.north.route.SncRoute;
 
@@ -25,4 +26,9 @@ public interface RouteNorthAPI {
     @Path("/operations/sptn-service-route:request-routes")
     @Produces({MediaType.APPLICATION_XML})
     Response requestRoutes(RequestRoutesInput input);
+
+    @POST
+    @Path("/operations/sptn-service-route:requestrestore-routes")
+    @Produces({MediaType.APPLICATION_XML})
+    Response requestRestoreRoutes(RequestRestoreRoutesInput input);
 }

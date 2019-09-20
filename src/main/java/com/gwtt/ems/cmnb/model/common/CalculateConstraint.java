@@ -1,7 +1,5 @@
-package com.gwtt.ems.cmnb.model.north.route;
+package com.gwtt.ems.cmnb.model.common;
 
-import com.gwtt.ems.cmnb.model.common.CalPolicy;
-import com.gwtt.ems.cmnb.model.common.NeLinkConstraint;
 
 import javax.xml.bind.annotation.XmlElement;
 

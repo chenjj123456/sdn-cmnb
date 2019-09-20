@@ -1,25 +1,22 @@
 package com.gwtt.ems.cmnb.util;
 
 
-import com.gwtt.ems.cmnb.model.common.AdminStatus;
-import com.gwtt.ems.cmnb.model.common.NeLinkConstraint;
-import com.gwtt.ems.cmnb.model.common.OperateStatus;
+import com.gwtt.ems.cmnb.model.common.*;
 import com.gwtt.ems.cmnb.model.north.fault.AlarmList;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
 import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltps;
 import com.gwtt.ems.cmnb.model.north.resources.ncd.Ncd;
+import com.gwtt.ems.cmnb.model.north.resources.ne.MeLocation;
 import com.gwtt.ems.cmnb.model.north.resources.ne.Ne;
 import com.gwtt.ems.cmnb.model.north.resources.ne.NeNode;
-import com.gwtt.ems.cmnb.model.north.route.SncRoute;
-import com.gwtt.ems.cmnb.model.north.route.XcList;
-import com.gwtt.ems.cmnb.model.north.route.Xcs;
+import com.gwtt.ems.cmnb.model.north.route.*;
 import com.gwtt.ems.cmnb.model.north.topology.*;
 import com.gwtt.ems.cmnb.model.north.tunnel.*;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
+import com.gwtt.ems.cmnb.model.south.resources.MeLocationData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
-import com.gwtt.ems.cmnb.model.south.route.SncRouteData;
-import com.gwtt.ems.cmnb.model.south.route.XcData;
+import com.gwtt.ems.cmnb.model.south.route.*;
 import com.gwtt.ems.cmnb.model.south.topology.LinkData;
 import com.gwtt.ems.cmnb.model.south.topology.NodeData;
 import com.gwtt.ems.cmnb.model.south.topology.TopologyData;
@@ -258,6 +255,14 @@ public class CmnbUtil {
         alarmList.setSequence(BigInteger.valueOf(alarm.getId()));
         alarmList.setId(alarm.getId() + "");
         return alarmList;
+    }
+
+    public static MeLocationData parserMeLocation(MeLocation meLocation){
+        MeLocationData meLocationData=new MeLocationData();
+        meLocationData.setNeUuid(meLocation.getNeId());
+        meLocationData.setLatitude(meLocation.getLatitude());
+        meLocationData.setLongitude(meLocation.getLongitude());
+        return meLocationData;
     }
 
     public static Topology parserTopologyData(TopologyData topologyData) {
@@ -529,45 +534,20 @@ public class CmnbUtil {
             NeLinkConstraint lspConstraint = new NeLinkConstraint();
 
             if (sncLspData.getExplicitIncludeNes() != null && sncLspData.getExplicitIncludeNes().size() > 0) {
-                List<ExplicitIncludeNeList> explicitIncludeNes = new ArrayList<>();
-                for (String neUuid:sncLspData.getExplicitIncludeNes()){
-                    ExplicitIncludeNeList explicitIncludeNeList=new ExplicitIncludeNeList();
-                    explicitIncludeNeList.setNeId(neUuid);
-                    explicitIncludeNes.add(explicitIncludeNeList);
-                }
-                lspConstraint.setExplicitIncludeNeList(explicitIncludeNes);
-
+                lspConstraint.setExplicitIncludeNeList(sncLspData.getExplicitIncludeNes());
             }
 
             if (sncLspData.getExplicitIncludeLinks()!=null&&sncLspData.getExplicitIncludeLinks().size()>0){
-                List<ExplicitIncludeLinkList> explicitIncludeLinks=new ArrayList<>();
-                for (String linkUuid:sncLspData.getExplicitIncludeLinks()){
-                    ExplicitIncludeLinkList explicitIncludeLinkList=new ExplicitIncludeLinkList();
-                    explicitIncludeLinkList.setLinkId(linkUuid);
-                    explicitIncludeLinks.add(explicitIncludeLinkList);
-                }
-                lspConstraint.setExplicitIncludeLinkList(explicitIncludeLinks);
+
+                lspConstraint.setExplicitIncludeLinkList(sncLspData.getExplicitIncludeLinks());
             }
 
             if (sncLspData.getExplicitExcludeNes() != null && sncLspData.getExplicitExcludeNes().size() > 0) {
-                List<ExplicitExcludeNeList> explicitExcludeNes = new ArrayList<>();
-                for (String neUuid:sncLspData.getExplicitExcludeNes()){
-                    ExplicitExcludeNeList explicitExcludeNeList=new ExplicitExcludeNeList();
-                    explicitExcludeNeList.setNeId(neUuid);
-                    explicitExcludeNes.add(explicitExcludeNeList);
-                }
-                lspConstraint.setExplicitExcludeNeList(explicitExcludeNes);
-
+                lspConstraint.setExplicitExcludeNeList(sncLspData.getExplicitExcludeNes());
             }
 
             if (sncLspData.getExplicitExcludeLinks()!=null&&sncLspData.getExplicitExcludeLinks().size()>0){
-                List<ExplicitExcludeLinkList> explicitExcludeLinks=new ArrayList<>();
-                for (String linkUuid:sncLspData.getExplicitExcludeLinks()){
-                    ExplicitExcludeLinkList explicitExcludeLinkList=new ExplicitExcludeLinkList();
-                    explicitExcludeLinkList.setLinkId(linkUuid);
-                    explicitExcludeLinks.add(explicitExcludeLinkList);
-                }
-                lspConstraint.setExplicitExcludeLinkList(explicitExcludeLinks);
+                lspConstraint.setExplicitExcludeLinkList(sncLspData.getExplicitExcludeLinks());
             }
 
             sncLsp.setLspConstraint(lspConstraint);
@@ -614,7 +594,80 @@ public class CmnbUtil {
     public static CreateTunnelInputData parserCreateTunnelInput(CreateTunnelInput input){
         CreateTunnelInputData createTunnelInputData=new CreateTunnelInputData();
 
+        SncTunnelData sncTunnelData=new SncTunnelData();
+        sncTunnelData.setUuid(input.getSncTunnel().getId());
+        sncTunnelData.setName(input.getSncTunnel().getName());
+        sncTunnelData.setUserLabel(input.getSncTunnel().getUserLabel());
+        sncTunnelData.setTenantId(input.getSncTunnel().getTenantId());
+        sncTunnelData.setCreater(input.getSncTunnel().getCreater());
+        sncTunnelData.setDirection(input.getSncTunnel().getDirection());
+        sncTunnelData.setType(input.getSncTunnel().getType());
+        sncTunnelData.setSourceNeId(input.getSncTunnel().getSourceNeId());
+        sncTunnelData.setDestinationNeId(input.getSncTunnel().getDestinationNeId());
+        sncTunnelData.setSourceIp(input.getSncTunnel().getSourceIp());
+        sncTunnelData.setDestinationIp(input.getSncTunnel().getDestinationIp());
+
+        if (input.getSncTunnel().getQos()!=null){
+            QosData qosData=parserQos(input.getSncTunnel().getQos());
+            sncTunnelData.setQos(qosData);
+        }
+
+        if (input.getSncTunnel().getSncSwitch()!=null){
+            SncSwitchData sncSwitchData=parserSncSwitch(input.getSncTunnel().getSncSwitch());
+            sncTunnelData.setSncSwitch(sncSwitchData);
+        }
+
+        if (input.getSncTunnel().getSncLsp().size()>0){
+            List<SncLspData> sncLspDataList=new ArrayList<>();
+            for (SncLsp sncLsp:input.getSncTunnel().getSncLsp()){
+                SncLspData sncLspData=parserSncLsp(sncLsp);
+                sncLspDataList.add(sncLspData);
+            }
+
+            sncTunnelData.setSncLsp(sncLspDataList);
+        }
+
+        sncTunnelData.setAdminStatus(input.getSncTunnel().getAdminStatus());
+        sncTunnelData.setOperateStatus(input.getSncTunnel().getOperateStatus());
+
         return createTunnelInputData;
+    }
+
+    public static SncLspData parserSncLsp(SncLsp sncLsp){
+        SncLspData sncLspData=new SncLspData();
+        sncLspData.setUuid(sncLsp.getId());
+        sncLspData.setName(sncLsp.getName());
+        sncLspData.setUserLabel(sncLsp.getUserLabel());
+        sncLspData.setDirection(sncLsp.getDirection());
+        sncLspData.setRole(sncLsp.getRole());
+        sncLspData.setType(sncLsp.getType());
+        sncLspData.setIngressNeId(sncLsp.getIngressNeId());
+        sncLspData.setEgressNeId(sncLsp.getIngressNeId());
+
+        if (sncLsp.getLspConstraint().getExplicitExcludeNeList() != null && sncLsp.getLspConstraint().getExplicitExcludeNeList().size() > 0) {
+            sncLspData.setExplicitExcludeNes(sncLsp.getLspConstraint().getExplicitExcludeNeList());
+        }
+
+        if (sncLsp.getLspConstraint().getExplicitExcludeLinkList() != null && sncLsp.getLspConstraint().getExplicitExcludeLinkList().size() > 0) {
+            sncLspData.setExplicitExcludeLinks(sncLsp.getLspConstraint().getExplicitExcludeLinkList());
+        }
+
+        if (sncLsp.getLspConstraint().getExplicitIncludeNeList() != null && sncLsp.getLspConstraint().getExplicitIncludeNeList().size() > 0) {
+            sncLspData.setExplicitIncludeNes(sncLsp.getLspConstraint().getExplicitIncludeNeList());
+        }
+
+        if (sncLsp.getLspConstraint().getExplicitIncludeLinkList() != null && sncLsp.getLspConstraint().getExplicitIncludeLinkList().size() > 0) {
+            sncLspData.setExplicitIncludeLinks(sncLsp.getLspConstraint().getExplicitIncludeLinkList());
+        }
+
+        sncLspData.setAdminStatus(sncLsp.getAdminStatus());
+        sncLspData.setOperateStatus(sncLsp.getOperateStatus());
+
+        if (sncLsp.getOam()!=null){
+            sncLspData.setOam(parserOam(sncLsp.getOam()));
+        }
+
+        return sncLspData;
     }
 
     public static QosData parserQos(Qos qos){
@@ -756,5 +809,80 @@ public class CmnbUtil {
         xcData.setEgressVlan(xcList.getEgressVlan());
         xcData.setIngressVlan(xcList.getIngressVlan());
         return xcData;
+    }
+
+    public static RouteCalReqData parserRouteCalReq(RouteCalReq routeCalReq){
+        RouteCalReqData routeCalReqData=new RouteCalReqData();
+        routeCalReqData.setSequenceNo(routeCalReq.getRouteCalReqContainer().getSequenceNo());
+        routeCalReqData.setCalculatePolicy(routeCalReq.getRouteCalReqContainer().getCalculatePolicy());
+        routeCalReqData.setCalculateType(routeCalReq.getRouteCalReqContainer().getCalculateType());
+        routeCalReqData.setCalculateMode(routeCalReq.getRouteCalReqContainer().getCalculateMode());
+        routeCalReqData.setCalculateInterconnectionMode(routeCalReq.getRouteCalReqContainer().getCalculateInterconnectionMode());
+        routeCalReqData.setLayerRate(routeCalReq.getRouteCalReqContainer().getLayerRate());
+        routeCalReqData.setLeftNeId(routeCalReq.getRouteCalReqContainer().getLeftNeIds().getLeftNeId());
+        routeCalReqData.setRightNeId(routeCalReq.getRouteCalReqContainer().getRightNeIds().getRightNeId());
+        routeCalReqData.setWorkCalculateConstraint(routeCalReq.getRouteCalReqContainer().getWorkCalculateConstraint());
+        routeCalReqData.setProtectCalculateConstraint(routeCalReq.getRouteCalReqContainer().getProtectCalculateConstraint());
+        routeCalReqData.setTunnelUsePolicy(routeCalReq.getRouteCalReqContainer().getTunnelUsePolicy());
+        routeCalReqData.setL3vpnId(routeCalReq.getRouteCalReqContainer().getL3vpnId());
+        routeCalReqData.setGwIp(routeCalReq.getRouteCalReqContainer().getGwIp());
+        routeCalReqData.setGwMask(routeCalReq.getRouteCalReqContainer().getGwMask());
+        routeCalReqData.setVlan(routeCalReq.getRouteCalReqContainer().getVlan());
+
+        return routeCalReqData;
+    }
+
+    public static RouteCalResult parserRouteCalResultData(RouteCalResultData routeCalResultData){
+        RouteCalResult routeCalResult=new RouteCalResult();
+
+        RouteCalResultContainer routeCalResultContainer=new RouteCalResultContainer();
+        routeCalResultContainer.setSequenceNo(routeCalResultData.getSequenceNo());
+        routeCalResultContainer.setGroupNo(routeCalResultData.getGroupNo());
+        routeCalResultContainer.setRole(routeCalResultData.getRole());
+        routeCalResultContainer.setIngressNeId(routeCalResultData.getIngressNeId());
+        routeCalResultContainer.setEgressNeId(routeCalResultData.getEgressNeId());
+        routeCalResultContainer.setLatency(routeCalResultContainer.getLatency());
+        routeCalResultContainer.setMaxAvailbleBandwidth(routeCalResultData.getMaxAvailbleBandwidth());
+        routeCalResult.setRouteCalResultContainer(routeCalResultContainer);
+
+        if (routeCalResultData.getXcDataList().size()>0){
+            Xcs xcs=new Xcs();
+            List<XcList> xcLists=new ArrayList<>();
+            for (XcData xcData:routeCalResultData.getXcDataList()){
+                XcList xcList=parserXcData(xcData);
+                xcLists.add(xcList);
+            }
+            xcs.setXcList(xcLists);
+            routeCalResult.setXcs(xcs);
+
+        }
+
+        routeCalResult.setSharedTunnelId(routeCalResultData.getSharedTunnelId());
+
+        return routeCalResult;
+
+    }
+
+    public static RerouteCalReqData parserRerouteCalReq(RerouteCalReq rerouteCalReq){
+
+        RerouteCalReqData rerouteCalReqData=new RerouteCalReqData();
+        rerouteCalReqData.setSequenceNo(rerouteCalReq.getRerouteCalReqContainer().getSequenceNo());
+        rerouteCalReqData.setLayerRate(rerouteCalReq.getRerouteCalReqContainer().getLayerRate());
+        rerouteCalReqData.setLspid(rerouteCalReq.getRerouteCalReqContainer().getLspid());
+        rerouteCalReqData.setLeftNeId(rerouteCalReq.getRerouteCalReqContainer().getLeftNeId().getLeftNeId());
+        rerouteCalReqData.setRightNeId(rerouteCalReq.getRerouteCalReqContainer().getRightNeIds().getRightNeId());
+        rerouteCalReqData.setCalculateConstraint(rerouteCalReq.getRerouteCalReqContainer().getCalculateConstraint());
+        return rerouteCalReqData;
+
+    }
+
+    public static RequestLabelsInputData parserRequestLabelsInput(RequestLabelsInput input){
+        RequestLabelsInputData requestLabelsInputData=new RequestLabelsInputData();
+        if (input.getNeIds().getNeIdList().size()>0){
+            requestLabelsInputData.setNeIdLists(input.getNeIds().getNeIdList());
+        }
+
+        requestLabelsInputData.setLabelNumber(input.getLabelNumber());
+        return requestLabelsInputData;
     }
 }

@@ -2,7 +2,11 @@ package com.gwtt.ems.cmnb.southInterface.service;
 
 import com.gwtt.ems.cmnb.model.common.AdminStatus;
 import com.gwtt.ems.cmnb.model.common.CommandResult;
+import com.gwtt.ems.cmnb.model.common.NeId;
 import com.gwtt.ems.cmnb.model.south.EmsConfigOrQueryResult;
+import com.gwtt.ems.cmnb.model.south.route.RequestRoutesOutputData;
+import com.gwtt.ems.cmnb.model.south.route.RerouteCalReqData;
+import com.gwtt.ems.cmnb.model.south.route.RouteCalReqData;
 import com.gwtt.ems.cmnb.model.south.route.SncRouteData;
 import com.gwtt.ems.cmnb.model.south.topology.*;
 import com.gwtt.ems.cmnb.model.south.tunnel.*;
@@ -571,6 +575,85 @@ public class CmnbServiceHelper {
             for (CmnbServiceAPI api : cmnbServiceApis) {
                 try {
                     result = api.modifyLspRouteProperty(tunnelId,lspId,sncRouteData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+    public RequestRoutesOutputData requestRoutes(List<RouteCalReqData> routeCalReqDataList){
+        RequestRoutesOutputData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.requestRoutes(routeCalReqDataList);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public RequestRoutesOutputData requestRestoreRoutes(List<RerouteCalReqData>rerouteCalReqDataList){
+        RequestRoutesOutputData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.requestRestoreRoutes(rerouteCalReqDataList);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public RequestLabelsOutputData requestLabels(RequestLabelsInputData requestLabelsInputData){
+        RequestLabelsOutputData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.requestLabels(requestLabelsInputData);
+                    //查询到一个结果后退出
+                    if (result != null ) {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    CmnbLogger.CMNBERR.log(api.getClass().getName(), 3);
+                    CmnbLogger.CMNBERR.logException(ex, 3);
+                }
+            }
+        }
+        return result;
+    }
+
+    public RequestMegidSpacesOutputData requestMegidSpaces(List<NeId> neIds){
+        RequestMegidSpacesOutputData result = null;
+
+        if (cmnbServiceApis != null) {
+            for (CmnbServiceAPI api : cmnbServiceApis) {
+                try {
+                    result = api.requestMegidSpaces(neIds);
                     //查询到一个结果后退出
                     if (result != null ) {
                         break;

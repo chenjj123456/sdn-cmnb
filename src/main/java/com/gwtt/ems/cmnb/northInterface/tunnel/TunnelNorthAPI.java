@@ -53,4 +53,13 @@ public interface TunnelNorthAPI {
     Response modifyLspOam(@PathParam("tunnelid") String tunnelId, @PathParam("lspid") String lspId, Oam oam);
 
 
+    @POST
+    @Path("/operations/sptn-service-tunnel:request-labels")
+    @Produces({MediaType.APPLICATION_XML})
+    Response requestLabels(RequestLabelsInput input);
+
+    @POST
+    @Path("/operations/sptn-service-tunnel:request-megid-spaces")
+    @Produces({MediaType.APPLICATION_XML})
+    Response requestMegidSpaces(RequestMegidSpacesInput input);
 }

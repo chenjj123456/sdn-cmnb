@@ -25,13 +25,13 @@ public class SncLspData extends EmsBaseData {
 
     private String egressNeId;
 
-    private List<String> explicitIncludeNes;
+    private List<NeId> explicitIncludeNes;
 
-    private List<String> explicitIncludeLinks;
+    private List<LinkId> explicitIncludeLinks;
 
-    private List<String> explicitExcludeNes;
+    private List<NeId> explicitExcludeNes;
 
-    private List<String> explicitExcludeLinks;
+    private List<LinkId> explicitExcludeLinks;
 
     private AdminStatus adminStatus;
 
@@ -103,35 +103,35 @@ public class SncLspData extends EmsBaseData {
         this.egressNeId = egressNeId;
     }
 
-    public List<String> getExplicitIncludeNes() {
+    public List<NeId> getExplicitIncludeNes() {
         return explicitIncludeNes;
     }
 
-    public void setExplicitIncludeNes(List<String> explicitIncludeNes) {
+    public void setExplicitIncludeNes(List<NeId> explicitIncludeNes) {
         this.explicitIncludeNes = explicitIncludeNes;
     }
 
-    public List<String> getExplicitIncludeLinks() {
+    public List<LinkId> getExplicitIncludeLinks() {
         return explicitIncludeLinks;
     }
 
-    public void setExplicitIncludeLinks(List<String> explicitIncludeLinks) {
+    public void setExplicitIncludeLinks(List<LinkId> explicitIncludeLinks) {
         this.explicitIncludeLinks = explicitIncludeLinks;
     }
 
-    public List<String> getExplicitExcludeNes() {
+    public List<NeId> getExplicitExcludeNes() {
         return explicitExcludeNes;
     }
 
-    public void setExplicitExcludeNes(List<String> explicitExcludeNes) {
+    public void setExplicitExcludeNes(List<NeId> explicitExcludeNes) {
         this.explicitExcludeNes = explicitExcludeNes;
     }
 
-    public List<String> getExplicitExcludeLinks() {
+    public List<LinkId> getExplicitExcludeLinks() {
         return explicitExcludeLinks;
     }
 
-    public void setExplicitExcludeLinks(List<String> explicitExcludeLinks) {
+    public void setExplicitExcludeLinks(List<LinkId> explicitExcludeLinks) {
         this.explicitExcludeLinks = explicitExcludeLinks;
     }
 
