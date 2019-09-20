@@ -39,6 +39,7 @@
             <ref bean="topologyNorthImpl"/>
             <ref bean="tunnelNorthImpl"/>
             <ref bean="routeNorthImpl"/>
+            <ref bean="elineNorthImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="xmlProvider"/>
