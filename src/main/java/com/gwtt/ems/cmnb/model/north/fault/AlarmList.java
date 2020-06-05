@@ -14,25 +14,18 @@ public class AlarmList extends CmnbBaseData {
 
     private BigInteger sequence;
 
-    @XmlElement(name = "probable-cause")
     private String probableCause;
 
-    @XmlElement(name = "perceived-severity")
     private int perceivedSeverity;
 
-    @XmlElement(name = "alarm-raised-time")
     private String alarmRaisedTime;
 
-    @XmlElement(name = "alarm-source-type")
     private int alarmSourceType;
 
-    @XmlElement(name = "alarm-source")
     private String alarmSource;
 
-    @XmlElement(name = "alarm-cleared-time")
     private String alarmClearedTime;
 
-    @XmlElement(name = "path-ids")
     private PathIds pathIds;
 
     public BigInteger getSequence() {
@@ -47,6 +40,7 @@ public class AlarmList extends CmnbBaseData {
         return probableCause;
     }
 
+    @XmlElement(name = "probable-cause")
     public void setProbableCause(String probableCause) {
         this.probableCause = probableCause;
     }
@@ -55,6 +49,7 @@ public class AlarmList extends CmnbBaseData {
         return perceivedSeverity;
     }
 
+    @XmlElement(name = "perceived-severity")
     public void setPerceivedSeverity(int perceivedSeverity) {
         this.perceivedSeverity = perceivedSeverity;
     }
@@ -63,6 +58,7 @@ public class AlarmList extends CmnbBaseData {
         return alarmRaisedTime;
     }
 
+    @XmlElement(name = "alarm-raised-time")
     public void setAlarmRaisedTime(String alarmRaisedTime) {
         this.alarmRaisedTime = alarmRaisedTime;
     }
@@ -71,6 +67,7 @@ public class AlarmList extends CmnbBaseData {
         return alarmSourceType;
     }
 
+    @XmlElement(name = "alarm-source-type")
     public void setAlarmSourceType(int alarmSourceType) {
         this.alarmSourceType = alarmSourceType;
     }
@@ -79,6 +76,7 @@ public class AlarmList extends CmnbBaseData {
         return alarmSource;
     }
 
+    @XmlElement(name = "alarm-source")
     public void setAlarmSource(String alarmSource) {
         this.alarmSource = alarmSource;
     }
@@ -87,6 +85,7 @@ public class AlarmList extends CmnbBaseData {
         return alarmClearedTime;
     }
 
+    @XmlElement(name = "alarm-cleared-time")
     public void setAlarmClearedTime(String alarmClearedTime) {
         this.alarmClearedTime = alarmClearedTime;
     }
@@ -95,6 +94,7 @@ public class AlarmList extends CmnbBaseData {
         return pathIds;
     }
 
+    @XmlElement(name = "path-ids")
     public void setPathIds(PathIds pathIds) {
         this.pathIds = pathIds;
     }

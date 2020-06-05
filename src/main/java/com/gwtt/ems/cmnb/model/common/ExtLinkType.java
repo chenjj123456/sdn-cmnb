@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.common;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Created by chenjj on 2019/9/4
  */
@@ -8,18 +10,21 @@ public enum ExtLinkType {
      * nni-nni
      *
      */
+    @XmlElement(name = "nni")
     Nni(1, "nni"),
 
     /**
      * uni-uni
      *
      */
+    @XmlElement(name = "uni")
     Uni(2, "uni"),
 
     /**
      * nni-nni and uni-uni
      *
      */
+    @XmlElement(name = "nni-and-uni")
     NniAndUni(3, "nni-and-uni")
     ;
 

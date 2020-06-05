@@ -61,7 +61,7 @@ public class JaxbObjectAndXmlUtil {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setNamespaceAware(true);
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.newDocument();;
+            Document doc = db.newDocument();
             JAXBContext context = JAXBContext.newInstance(c);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -75,6 +75,7 @@ public class JaxbObjectAndXmlUtil {
             tt.transform(new DOMSource(doc), new StreamResult(bos));
             result = bos.toString();
         } catch (JAXBException | ParserConfigurationException | TransformerException e) {
+            e.printStackTrace();
             
         }
         if(result.contains("<?xml")){

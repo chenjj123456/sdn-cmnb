@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.north.resources.ltp;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class Ltps {
         return ltp;
     }
 
+    @JacksonXmlElementWrapper(useWrapping = false)
     public void setLtp(List<Ltp> ltp) {
         this.ltp = ltp;
     }

@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.north.topology;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Links {
         return link;
     }
 
+    @JacksonXmlElementWrapper(useWrapping = false)
     public void setLink(List<Link> link) {
         this.link = link;
     }

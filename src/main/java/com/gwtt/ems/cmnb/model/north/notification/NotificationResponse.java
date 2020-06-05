@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "output", namespace="urn:chinamobile:notification")
 public class NotificationResponse {
 
-    @XmlElement(name="notification-stream-identifier")
+    @XmlElement(name="notification-stream-identifier",namespace="urn:chinamobile:notification")
     private String notificationStreamIdentifier;
 
     public String getNotificationStreamIdentifier() {

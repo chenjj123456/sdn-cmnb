@@ -8,13 +8,14 @@ import java.util.List;
  */
 public class PathIds {
 
-    @XmlElement(name = "path-id-list")
+
     private List<PathIdList> pathIdList;
 
     public List<PathIdList> getPathIdList() {
         return pathIdList;
     }
 
+    @XmlElement(name = "path-id-list")
     public void setPathIdList(List<PathIdList> pathIdList) {
         this.pathIdList = pathIdList;
     }

@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.common;
 
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Created by chenjj on 2019/9/4
  */
@@ -8,18 +10,22 @@ public enum NodeType {
      * physical
      *
      */
+    @XmlElement(name = "physical")
     Physical(0, "physical"),
 
     /**
      * virtual
      *
      */
+
+    @XmlElement(name = "virtual")
     Virtual(1, "virtual"),
 
     /**
      * container
      *
      */
+    @XmlElement(name = "container")
     Container(2, "container")
     ;
 

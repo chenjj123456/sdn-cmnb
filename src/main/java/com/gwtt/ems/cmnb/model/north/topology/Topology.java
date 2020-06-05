@@ -12,10 +12,8 @@ import javax.xml.bind.annotation.XmlElement;
 public class Topology extends CmnbBaseData {
     private String name;
 
-    @XmlElement(name = "layer-rate")
     private LayerRate layerRate;
 
-    @XmlElement(name = "sub-layer-rate")
     private SubLayerRate subLayerRate;
 
     public String getName() {
@@ -30,6 +28,7 @@ public class Topology extends CmnbBaseData {
         return layerRate;
     }
 
+    @XmlElement(name = "layer-rate")
     public void setLayerRate(LayerRate layerRate) {
         this.layerRate = layerRate;
     }
@@ -38,6 +37,7 @@ public class Topology extends CmnbBaseData {
         return subLayerRate;
     }
 
+    @XmlElement(name = "sub-layer-rate")
     public void setSubLayerRate(SubLayerRate subLayerRate) {
         this.subLayerRate = subLayerRate;
     }

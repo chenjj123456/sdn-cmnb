@@ -6,11 +6,15 @@ import com.gwtt.ems.cmnb.model.north.resources.ltp.Ltp;
 import com.gwtt.ems.cmnb.model.north.resources.ne.NeNode;
 import com.gwtt.ems.cmnb.model.north.topology.Link;
 import com.gwtt.ems.cmnb.model.north.topology.Node;
+import com.gwtt.ems.cmnb.model.north.tunnel.SncLsp;
+import com.gwtt.ems.cmnb.model.north.tunnel.SncTunnel;
 import com.gwtt.ems.cmnb.model.south.EmsBaseData;
 import com.gwtt.ems.cmnb.model.south.resources.LtpData;
 import com.gwtt.ems.cmnb.model.south.resources.NeData;
 import com.gwtt.ems.cmnb.model.south.topology.LinkData;
 import com.gwtt.ems.cmnb.model.south.topology.NodeData;
+import com.gwtt.ems.cmnb.model.south.tunnel.SncLspData;
+import com.gwtt.ems.cmnb.model.south.tunnel.SncTunnelData;
 import com.gwtt.ems.cmnb.northInterface.CmnbEventPush;
 import com.gwtt.ems.cmnb.util.CmnbUtil;
 
@@ -70,6 +74,17 @@ public class CmnbEventObserver implements CmnbEventListener {
                 Link link=CmnbUtil.parserLinkData((LinkData)emsBaseData);
                 eventInQueque.setPushEventData(link);
                 break;
+            case SncLsp:
+                eventInQueque.setPushEventType(PushEventType.SncLsp);
+                SncLsp sncLsp=CmnbUtil.parserSncLspData((SncLspData)emsBaseData);
+                eventInQueque.setPushEventData(sncLsp);
+                break;
+            case SncTunnel:
+                eventInQueque.setPushEventType(PushEventType.SncTunnel);
+                SncTunnel sncTunnel=CmnbUtil.parserSncTunnelData((SncTunnelData)emsBaseData);
+                eventInQueque.setPushEventData(sncTunnel);
+                break;
+
 
         }
 

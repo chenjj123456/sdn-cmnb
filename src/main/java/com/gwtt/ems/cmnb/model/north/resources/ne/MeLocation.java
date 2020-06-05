@@ -14,6 +14,8 @@ public class MeLocation {
 
     private String latitude;
 
+    public MeLocation(String b) { }
+
     public String getNeId() {
         return neId;
     }

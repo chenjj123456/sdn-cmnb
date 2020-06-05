@@ -1,5 +1,7 @@
 package com.gwtt.ems.cmnb.model.north.topology;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class Topologies {
         return topology;
     }
 
+    @JacksonXmlElementWrapper(useWrapping = false)
     public void setTopology(List<Topology> topology) {
         this.topology = topology;
     }

@@ -97,7 +97,7 @@ public class WebSocketClient {
         if (args.length > 0) {
             uri = new URI(args[0]);
         } else {
-            uri = new URI("http://localhost:9999/restconf/streams/stream/pm-query-result-notification");
+            uri = new URI("http://localhost:9999/restconf/streams/stream/alarms-notification");
         }
         IClientMessageCallback messageCallback = new ClientMessageCallback();
         WebSocketClient webSocketClient = new WebSocketClient(uri, messageCallback);
