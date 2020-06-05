@@ -8,7 +8,6 @@ import java.math.BigInteger;
 
 /**
  * Created by chenjj on 2019/8/2
- * 用于测试git分支
  */
 
 public class AlarmList extends CmnbBaseData {
